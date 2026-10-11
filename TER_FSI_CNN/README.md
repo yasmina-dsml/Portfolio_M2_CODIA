@@ -2,6 +2,18 @@
 
 TER (Travail d'Étude et de Recherche) réalisé dans le cadre du Master 1 Sciences de Données et Systèmes Complexes à l'Université de Strasbourg, sous la direction d'Anne Jeannin-Girardon (ICube). Le sujet porte sur l'étude empirique du phénomène de superposition des caractéristiques dans les réseaux de neurones convolutifs (CNN), et de son lien possible avec l'interférence entre caractéristiques apprises.
 
+## En bref
+
+| | |
+|---|---|
+| **Question** | Le design d'un bloc convolutif (classique, bottleneck, bottleneck inversé) change-t-il la façon dont un CNN superpose ses caractéristiques ? |
+| **Protocole** | 3 CNN comparables, tous mesurés en sortie du même bloc (8 canaux) ; mêmes données (CIFAR-10, 4 classes, 20 000 images d'entraînement et 4 000 de test), même perte, même optimiseur, même nombre d'epochs |
+| **Classification** | Top-1 de 67,4 % (bottleneck standard) et 69,3 % (bottleneck inversé) ; 69,6 % de validation en fin d'entraînement pour la baseline. Les trois modèles apprennent la tâche à un niveau comparable, condition nécessaire pour comparer leurs représentations |
+| **Mesures** | Similarité cosinus entre canaux et rang effectif (SVD) des cartes de caractéristiques, extraites par hook PyTorch |
+| **Résultat** | Rang effectif **4,1/8** pour le bottleneck standard contre **7,7/8** pour le bottleneck inversé et 7,0/8 pour la baseline |
+| **Robustesse** | Le code ne fixe pas de graine : une ré-exécution complète dans un environnement neuf donne des valeurs proches et les mêmes tendances pour les trois architectures |
+| **Limite assumée** | Ces mesures montrent un chevauchement des représentations, mais ne prouvent pas à elles seules une superposition |
+
 ## Objectif
 
 Étudier si le design d'un bloc de convolution (standard vs. bottleneck vs. bottleneck inversé) influence l'organisation interne des caractéristiques apprises par un CNN, en particulier leur degré de redondance/chevauchement entre canaux. L'hypothèse sous-jacente, issue des travaux d'Elhage et coll. (2022) sur la superposition dans les réseaux de neurones, est qu'un réseau peut représenter plus de caractéristiques que sa dimensionnalité ne le permettrait normalement en les superposant dans des directions partagées de l'espace latent — ce qui peut être efficace, mais aussi source d'interférence entre caractéristiques.

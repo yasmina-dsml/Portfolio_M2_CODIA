@@ -10,6 +10,17 @@ individuelle** : l'exploration des données, le prétraitement, l'ingénierie de
 caractéristiques et un modèle de régression logistique multiclasse, développés et
 documentés indépendamment du reste du groupe.
 
+## En bref
+
+| | |
+|---|---|
+| **Tâche** | Classification multiclasse : 20 types de cultures à partir de séries d'images Sentinel-2 (10 dates × 3 canaux × 32 × 32 pixels) |
+| **Données** | 10 000 parcelles en entraînement, 2 500 en test ; classes très déséquilibrées (de 31 à 2 464 exemples par classe) |
+| **Méthode** | 130 variables construites à la main (statistiques par canal et par date, NDVI), puis pipeline standardisation → sélection de variables → régression logistique pondérée |
+| **Protocole** | Hyperparamètres choisis par `GridSearchCV` en validation croisée stratifiée à 5 folds, sur le F1 macro ; test évalué une seule fois à la fin |
+| **Résultat** | F1 macro **0,48** sur le test (0,61 en validation croisée), contre 0,05 pour une prédiction aléatoire et 0,02 pour la classe majoritaire |
+| **Lecture** | La baisse entre validation et test s'explique en partie par un changement de répartition des classes : la classe majoritaire passe de 25 % à 31 % des parcelles, et l'écart total de distribution entre les deux jeux atteint 19 % |
+
 ## Objectif
 
 Classifier le type de culture agricole d'une parcelle (20 classes : blé tendre d'hiver,

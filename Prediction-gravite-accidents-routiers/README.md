@@ -2,6 +2,18 @@
 
 Projet réalisé dans le cadre du M1 SDSC (Sciences de Données et apprentissage) à l'Université de Strasbourg, en groupe de trois. Il croise les données officielles des accidents corporels de la route (BAAC 2024) avec des données territoriales (équipements des communes, densité de population) pour étudier et prédire la gravité des accidents.
 
+## En bref
+
+| | |
+|---|---|
+| **Tâche** | Classification binaire : accident grave (au moins un tué ou hospitalisé) ou léger |
+| **Données** | 54 402 accidents corporels de 2024, issus de la fusion de 6 sources publiques ; 36 variables après sélection |
+| **Protocole** | Découpage stratifié 80/20 (43 521 accidents en entraînement, 10 881 en test, `random_state=42`) ; standardisation ajustée sur l'entraînement seul ; 6 modèles comparés sur le même test |
+| **Métrique principale** | F1 sur la classe « grave » (36 % des accidents) : l'enjeu est de repérer les accidents graves, pas de maximiser l'accuracy |
+| **Résultat** | Régression logistique pondérée : F1 grave **0,665** (précision 0,62, rappel 0,71), contre 0,53 pour la baseline « tout grave » et 0 pour « tout léger » (accuracy 63,9 %) |
+| **Stabilité** | Validation croisée à 5 folds sur l'entraînement : F1 grave 0,654 ± 0,005, cohérent avec le score sur test |
+| **Ma part** | Construction du jeu de données : fusion des 6 sources, jointures validées, nettoyage, sélection des variables |
+
 ## Objectif
 
 L'objectif est de répondre à la question suivante : peut-on prédire si un accident corporel de la route sera grave (au moins un blessé hospitalisé ou un décès), et comment cette probabilité varie-t-elle selon la densité de population et le niveau d'équipements de la commune où l'accident se produit ? Le projet construit d'abord un jeu de données unique à partir de plusieurs sources, puis compare plusieurs modèles de classification supervisée sur cette tâche.

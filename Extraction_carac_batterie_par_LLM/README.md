@@ -11,6 +11,18 @@ J’ai réalisé ce projet en M1 à l’Université de Strasbourg, avec Olivia A
 - Domaine : extraction d’informations, LLM, données structurées et validation.
 - Documents étudiés : quatre fiches techniques de batteries au format PDF.
 
+## En bref
+
+| | |
+|---|---|
+| **Tâche** | Extraire 20 champs techniques (avec unités) de fiches PDF de batteries et produire un JSON validé |
+| **Modèle** | Mistral Small 3.2 24B, via l'API OpenWebUI du serveur de l'Université de Strasbourg |
+| **Protocole** | Comparaison zero-shot et few-shot sur 4 fiches techniques, F1 calculé par rapport à des JSON de référence annotés à la main |
+| **Résultat** | F1 moyen **0,85 en zero-shot, 0,87 en few-shot** ; corpus trop petit pour généraliser |
+| **Contrôle qualité** | Règles de validation (valeurs hors plage physique, champs obligatoires manquants, valeurs suspectes) pour repérer les hallucinations |
+| **Code** | Package Python en 6 modules (`src/`), configuration YAML, clé API lue dans une variable d'environnement |
+| **Tests** | 24 tests `pytest` : ils passent en moins d'une seconde, sans réseau ni clé API ; couverture de 39 % sur l'ensemble du code, de 41 à 67 % sur les modules d'extraction et de validation |
+
 ## Objectif
 
 Notre objectif était de transformer les informations contenues dans des fiches techniques PDF en données JSON exploitables.
@@ -367,6 +379,17 @@ print(evaluation["comparison"])
 - Journaux : dossier défini par `paths.logs_dir`.
 
 Les exemples ci-dessus utilisent les méthodes du projet. Je n’ai pas revérifié l’exécution complète pour cette mise à jour du README.
+
+## Tests
+
+Les tests unitaires couvrent la structure des données (`BatteryData`), les règles de validation (tension invalide, champs manquants, valeurs suspectes), le nettoyage du texte des PDF, l'analyse des réponses du LLM (JSON valide ou non), la conversion d'unités et un pipeline complet simulé. Ils n'appellent jamais le serveur LLM.
+
+```bash
+pip install -r requirements.txt
+python -m pytest -q --cov=src
+```
+
+Résultat vérifié le 11/10/2026 dans un environnement neuf : **24 tests réussis**, couverture de 39 %. La partie graphe de connaissances (`src/knowledge_graph.py`, réalisée par mes coéquipières) est la moins couverte (9 %).
 
 ## Limites et améliorations possibles
 

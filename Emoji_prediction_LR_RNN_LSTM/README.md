@@ -4,6 +4,18 @@ Projet universitaire en M1 de traitement du langage naturel avec Python : compar
 
 Projet réalisé en groupe de trois pendant le M1. Ce dépôt met en avant la partie que j'ai menée : l'augmentation des données par back-traduction, les embeddings GloVe, l'implémentation et la comparaison des trois modèles, et les deux évaluations (validation croisée et test indépendant). Détail des contributions dans la section [Contributeurs](#contributeurs).
 
+## En bref
+
+| | |
+|---|---|
+| **Tâche** | Classification de phrases courtes en 5 classes (emojis) |
+| **Données** | 274 phrases d'entraînement (dont 59 issues de back-traduction), 56 phrases de test |
+| **Modèles** | Régression logistique (sac de mots), RNN simple et LSTM sur embeddings GloVe gelés |
+| **Protocole** | Validation croisée stratifiée à 5 folds, puis test sur un fichier séparé ; graines fixées, opérations TensorFlow déterministes |
+| **Résultat fiable** | Accuracy de 0,55 à 0,59 sur le test ; de 0,62 à 0,69 en validation croisée sans fuite (évaluation 4) |
+| **Point fort** | Fuite d'information localisée et mesurée : le découpage des folds séparait des phrases de leurs paraphrases, ce qui gonflait la validation croisée de la régression logistique de 9 points |
+| **Reproductibilité** | Les chiffres de ce README ont été reproduits à l'identique dans un environnement neuf ; `src/verification_fuite.py` rejoue l'évaluation 4 |
+
 ## Objectif
 
 L'objectif est de comparer trois modèles de complexité croissante — une régression logistique, un RNN simple et un LSTM — pour choisir, parmi 5 emojis, celui qui correspond le mieux au sens d'une phrase.
@@ -16,8 +28,8 @@ Les 5 classes correspondent, d'après le contenu des phrases du jeu de données,
 
 Le jeu de données est réparti sur plusieurs fichiers dans `data/` :
 
-- `train_emoji.csv` : 131 phrases annotées (répartition par classe : 22, 19, 38, 36, 17).
-- `train_emoji_enrichi.csv` : version enrichie manuellement à 214 phrases (44, 24, 57, 60, 30), sur-ensemble du fichier précédent.
+- `train_emoji.csv` : 132 phrases annotées (répartition par classe : 22, 19, 38, 36, 17).
+- `train_emoji_enrichi.csv` : version enrichie manuellement à 215 phrases (44, 24, 57, 60, 30), sur-ensemble du fichier précédent.
 - `test_emoji.csv` : 56 phrases (12, 5, 18, 15, 6), tenues à l'écart de l'entraînement et de l'augmentation, utilisées comme jeu de test indépendant.
 
 Les phrases sont tokenisées avec le `Tokenizer` de Keras puis converties en séquences d'entiers, complétées (`pad_sequences`, padding en début de séquence) à la longueur maximale du corpus.
@@ -112,7 +124,7 @@ Ce résultat s'explique surtout par la taille encore limitée du jeu de données
 
 ### Évaluation 3 — effet de la back-traduction
 
-Pour mesurer ce qu'apporte l'augmentation, `src/lstm.ipynb` a été ré-exécuté à l'identique (mêmes modèles, mêmes graines, mêmes folds), en changeant une seule ligne : le fichier d'entraînement `train_emoji_enrichi_aug.csv` (274 phrases, avec back-traduction) est remplacé par `train_emoji_enrichi.csv` (214 phrases, sans back-traduction). La ré-exécution avec augmentation redonne exactement les chiffres des évaluations 1 et 2, ce qui confirme que la comparaison porte uniquement sur les données.
+Pour mesurer ce qu'apporte l'augmentation, `src/lstm.ipynb` a été ré-exécuté à l'identique (mêmes modèles, mêmes graines, mêmes folds), en changeant une seule ligne : le fichier d'entraînement `train_emoji_enrichi_aug.csv` (274 phrases, avec back-traduction) est remplacé par `train_emoji_enrichi.csv` (215 phrases, sans back-traduction). La ré-exécution avec augmentation redonne exactement les chiffres des évaluations 1 et 2, ce qui confirme que la comparaison porte uniquement sur les données.
 
 | Modèle | Test sans back-trad. | Test avec back-trad. | Gain (test) | CV sans | CV avec |
 | --- | --- | --- | --- | --- | --- |
@@ -121,7 +133,29 @@ Pour mesurer ce qu'apporte l'augmentation, `src/lstm.ipynb` a été ré-exécut�
 | LSTM | 0,5536 (31/56) | 0,5893 (33/56) | **+3,6 pts** | 0,6326 | 0,6975 |
 
 - **Sur le test indépendant**, la back-traduction aide les deux modèles séquentiels (+4 phrases correctes pour le RNN, +2 pour le LSTM) et ne change rien pour la régression logistique. Ces gains restent petits en valeur absolue (une phrase vaut environ 1,8 point) et proviennent d'une seule exécution : ils indiquent une tendance, pas un effet établi.
-- **En validation croisée**, le gain apparent est bien plus grand (+6 à +11 points). L'écart entre validation croisée et test passe de 2 à 8 points sans augmentation à 6 à 14 points avec. Ce creusement est cohérent avec l'hypothèse de fuite d'information décrite dans les limites : une partie du gain mesuré en validation croisée vient de paraphrases trop proches des phrases de validation, pas d'une meilleure généralisation.
+- **En validation croisée**, le gain apparent est bien plus grand (+6 à +11 points). L'écart entre validation croisée et test passe de 2 à 8 points sans augmentation à 6 à 14 points avec. Ce creusement vient de la fuite d'information localisée dans l'évaluation 4 : une partie du gain mesuré en validation croisée vient de paraphrases trop proches des phrases de validation, pas d'une meilleure généralisation.
+
+### Évaluation 4 — où se situe la fuite d'information
+
+L'écart entre validation croisée et test pouvait venir de quatre endroits : le prétraitement, l'augmentation, le découpage des folds ou le jeu de test lui-même. Chacun a été vérifié avec le code des modèles du notebook, inchangé (script `src/verification_fuite.py`).
+
+**1. Découpage des folds : c'est là que se situe la fuite principale.** Le notebook applique la back-traduction avant la validation croisée, puis découpe les 274 phrases au hasard. Une phrase originale et sa paraphrase peuvent donc tomber l'une en entraînement et l'autre en validation. Le jeu contient aussi 5 doublons exacts. Au total, **106 phrases de validation sur 274 avaient un « jumeau » (source, paraphrase ou doublon) dans les données d'entraînement de leur fold.**
+
+Pour corriger, chaque paraphrase a été rattachée à sa phrase source, par un alignement qui suit l'ordre de génération du notebook d'augmentation et la similarité des phrases, puis la validation croisée a été refaite en gardant chaque groupe dans un seul fold (`StratifiedGroupKFold`, 5 folds) :
+
+| Modèle | CV du notebook | CV sans fuite | Écart |
+| --- | --- | --- | --- |
+| Régression logistique | 0,7337 | 0,6421 | **−9,2 pts** |
+| RNN simple | 0,6464 | 0,6171 | −2,9 pts |
+| LSTM | 0,6975 | **0,6861** | −1,1 pt |
+
+La fuite profitait surtout à la régression logistique : un modèle par sac de mots reconnaît facilement une paraphrase qui reprend les mêmes mots. Sans fuite, **le classement s'inverse : le LSTM devient le meilleur modèle en validation croisée**, et la conclusion initiale (« le modèle simple est le meilleur ») ne tient plus.
+
+**2. Jeu de test : contamination partielle.** 5 des 56 phrases de test figurent aussi, à l'identique, dans le jeu d'entraînement. Les trois modèles les classent toutes correctement. Sans ces 5 phrases, l'accuracy tombe à **0,549 (28/51) pour les trois modèles**, au lieu de 0,589. L'accuracy sur test présentée plus haut est donc légèrement optimiste.
+
+**3. Prétraitement : effet négligeable.** Le `Tokenizer` Keras est ajusté sur les 274 phrases avant la validation croisée, ce qui donne au modèle les mots des phrases de validation. Comme les embeddings GloVe sont pré-entraînés et gelés, cela ne transmet aucune information sur les étiquettes. Pour la régression logistique, le `CountVectorizer` est dans le pipeline et n'est ajusté que sur les données d'entraînement de chaque fold.
+
+**4. Ce qui reste.** Même sans fuite, la validation croisée reste au-dessus du test (de 0,62 à 0,69, contre 0,55 sur les phrases de test inédites). Le reste de l'écart vient probablement de la différence de style entre les phrases d'entraînement et celles du test, et de la petite taille du test (une phrase vaut environ 2 points).
 
 ## Exécuter le projet
 
@@ -129,6 +163,7 @@ Pour mesurer ce qu'apporte l'augmentation, `src/lstm.ipynb` a été ré-exécut�
 
 - `src/data_augmentation.ipynb` : génère `data/train_emoji_enrichi_aug.csv` par back-traduction (optionnel à ré-exécuter, le fichier de sortie est déjà fourni dans `data/`).
 - `src/lstm.ipynb` : charge les données augmentées, construit les embeddings GloVe et compare les trois modèles.
+- `src/verification_fuite.py` : rejoue l'évaluation 4 (validation croisée sans fuite et test sur phrases inédites). À lancer depuis `src/` avec `python verification_fuite.py`, après une première exécution de `lstm.ipynb` ou avec accès à Internet pour télécharger GloVe.
 
 ### Données nécessaires
 
@@ -160,15 +195,15 @@ Au premier lancement de `lstm.ipynb`, l'archive GloVe 50d est téléchargée aut
 ## Limites et améliorations possibles
 
 - **Jeu de données très petit** : 274 phrases d'entraînement même après enrichissement et augmentation, et seulement 56 phrases de test, ce qui limite la capacité des modèles à généraliser et rend les scores sensibles au découpage des folds comme au contenu exact du jeu de test.
-- **La hiérarchie observée en validation croisée ne se confirme pas sur données indépendantes** : en CV, la régression logistique devançait nettement le LSTM et le RNN (écarts de 7 à 9 points). Sur `test_emoji.csv`, les trois modèles retombent exactement au même niveau (0,5893), avec une perte de 8 à 18 points chacun par rapport à leur score CV. L'hypothèse la plus probable est une forme de fuite d'information en validation croisée : les phrases augmentées par back-traduction restent lexicalement très proches des phrases originales dont elles dérivent, et rien n'empêche qu'une phrase originale et sa paraphrase se retrouvent dans deux folds différents (l'un en entraînement, l'autre en validation), ce qui gonfle artificiellement le score de tous les modèles — et profite en particulier à la régression logistique, plus sensible à la simple répétition de mots-clés. Le test indépendant, qui ne partage pas ce lien avec les phrases d'entraînement, donne une mesure plus fiable de la généralisation réelle. L'évaluation 3 va dans ce sens : sans back-traduction, l'écart entre validation croisée et test est nettement plus faible (2 à 8 points contre 6 à 14). Cette observation ne prouve pas la fuite à elle seule, car la taille du jeu d'entraînement change aussi ; un découpage qui garde chaque phrase et ses paraphrases dans le même fold permettrait de trancher.
+- **La validation croisée du notebook est gonflée par une fuite d'information** : le découpage des folds sépare des phrases de leurs paraphrases et de leurs doublons (106 phrases de validation sur 274 concernées). La fuite est localisée et mesurée dans l'évaluation 4 : sans elle, la régression logistique perd 9 points et le LSTM devient le meilleur modèle. Le notebook garde volontairement le protocole d'origine, pour que ses chiffres restent comparables à ceux du rendu ; le protocole corrigé est dans `src/verification_fuite.py`.
 - **Le choix d'architecture semble donc moins déterminant que la quantité et la diversité des données** : sur test indépendant, aucun des trois modèles ne se distingue vraiment des deux autres, ce qui nuance la conclusion initiale ("un modèle simple généralise mieux avec peu de données") — elle est plutôt à lire comme "avec ce volume de données, aucune des trois architectures ne prend un avantage net face à des formulations nouvelles".
-- **Le test lui-même reste petit** (56 phrases, soit ~1,8 point d'accuracy par exemple) : l'égalité parfaite entre les trois scores est en partie due à cette granularité (les modèles font des erreurs différentes, mais en nombre égal) et ne doit pas être sur-interprétée comme une preuve d'équivalence stricte des modèles ; la baisse commune, elle, est un signal plus robuste car observée sur les trois architectures.
+- **Le test lui-même reste petit et partiellement contaminé** (56 phrases, soit ~1,8 point d'accuracy par exemple, dont 5 déjà présentes dans l'entraînement) : l'égalité parfaite entre les trois scores est en partie due à cette granularité (les modèles font des erreurs différentes, mais en nombre égal) et ne doit pas être sur-interprétée comme une preuve d'équivalence stricte des modèles ; la baisse commune, elle, est un signal plus robuste car observée sur les trois architectures.
 - **Filtrage manuel des back-traductions** : le tri des phrases générées incohérentes est subjectif et non automatisé.
 - **Embeddings gelés** : GloVe n'est pas ré-entraîné (fine-tuné), ce qui peut limiter l'adaptation au vocabulaire spécifique du jeu de données.
 - **Pas de recherche d'hyperparamètres** : une seule configuration testée (30 epochs, batch 16, 32 unités) pour le RNN et le LSTM.
 - **Classes encore déséquilibrées** malgré l'enrichissement manuel et l'augmentation.
 
-Des prolongements possibles seraient de séparer entraînement et validation en gardant chaque phrase originale et ses paraphrases augmentées du même côté (pour éviter la fuite suspectée en validation croisée), de collecter davantage de phrases de test indépendantes pour confirmer l'écart observé, d'essayer des embeddings plus grands ou fine-tunés, d'autres architectures (GRU, LSTM bidirectionnel, attention), et une recherche d'hyperparamètres.
+Des prolongements possibles seraient d'appliquer la back-traduction à l'intérieur de chaque fold d'entraînement seulement, de retirer du jeu d'entraînement les phrases déjà présentes dans le test, de collecter davantage de phrases de test indépendantes pour confirmer l'écart observé, d'essayer des embeddings plus grands ou fine-tunés, d'autres architectures (GRU, LSTM bidirectionnel, attention), et une recherche d'hyperparamètres.
 
 ## Contributeurs
 
