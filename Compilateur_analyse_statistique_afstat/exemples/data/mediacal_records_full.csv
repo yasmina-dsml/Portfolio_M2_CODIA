@@ -1,0 +1,31 @@
+id,name,age,city,weight,height,bmi
+1,Alice,45,Paris,78.5,1.75,25.6
+2,Bob,62,Lyon,85.2,1.62,32.4
+3,Carol,31,Marseille,72.8,1.80,22.5
+4,Dave,55,Toulouse,68.9,1.68,24.4
+5,Eve,70,Nice,90.1,1.70,31.2
+6,Frank,48,Strasbourg,75.6,1.65,27.8
+7,Grace,25,Bordeaux,65.4,1.78,20.6
+8,Heidi,68,Lille,80.7,1.64,29.9
+9,Ivan,50,Rennes,82.3,1.72,27.8
+10,Judy,39,Nantes,70.0,1.60,27.3
+11,Ken,58,Montpellier,87.5,1.76,28.2
+12,Leo,41,Grenoble,71.2,1.67,25.5
+13,Mia,66,Rouen,89.9,1.74,29.7
+14,Noah,33,Toulon,67.5,1.66,24.5
+15,Olive,75,Reims,95.0,1.71,32.5
+16,Pam,42,Le Havre,76.1,1.69,26.6
+17,Quinn,59,Amiens,88.3,1.77,28.2
+18,Ray,63,Metz,83.6,1.63,31.4
+19,Sara,49,Nancy,80.5,1.73,26.9
+20,Tom,54,Brest,74.0,1.61,28.6
+21,Una,37,Dijon,69.8,1.79,21.8
+22,Vic,61,Le Mans,86.4,1.65,31.7
+23,Will,52,Angers,81.0,1.70,28.0
+24,Xena,46,Nîmes,77.2,1.68,27.3
+25,Yuki,71,Aix,92.5,1.72,31.3
+26,Zoe,53,Saint-Étienne,79.9,1.66,29.0
+27,Adam,38,Limoges,70.5,1.81,21.5
+28,Beth,65,Tours,84.1,1.60,32.9
+29,Carl,57,Clermont-Ferrand,82.8,1.74,27.4
+30,Dina,44,Orléans,76.5,1.67,27.4

@@ -1,0 +1,6 @@
+// Lexical error: invalid character '@' in identifier.
+source patients@ "exemples/data/patients_medinfo.csv";
+
+schema s { x integer; }
+associate s with patients;
+analyze s { mean x; }

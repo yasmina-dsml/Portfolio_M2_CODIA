@@ -1,0 +1,35 @@
+// Objectif : Le test ultime. Combine plusieurs jointures, filtres successifs et calculs complexes
+source p_data "patients2.csv";
+source v_data "visits.csv";
+
+schema p_sch { id integer; age integer; city string; }
+schema v_sch { p_id integer; pulse integer; temp float; }
+
+associate p_sch with p_data;
+associate v_sch with v_data;
+
+join main_join = p_data.id inner join v_data.p_id;
+
+// Filtre 1
+filter seniors = main_join where p_sch.age > 65;
+
+// Filtre 2 sur le résultat du filtre 1
+filter sick_seniors = seniors where v_sch.temp > 38.5;
+
+// Calcul
+compute heart_stress = v_sch.pulse * 1.2;
+
+analyze sick_seniors {
+    mean heart_stress;
+    histogram city;
+    summary temp;
+}
+
+// Mean heart_stress: 102.00
+// --- Histogram for city ---
+// Paris: 2
+// --- Summary for temp ---
+// Min: 38.80
+// Max: 39.00
+// Mean: 38.90
+// Std Dev: 0.14

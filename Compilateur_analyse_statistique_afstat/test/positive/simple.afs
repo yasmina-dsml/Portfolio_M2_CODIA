@@ -1,0 +1,14 @@
+// Simple analysis: source + schema + associate + analyze (mean + histogram).
+source patients "exemples/data/patients_medinfo.csv";
+
+schema patient_data {
+    id integer;
+    age integer;
+    gender string;
+}
+associate patient_data with patients;
+
+analyze patient_data {
+    mean age;
+    histogram gender;
+}

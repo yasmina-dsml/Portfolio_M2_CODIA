@@ -1,0 +1,178 @@
+name: okey
+networks:
+  okey:
+    name: okey
+    # enable_ipv6: true
+    attachable: true
+    driver: bridge
+    driver_opts:
+      name: okey
+services:
+  okey-api:
+    image: registry.app.unistra.fr/okaybytes/okey/okeyapi:${TARGET:-dev}
+    build:
+      context: ../
+      dockerfile: docker/OkeyApi.Dockerfile
+      tags:
+        - registry.app.unistra.fr/okaybytes/okey/okeyapi
+    restart: always
+    container_name: okey-api
+    networks:
+      - okey
+    depends_on:
+      - db
+      - db-init
+    expose: # ça ne sert strictement à rien, aucun effet
+      - 3031
+    profiles:
+      - core
+      - extra
+  okey-server:
+    image: registry.app.unistra.fr/okaybytes/okey/okeyserver:${TARGET:-dev}
+    build:
+      context: ../
+      dockerfile: docker/OkeyServer.Dockerfile
+      tags:
+        - registry.app.unistra.fr/okaybytes/okey/okeyserver
+    restart: always
+    container_name: okey-server
+    networks:
+      - okey
+    depends_on:
+      - okey-api
+    expose: # ça ne sert strictement à rien, aucun effet
+      - 3030
+    profiles:
+      - core
+      - extra
+  db-init:
+    image: registry.app.unistra.fr/okaybytes/okey/db-init:${TARGET:-dev}
+    build:
+      context: ../
+      dockerfile: docker/DB-Init.Dockerfile
+      tags:
+        - registry.app.unistra.fr/okaybytes/okey/db-init
+    restart: on-failure
+    container_name: db-init
+    networks:
+      - okey
+    depends_on:
+      - db
+    profiles:
+      - core
+      - extra
+  okey-website:
+    image: registry.app.unistra.fr/okaybytes/okey/okeywebsite:${TARGET:-dev}
+    build:
+      context: ../
+      dockerfile: docker/OkeyWebsite.Dockerfile
+      tags:
+        - registry.app.unistra.fr/okaybytes/okey/okeywebsite
+    restart: always
+    container_name: okey-website
+    networks:
+      - okey
+    expose: # ça ne sert strictement à rien, aucun effet
+      - 3000
+    profiles:
+      - core
+      - extra
+  db:
+    image: mysql:8.0.36
+    restart: always
+    container_name: mysql
+    volumes:
+      - ${PERSIST_PATH:-./}docker_data/data/mysql/mysql_data:/var/lib/mysql
+      - ${PERSIST_PATH:-./}docker_data/config/mysql/mysql_config:/etc/mysql/conf.d:ro
+      - ${PERSIST_PATH:-./}docker_data/config/mysql/mysql_init:/docker-entrypoint-initdb.d:ro
+      - ${PERSIST_PATH:-./}docker_data/config/mysql/init.sql:/init.sql:ro
+    networks:
+      - okey
+    expose: # ça ne sert strictement à rien, aucun effet
+      - 8889 # port mapping doesn't work don't touch
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 8889
+      MYSQL_READONLY_PASS: "${MYSQL_READONLY_PASS}"
+      MYSQL_ADMIN_PASS: "${MYSQL_ADMIN_PASS}"
+    profiles:
+      - core
+      - extra
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    restart: always
+    container_name: phpmyadmin
+    volumes:
+      - ${PERSIST_PATH:-./}docker_data/config/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
+    networks:
+      - okey
+    depends_on:
+      - db
+    expose: # ça ne sert strictement à rien, aucun effet
+      - 80
+    environment:
+      PMA_ABSOLUTE_URI: "${CI_ENVIRONMENT_URL:-http://localhost}/phpmyadmin/"
+      PMA_HOST: db
+      PMA_PORT: 8889
+      PMA_CONTROLPORT: 8889
+      PMA_PMADB: phpmyadmin
+      PMA_CONTROLUSER: phpmyadmin
+      PMA_CONTROLPASS: phpmyadmin
+    profiles:
+      - extra
+  portainer:
+    image: portainer/portainer-ce:2.20.2
+    restart: always
+    container_name: portainer
+    volumes:
+      - ${PERSIST_PATH:-./}docker_data/data/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - okey
+    expose: # ça ne sert strictement à rien, aucun effet
+      - 9000
+    profiles:
+      - extra
+    command: "--base-url=/portainer --http-enabled --admin-password=${PORTAINER_PASS}"
+  nginx-core:
+    image: nginx:1.26.0
+    restart: always
+    container_name: nginx-core
+    volumes:
+      - ${PERSIST_PATH:-./}docker_data/config/nginx/nginx-core.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - okey
+    depends_on:
+      - db
+      - okey-api
+      - okey-server
+      - db-init
+      - okey-website
+    ports:
+      - '80:80' # Public HTTP Port
+      - '10000:10000' # OkeyServer port
+      - '10008:10008' # OkeyServer port
+    profiles:
+      - core
+  nginx-extra:
+    image: nginx:1.26.0
+    restart: always
+    container_name: nginx-extra
+    volumes:
+      - ${PERSIST_PATH:-./}docker_data/config/nginx/nginx-extra.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - okey
+    depends_on:
+      - db
+      - okey-api
+      - okey-server
+      - db-init
+      - okey-website
+      - phpmyadmin
+      - portainer
+    ports:
+      - '80:80' # Public HTTP Port
+      - '10000:10000' # OkeyServer port
+      - '10008:10008' # OkeyServer port
+    profiles:
+      - extra

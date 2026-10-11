@@ -1,0 +1,23 @@
+{
+  "model": "9059156",
+  "manufacturer": "unknown",
+  "chemistry": "Polymer lithium-ion battery",
+  "voltage": 3.7,
+  "voltage_unit": "V",
+  "capacity": 11500.0,
+  "capacity_unit": "mAh",
+  "charge_current": 1000.0,
+  "charge_current_unit": "mA",
+  "discharge_current": 1000.0,
+  "discharge_current_unit": "mA",
+  "internal_resistance": 15.0,
+  "internal_resistance_unit": "mΩ",
+  "temperature_range": "-20°C to 60°C",
+  "dimensions": "9.2×59.0×157.0 mm³ (±0.5 mm)",
+  "weight": 196.0,
+  "weight_unit": "g",
+  "cycle_life": 300,
+  "charge_cutoff_voltage": 4.2,
+  "discharge_cutoff_voltage": 2.75,
+  "confidence_score": 1.0
+}

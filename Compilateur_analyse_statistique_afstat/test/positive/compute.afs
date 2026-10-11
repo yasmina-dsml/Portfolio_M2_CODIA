@@ -1,0 +1,17 @@
+// Compute BMI and summarize it.
+source visits "exemples/data/visits_info.csv";
+
+schema health_data {
+    visit_id integer;
+    patient_id integer;
+    visit_date string;
+    weight float;
+    height float;
+}
+associate health_data with visits;
+
+compute bmi = weight / (height * height);
+
+analyze health_data {
+    summary bmi;
+}

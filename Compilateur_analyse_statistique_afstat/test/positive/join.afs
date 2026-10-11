@@ -1,0 +1,24 @@
+// Join patients and records, then summarize cholesterol.
+source patients "exemples/data/patients_medinfo.csv";
+source records "exemples/data/records.csv";
+
+schema patients_schema {
+    id integer;
+    age integer;
+    gender string;
+}
+associate patients_schema with patients;
+
+schema records_schema {
+    record_id integer;
+    patient_id integer;
+    cholesterol float;
+    blood_pressure float;
+}
+associate records_schema with records;
+
+join patient_cholesterol = patients.id inner join records.patient_id;
+
+analyze patient_cholesterol {
+    summary cholesterol;
+}

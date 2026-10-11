@@ -1,0 +1,46 @@
+### YamlMime:ManagedReference
+items:
+- uid: OkeyApi.Interfaces
+  commentId: N:OkeyApi.Interfaces
+  id: OkeyApi.Interfaces
+  children:
+  - OkeyApi.Interfaces.ITokenService
+  langs:
+  - csharp
+  - vb
+  name: OkeyApi.Interfaces
+  nameWithType: OkeyApi.Interfaces
+  fullName: OkeyApi.Interfaces
+  type: Namespace
+  assemblies:
+  - OkeyApi
+references:
+- uid: OkeyApi.Interfaces.ITokenService
+  commentId: T:OkeyApi.Interfaces.ITokenService
+  parent: OkeyApi.Interfaces
+  href: OkeyApi.Interfaces.ITokenService.html
+  name: ITokenService
+  nameWithType: ITokenService
+  fullName: OkeyApi.Interfaces.ITokenService
+- uid: OkeyApi.Interfaces
+  commentId: N:OkeyApi.Interfaces
+  href: OkeyApi.html
+  name: OkeyApi.Interfaces
+  nameWithType: OkeyApi.Interfaces
+  fullName: OkeyApi.Interfaces
+  spec.csharp:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Interfaces
+    name: Interfaces
+    href: OkeyApi.Interfaces.html
+  spec.vb:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Interfaces
+    name: Interfaces
+    href: OkeyApi.Interfaces.html

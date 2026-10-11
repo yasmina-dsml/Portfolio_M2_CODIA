@@ -1,0 +1,32 @@
+{
+  "model": "16340",
+  "manufacturer": "DNK Power o., Ltd.",
+  "chemistry": "Lithium-ion battery cell",
+
+  "voltage": 3.2,
+  "voltage_unit": "V",
+
+  "capacity": 500,
+  "capacity_unit": "mAh",
+
+  "charge_current": 100,
+  "charge_current_unit": "mA",
+
+  "discharge_current": 1.0,
+  "discharge_current_unit": "A",
+
+  "internal_resistance": 100,
+  "internal_resistance_unit": "mΩ",
+
+  "temperature_range": "unknown",
+
+  "dimensions": "Diameter 16.3 mm (+0.2/-0.1 mm); height 34.0 mm (±0.2 mm)",
+
+  "weight": 17,
+  "weight_unit": "g",
+
+  "cycle_life": 1500,
+
+  "charge_cutoff_voltage": 3.65,
+  "discharge_cutoff_voltage": 2.0
+}

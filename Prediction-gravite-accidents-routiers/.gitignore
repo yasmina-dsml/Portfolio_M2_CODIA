@@ -1,0 +1,26 @@
+# Environnement virtuel Python (514 Mo) : dossier technique généré par
+# `python -m venv`, propre à cette machine (son script pip pointait même vers
+# un chemin absolu qui n'existe plus). Jamais versionné, recréé via
+# requirements.txt.
+sda_projet_venv/
+
+# Caches Python et Jupyter générés automatiquement à l'exécution.
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Fichier brut BPE-2024.csv (1,3 Go) : dépasse largement la limite stricte
+# de GitHub (100 Mio par fichier). Téléchargeable depuis l'INSEE
+# (voir lien dans le README / le rapport).
+data/BPE-2024.csv
+
+# Fichiers intermédiaires du pipeline (data/intermediate/), régénérables en
+# ré-exécutant les cellules 1 à 6 du notebook : on ne garde que le jeu de
+# données final prêt pour le Machine Learning (step08_accidents_clean.csv,
+# ~15 Mo) pour permettre de reproduire directement la partie modélisation
+# sans re-télécharger le BPE ni relancer tout le pipeline de jointures.
+data/intermediate/*
+!data/intermediate/step08_accidents_clean.csv
+
+# Fichiers système
+.DS_Store

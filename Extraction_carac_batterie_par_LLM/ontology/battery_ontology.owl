@@ -1,0 +1,530 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://example.com/battery#"
+     xml:base="http://example.com/battery"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:spec="http://example.com/specs#"
+     xmlns:battery="http://example.com/battery#">
+    <owl:Ontology rdf:about="http://example.com/battery"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.com/specs#maxValue -->
+
+    <owl:AnnotationProperty rdf:about="http://example.com/specs#maxValue"/>
+    
+
+
+    <!-- http://example.com/specs#minValue -->
+
+    <owl:AnnotationProperty rdf:about="http://example.com/specs#minValue"/>
+    
+
+
+    <!-- http://example.com/specs#unit -->
+
+    <owl:AnnotationProperty rdf:about="http://example.com/specs#unit"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.com/battery#sameChemistry -->
+
+    <owl:ObjectProperty rdf:about="http://example.com/battery#sameChemistry">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:label xml:lang="fr">même chimie</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.com/battery#similarCapacityRange -->
+
+    <owl:ObjectProperty rdf:about="http://example.com/battery#similarCapacityRange">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:label xml:lang="fr">capacité similaire</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.com/battery#similarVoltage -->
+
+    <owl:ObjectProperty rdf:about="http://example.com/battery#similarVoltage">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:label xml:lang="fr">voltage similaire</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.com/specs#capacityUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#capacityUnit">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="fr">unité de capacité</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#chargeCurrentUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#chargeCurrentUnit">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="fr">unité courant de charge</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#chargeCutoffVoltage -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#chargeCutoffVoltage">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <spec:unit rdf:resource="http://example.com/specs#Volt"/>
+        <rdfs:label xml:lang="fr">tension de fin de charge</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#chargeFlowRate -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#chargeFlowRate">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#chemistry -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#chemistry">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#cycleLife -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#cycleLife">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <spec:maxValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10000</spec:maxValue>
+        <spec:minValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</spec:minValue>
+        <rdfs:label xml:lang="fr">durée de vie (cycles)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#dischargeCurrent -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#dischargeCurrent">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:label xml:lang="fr">courant de décharge</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#dischargeCurrentUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#dischargeCurrentUnit">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="fr">unité courant de décharge</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#dischargeCutoffVoltage -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#dischargeCutoffVoltage">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <spec:unit rdf:resource="http://example.com/specs#Volt"/>
+        <rdfs:label xml:lang="fr">tension de fin de décharge</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#extractionConfidence -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#extractionConfidence">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <spec:maxValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</spec:maxValue>
+        <spec:minValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</spec:minValue>
+        <rdfs:comment xml:lang="fr">Score de confiance LLM entre 0 et 1.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#hasCapacity -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#hasCapacity">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <spec:maxValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1000000.0</spec:maxValue>
+        <spec:minValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</spec:minValue>
+        <rdfs:label xml:lang="fr">capacité</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#hasVoltage -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#hasVoltage">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <spec:maxValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">12.0</spec:maxValue>
+        <spec:minValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.5</spec:minValue>
+        <spec:unit rdf:resource="http://example.com/specs#Volt"/>
+        <rdfs:label xml:lang="fr">tension nominale</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#internalResistance -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#internalResistance">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <spec:maxValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1000.0</spec:maxValue>
+        <spec:minValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.1</spec:minValue>
+        <spec:unit rdf:resource="http://example.com/specs#Milliohm"/>
+        <rdfs:label xml:lang="fr">résistance interne</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#internalResistanceUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#internalResistanceUnit">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#manufacturer -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#manufacturer">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#maxOperatingTemperature -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#maxOperatingTemperature">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <spec:maxValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</spec:maxValue>
+        <rdfs:label xml:lang="fr">température maximale</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#minOperatingTemperature -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#minOperatingTemperature">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <spec:minValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">-60.0</spec:minValue>
+        <rdfs:label xml:lang="fr">température minimale</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#physicalDimensions -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#physicalDimensions">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#temperatureRange -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#temperatureRange">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#voltageUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#voltageUnit">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#weight -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#weight">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.com/specs#weightUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://example.com/specs#weightUnit">
+        <rdfs:domain rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.com/battery#Battery -->
+
+    <owl:Class rdf:about="http://example.com/battery#Battery">
+        <rdfs:comment xml:lang="fr">Batterie électrochimique rechargeable avec ses spécifications techniques.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Batterie</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://example.com/battery#LiFePO4Battery -->
+
+    <owl:Class rdf:about="http://example.com/battery#LiFePO4Battery">
+        <rdfs:subClassOf rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://example.com/specs#hasVoltage"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="fr">Batterie LiFePO4</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://example.com/battery#LiPolymerBattery -->
+
+    <owl:Class rdf:about="http://example.com/battery#LiPolymerBattery">
+        <rdfs:subClassOf rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://example.com/specs#hasVoltage"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="fr">Batterie Li-Po</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://example.com/battery#LithiumIonBattery -->
+
+    <owl:Class rdf:about="http://example.com/battery#LithiumIonBattery">
+        <rdfs:subClassOf rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://example.com/specs#hasVoltage"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="fr">Batterie Li-ion</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://example.com/battery#NiMHBattery -->
+
+    <owl:Class rdf:about="http://example.com/battery#NiMHBattery">
+        <rdfs:subClassOf rdf:resource="http://example.com/battery#Battery"/>
+        <rdfs:label xml:lang="fr">Batterie NiMH</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://example.com/specs#Specification -->
+
+    <owl:Class rdf:about="http://example.com/specs#Specification">
+        <rdfs:comment xml:lang="fr">Spécification technique d&apos;une batterie (valeur + unité)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://example.com/specs#Unit -->
+
+    <owl:Class rdf:about="http://example.com/specs#Unit">
+        <rdfs:label xml:lang="fr">Unité de mesure</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.com/specs#Ampere -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Ampere">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Ampère — unité de courant électrique</rdfs:comment>
+        <rdfs:label>A</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Ampere_hour -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Ampere_hour">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Ampère-heure — unité de capacité</rdfs:comment>
+        <rdfs:label>Ah</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Celsius -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Celsius">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Degré Celsius — unité de température</rdfs:comment>
+        <rdfs:label>°C</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Gram -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Gram">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Gramme — unité de masse</rdfs:comment>
+        <rdfs:label>g</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Kilogram -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Kilogram">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Kilogramme — unité de masse</rdfs:comment>
+        <rdfs:label>kg</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Milliampere -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Milliampere">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Milliampère — unité de courant électrique</rdfs:comment>
+        <rdfs:label>mA</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Milliampere_hour -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Milliampere_hour">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Milliampère-heure — unité de capacité</rdfs:comment>
+        <rdfs:label>mAh</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Milliohm -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Milliohm">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Milliohm — unité de résistance interne</rdfs:comment>
+        <rdfs:label>mΩ</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Ohm -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Ohm">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Ohm — unité de résistance électrique</rdfs:comment>
+        <rdfs:label>Ω</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.com/specs#Volt -->
+
+    <owl:NamedIndividual rdf:about="http://example.com/specs#Volt">
+        <rdf:type rdf:resource="http://example.com/specs#Unit"/>
+        <rdfs:comment xml:lang="fr">Volt — unité de tension électrique</rdfs:comment>
+        <rdfs:label>V</rdfs:label>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

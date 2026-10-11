@@ -1,0 +1,23 @@
+{
+  "model": "FFH3DS",
+  "manufacturer": "CATL",
+  "chemistry": "Lithium iron phosphate",
+  "voltage": 3.2,
+  "voltage_unit": "V",
+  "capacity": 86.0,
+  "capacity_unit": "Ah",
+  "charge_current": 43.0,
+  "charge_current_unit": "A",
+  "discharge_current": 43.0,
+  "discharge_current_unit": "A",
+  "internal_resistance": 0.32,
+  "internal_resistance_unit": "mΩ",
+  "temperature_range": "-20°C to 60°C",
+  "dimensions": "Width: 173±0.5mm; Height: 131±0.5mm; Thickness: 47.5±0.5mm",
+  "weight": 2.25,
+  "weight_unit": "kg",
+  "cycle_life": 3500,
+  "charge_cutoff_voltage": 3.65,
+  "discharge_cutoff_voltage": 2.5,
+  "confidence_score": 0.9
+}

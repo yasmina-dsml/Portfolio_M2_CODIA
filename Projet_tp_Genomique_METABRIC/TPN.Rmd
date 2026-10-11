@@ -1,0 +1,285 @@
+---
+title: "TP noté : Jeu de données METABRIC"
+author: "FARID Yasmina"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,       
+  warning = FALSE,  
+  message = FALSE    
+)
+```
+
+# Préparation et import des données
+
+
+```{r importation, echo=TRUE}
+
+#le code fourni par le prof
+#------------------------------------------------
+#installer le package si c'est pas encore fait
+#install.packages("tidyverse")
+#charger la lib
+library(tidyverse)
+
+
+metabric.data <- read.csv2('./data/METABRIC_RNA_Mutation.csv',
+                           header=TRUE,
+                           sep=",",
+                           row.names='patient_id')
+
+# supprimer les données de mutation que nous n'allons pas utiliser
+genes.data <- metabric.data[,1:519]
+
+# Conversion des colonnes au bon type
+genes.data <- type_convert(genes.data)
+
+# Première diminution de dimension par sélection des 100 gènes
+# les plus corrélés au score de gravité de Nottingham
+corre <- c()
+for (i in c(1:489)) {
+  # ici, la 21ème colonne est l'indice de Nottingham
+  # on calcule la corrélation au carré avec chacune des colonnes de gènes
+  corre <- c(corre, cor(genes.data[,21], genes.data[, i+30], use="pairwise.complete.obs")^2)
+}
+selected <- order(corre, decreasing = TRUE)[1:100]
+genes.data <- genes.data[, c(1:30, 30 + selected)]
+#-----------------------------------------
+
+# Supression des valeurs manquantes (NA)
+genes.data <- na.omit(genes.data)
+
+# Vérifions les dimensions finales
+dim(genes.data)
+```
+
+- Les 30 premières colonnes sont des variables médicales.  
+- Les 100 colonnes suivantes sont les expressions géniques retenues.  
+
+Dans ces variables médicales, on nous indique que les variables **1, 19, 20, 21, 23 et 28** sont quantitatives, 
+Les autres colonnes (2, 3, 4, ..., 18, 22, 24, 25, 26, 27, 29, 30) sont considérées qualitatives.
+
+---
+
+# 1 Analyse en Composantes Principales (ACP)
+
+Nous allons réaliser une ACP **normée** (centrée-réduite) sur les **100 gènes** (variables actives).  
+Les variables médicales (les colonnes 1 à 30) serviront en tant que **variables supplémentaires**.
+
+## Mise en forme des données pour l’ACP
+
+```{r prep-acp, echo=TRUE}
+#installer les packages si c'est pas encore fait
+# install.packages("FactoMineR")
+# install.packages("factoextra")
+#charger les libs
+library(FactoMineR)
+library(factoextra)
+
+# Séparons les données :
+#   - Les 100 gènes (colonnes 31 à 130) en variables actives
+#   - Les 30 premières colonnes (médicales) en variables supplémentaires
+
+genes_only <- genes.data[, 31:ncol(genes.data)]  # 100 gènes
+med_vars    <- genes.data[, 1:30]               # Variables médicales
+
+# Vérifions le type de chacune des variables médicales
+# pour les passer dans FactoMineR en tant que variables supplémentaires
+# Indiquez explicitement dans un vecteur quels sont les quantitatifs vs qualitatifs
+which_quant <- c(1, 19, 20, 21, 23, 28)  # index quantitatifs dans les 30 premières colonnes
+quant_vars  <- colnames(med_vars)[which_quant]
+qual_vars   <- setdiff(colnames(med_vars), quant_vars)
+```
+
+## Réalisation de l’ACP normée
+
+```{r acp, echo=TRUE}
+# L'ACP avec FactoMineR : 
+# scale.unit = TRUE -> on centre-réduit
+# ncp = 30     -> on calcule jusqu'à 30 composantes par exemple
+res.pca <- PCA(
+  X = genes_only,
+  scale.unit = TRUE,
+  ncp = 30,
+  graph = FALSE,
+  quanti.sup = which(colnames(med_vars) %in% quant_vars),
+  quali.sup  = which(colnames(med_vars) %in% qual_vars)
+)
+
+# Pour inclure les variables supplémentaires, FactoMineR attend des colonnes
+# successives ; on peut aussi réaliser un PCA sur le data.frame complet et
+# préciser les colonnes actives vs. supplémen.
+# Ci-dessus, on a fait un "PCA" sur 'genes_only', puis on pourrait
+# ajouter les variables sup à l’objet PCA. 
+#
+# => Option alternative: faire un nouveau data.frame
+#    NB: FactoMineR propose la syntaxe: PCA(X, ind.sup=..., quanti.sup=..., ...)
+#    si on veut déclarer directement les colonnes sup.  
+#
+# Mais pour rester simple, continuons. On illustre ici un usage direct ci-dessous:
+
+# On peut ajouter un "supplément" via la fonction `PCA` sur un data.frame complet,
+#   en spécifiant en paramètre 'sup.var' (ou quanti.sup / quali.sup).
+#
+# => Méthode alternative (tous en un):
+#    df_acp <- cbind(genes_only, med_vars)
+#    # on veut activer seulement 100 gènes => 1:100
+#    # on veut quanti.sup => 101 + indices
+#    # on veut quali.sup => etc.
+#    # A titre d'exemple, on le montre plus bas si besoin.
+```
+
+### Choix du nombre de composantes à garder
+
+Pour justifier le nombre de composantes, on observe généralement l’éboulis des valeurs propres :
+
+```{r scree-plot, echo=TRUE, fig.width=7, fig.height=5}
+fviz_eig(res.pca, addlabels = TRUE, ylim = c(0, 50))
+```
+
+On choisit souvent de garder les composantes jusqu’à atteindre ~70–80% d’inertie cumulée ou selon le critère du coude (breakpoint) dans l’éboulis.
+
+---
+
+# K-means sur les composantes principales
+
+Nous allons appliquer l’algorithme des k-means **après** projection sur les composantes de l’ACP.  
+Pour cela, on regarde comment varie la somme des carrés intra-classes en fonction du nombre de composantes utilisées puis on utilise un critère du « coude » pour choisir le nombre de composantes.  
+Ensuite, on choisit un nombre de **classes** (k) en observant le second coude : la **somme des carrés intra-classes** (WSS) en fonction de k.
+
+## Choix du nombre de composantes
+
+Pour chaque `nb_comp` de 1 à 30, nous allons :
+
+1. Récupérer les coordonnées des individus sur les `nb_comp` premières dimensions de l’ACP.
+2. Appliquer K-means avec un certain nombre de clusters (nous ferons varier ce nombre de clusters juste après).
+3. Regarder la somme des carrés intra-classes.
+
+> **NB** : Souvent, pour choisir le nombre de composantes, on se base plutôt sur l’éboulis.  
+> Dans la suite, pour l’illustration, on fixe par exemple `nb_comp = 10` (ou autre) d’après l’éboulis.  
+> Puis on fait varier `k` (le nombre de classes).
+
+Ici, montrons plutôt la variation de WSS en faisant varier **k**.
+
+## Choix du nombre de clusters (k) via la méthode du coude
+
+```{r kmeans-elbow, echo=TRUE}
+# Supposons que nous ayons décidé de garder ncp = 10 composantes
+# d'après la visualisation de l'éboulis des valeurs propres.
+chosen_ncp <- 10
+
+# Coordonnées des individus sur les n premières composantes
+ind_coords <- res.pca$ind$coord[, 1:chosen_ncp]
+
+wss <- c()
+Kmax <- 10  # on peut essayer jusqu'à 10 classes par exemple
+for(k in 1:Kmax) {
+  km <- kmeans(ind_coords, centers = k, nstart = 10)
+  wss[k] <- km$tot.withinss
+}
+
+plot(1:Kmax, wss, type="b", pch=19, frame=FALSE,
+     xlab="Nombre de clusters k",
+     ylab="Somme des carrés intra-classes (WSS)",
+     main="Méthode du coude pour déterminer k")
+abline(v = 1:Kmax, lty=2, col="grey")
+```
+
+On recherche un « coude » dans la courbe ci-dessus pour décider du nombre de clusters.  
+Supposons que l’on trouve un coude autour de `k = 3` ou `k = 4`, par exemple.
+
+## Application du K-means final
+
+```{r kmeans-final, echo=TRUE}
+# Choix final : mettons par exemple k = 3
+k_final <- 3
+km_final <- kmeans(ind_coords, centers = k_final, nstart = 10)
+
+# Ajout de cette classification dans nos données :
+clusters <- as.factor(km_final$cluster)
+
+# Visualisation sur le plan principal (Dim 1 & 2)
+fviz_cluster(km_final, data = ind_coords,
+             geom = "point",
+             ellipse.type = "norm",
+             main = "Classification K-means (k=3) sur les deux premières composantes")
+```
+
+> **Observation** : On peut constater si les clusters sont bien séparés ou non sur les 2 premières composantes. Il se peut qu’ils se distinguent plus clairement sur d’autres dimensions.
+
+---
+
+# Interprétation des résultats
+
+## 4. Tests du chi-deux pour les variables médicales qualitatives
+
+Nous allons maintenant évaluer, pour chaque **variable médicale qualitative**, si la distribution des classes K-means est indépendante ou non de la variable en question.  
+Pour cela, on construit une table de contingence entre la variable et le **cluster** issu du K-means, puis on applique un test du **chi-deux** d’indépendance.
+
+```{r chi-square, echo=TRUE, results='hide'}
+# Rappel : 'qual_vars' contient le nom des variables qualitatives
+# On stocke les p-values des tests pour voir celles qui sont plus (ou moins) significatives
+
+pvals_chi2 <- c()
+for(v in qual_vars) {
+  # Construction de la table de contingence
+  t <- table(med_vars[,v], clusters)
+  
+  # Test du chi-2
+  chi_res <- chisq.test(t)
+  
+  pvals_chi2[v] <- chi_res$p.value
+}
+
+# On peut regarder les 3 plus petites p-values
+sort(pvals_chi2)[1:3]
+```
+
+Les variables qualitatives qui ont les plus petites p-values sont potentiellement « les plus liées » (i.e. les plus éloignées de l’indépendance) avec la classification.  
+Pour interpréter, on peut afficher la table de contingence :
+
+```{r contingence-exemple, echo=TRUE}
+# Disons qu'on affiche la table de la variable qualitative la plus significative
+best_var <- names(sort(pvals_chi2))[1]
+cat("Variable qualitative la plus significative:", best_var, "\n")
+table(med_vars[,best_var], clusters)
+```
+
+**Commentaire** : En regardant la distribution des patientes dans chaque classe pour cette variable, on peut avoir une première interprétation de la classification. Par exemple, si c’est la variable `er_status` qui est la plus discriminante, peut-être que certains clusters regroupent plutôt les patientes positives, etc.
+
+---
+
+# 5. Prédiction de l’indice de Nottingham
+
+Enfin, nous mettons en place une **prédiction** de l’indice de Nottingham (variable quantitative, colonne 21) à l’aide d’un **modèle linéaire**.  
+Nous pouvons, par exemple :
+
+1. Sélectionner quelques gènes les plus discriminants (ou bien toutes les composantes de l’ACP).
+2. Construire un modèle linéaire (ex: `lm()`).
+3. Évaluer ses performances (coefficient de détermination \( R^2 \), RMSE, etc.).
+
+## Exemple : Modèle linéaire sur les 10 premières composantes de l’ACP
+
+```{r regression, echo=TRUE}
+# On récupère l'indice de Nottingham
+nottingham <- genes.data$nottingham_prognostic_index
+
+# On garde 10 composantes de l'ACP comme variables explicatives
+X_lm <- as.data.frame(ind_coords)  # c'est déjà la projection sur 10 axes
+colnames(X_lm) <- paste0("Dim", 1:ncol(X_lm))
+
+# Modèle linéaire
+model_lm <- lm(nottingham ~ ., data = X_lm)
+
+summary(model_lm)
+```
+
+> **Interprétation** : Le `summary(model_lm)` nous donne les coefficients estimés, la p-value globale du modèle et le \( R^2 \). Si le \( R^2 \) est relativement élevé (proche de 1), cela indique que les 10 composantes résument bien la variabilité liée à l’indice de Nottingham. Sinon, on pourrait tester davantage de composantes ou d’autres types de modèles (régression pénalisée, random forest, etc.).
+
+---

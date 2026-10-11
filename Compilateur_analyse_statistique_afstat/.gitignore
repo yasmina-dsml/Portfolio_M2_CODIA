@@ -1,0 +1,15 @@
+# Binaires compilés (régénérés par `make` — voir README > Exécuter le projet)
+afstat_parser
+a.out
+*.o
+
+# Fichiers générés par flex/bison à partir de lexer.l et parser.y
+lex.yy.c
+parser.tab.c
+parser.tab.h
+parser.output
+
+# Sortie du compilateur AFSTAT (code C généré à partir d'un .afs, nom par défaut
+# du flag -o) et binaires de test générés par `make test_codegen` / `make test_positive`
+afstat.c
+build/

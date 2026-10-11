@@ -1,0 +1,14 @@
+# Fichiers R / RStudio
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# Jeu de données Kaggle, non redistribué (voir README, section "Données nécessaires")
+data/METABRIC_RNA_Mutation.csv
+
+# Rendus générés par knit (à régénérer avec rmarkdown::render)
+TPN.html
+TPN.pdf
+*_cache/
+*_files/

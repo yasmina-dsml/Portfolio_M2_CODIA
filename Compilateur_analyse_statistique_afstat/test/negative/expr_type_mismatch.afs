@@ -1,0 +1,16 @@
+// Expression with incompatible operands: string + integer.
+source employees "exemples/data/employees.csv";
+
+schema employee_schema {
+    id integer;
+    name string;
+    department string;
+    salary float;
+}
+associate employee_schema with employees;
+
+compute bad = name + 3; // invalid: string + int
+
+analyze employee_schema {
+    summary salary;
+}

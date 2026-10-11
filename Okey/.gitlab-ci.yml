@@ -1,0 +1,639 @@
+default:
+  image: $CI_REGISTRY_IMAGE/projet-integrateur-cicd
+  cache:
+    paths:
+      - .cache/pre-commit
+  before_script:
+    # Fix Unistra GitLab Docker runner permission issues
+    - echo $(ls -ld .git/ | awk '{print $3}') > RUNNER_USER
+    - mkdir -p .cache/pre-commit/
+    - chown -R $(whoami) .
+  after_script:
+    # Fix Unistra GitLab Docker runner permission issues
+    - chown -fR "$(cat RUNNER_USER)" .cache/pre-commit/
+stages:
+  - build
+  - test
+  - deploy
+  - release
+variables:
+  PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
+  RELEASE_TAG: '/^v\d+\.\d+\.\d+.*$/'
+  CLIENT_PACKAGE_NAME: "Unity-Client"
+test 1/2:
+  stage: test
+  dependencies: []
+  script:
+    - dotnet restore server/OkeyApi
+    - dotnet restore server/OkeyServer
+    - pre-commit run -a
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  allow_failure: true
+  tags:
+    - kubernetes
+test 2/2:
+  stage: test
+  dependencies: []
+  script:
+    - dotnet docfx docs/docfx.json
+    - cp -r docs/_site public
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  artifacts:
+    paths:
+      - public
+  tags:
+    - kubernetes
+docker-ci:
+  # Docker, Docker in Docker (dind) and Buildah don't work
+  # with Unistra GitLab's kubernetes shared runners due to
+  # various permission and runner configuration issues (user space/kernel space)
+  image:
+    name: gcr.io/kaniko-project/executor:v1.21.1-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    IMAGE_NAME: projet-integrateur-cicd
+  before_script:
+    # Store registry auth credentials for Kaniko to read during push
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+  script:
+    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/docker/CICD.Dockerfile" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}"
+  after_script: ""
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - docker/CICD.Dockerfile
+        - requirements.txt
+        - .config/dotnet-tools.json
+      when: always
+  tags:
+    - kubernetes
+docker-api:
+  # Docker, Docker in Docker (dind) and Buildah don't work
+  # with Unistra GitLab's kubernetes shared runners due to
+  # various permission and runner configuration issues (user space/kernel space)
+  image:
+    name: gcr.io/kaniko-project/executor:v1.21.1-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    IMAGE_NAME: okeyapi
+  before_script:
+    # Store registry auth credentials for Kaniko to read during push
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - IMAGE_TAG=$(if [ "${CI_COMMIT_BRANCH}" ]; then echo "dev-${CI_COMMIT_SHORT_SHA}"; else echo ${CI_COMMIT_TAG}; fi)
+    - IMAGE_SLIDING_TAG=$(if [ "${CI_COMMIT_BRANCH}" ]; then echo "dev"; else echo "latest"; fi)
+  script:
+    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/docker/OkeyApi.Dockerfile" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:${IMAGE_TAG}" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:${IMAGE_SLIDING_TAG}"
+  after_script: ""
+  rules:
+    - if: $CI_COMMIT_BRANCH == "back-end"
+      changes:
+        - docker/OkeyApi.Dockerfile
+        - docker/OkeyApi.Dockerfile.dockerignore
+        - server/OkeyApi/**/*.cs
+        - server/OkeyApi/appsettings*.json
+        - server/OkeyApi/**/launchSettings.json
+        - server/OkeyApi/*.csproj
+        - server/OkeyApi/*.sln
+      when: always
+    - if: '$CI_COMMIT_TAG =~ $RELEASE_TAG'
+      when: always
+  tags:
+    - kubernetes
+docker-server:
+  # Docker, Docker in Docker (dind) and Buildah don't work
+  # with Unistra GitLab's kubernetes shared runners due to
+  # various permission and runner configuration issues (user space/kernel space)
+  image:
+    name: gcr.io/kaniko-project/executor:v1.21.1-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    IMAGE_NAME: okeyserver
+  before_script:
+    # Store registry auth credentials for Kaniko to read during push
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - IMAGE_TAG=$(if [ "${CI_COMMIT_BRANCH}" ]; then echo "dev-${CI_COMMIT_SHORT_SHA}"; else echo ${CI_COMMIT_TAG}; fi)
+    - IMAGE_SLIDING_TAG=$(if [ "${CI_COMMIT_BRANCH}" ]; then echo "dev"; else echo "latest"; fi)
+  script:
+    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/docker/OkeyServer.Dockerfile" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:${IMAGE_TAG}" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:${IMAGE_SLIDING_TAG}"
+  after_script: ""
+  rules:
+    - if: $CI_COMMIT_BRANCH == "back-end"
+      changes:
+        - docker/OkeyServer.Dockerfile
+        - docker/OkeyServer.Dockerfile.dockerignore
+        - server/OkeyServer/**/*.cs
+        - server/OkeyServer/*.csproj
+        - server/OkeyServer/*.sln
+      when: always
+    - if: '$CI_COMMIT_TAG =~ $RELEASE_TAG'
+      when: always
+  tags:
+    - kubernetes
+docker-db-init:
+  # Docker, Docker in Docker (dind) and Buildah don't work
+  # with Unistra GitLab's kubernetes shared runners due to
+  # various permission and runner configuration issues (user space/kernel space)
+  image:
+    name: gcr.io/kaniko-project/executor:v1.21.1-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    IMAGE_NAME: db-init
+  before_script:
+    # Store registry auth credentials for Kaniko to read during push
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - IMAGE_TAG=$(if [ "${CI_COMMIT_BRANCH}" ]; then echo "dev-${CI_COMMIT_SHORT_SHA}"; else echo ${CI_COMMIT_TAG}; fi)
+    - IMAGE_SLIDING_TAG=$(if [ "${CI_COMMIT_BRANCH}" ]; then echo "dev"; else echo "latest"; fi)
+  script:
+    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/docker/DB-Init.Dockerfile" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:${IMAGE_TAG}" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:${IMAGE_SLIDING_TAG}"
+  after_script: ""
+  rules:
+    - if: $CI_COMMIT_BRANCH == "back-end"
+      changes:
+        - docker/DB-Init.Dockerfile
+        - docker/DB-Init.Dockerfile.dockerignore
+        - server/OkeyApi/**/*.cs
+        - server/OkeyApi/appsettings*.json
+        - server/OkeyApi/**/launchSettings.json
+        - server/OkeyApi/*.csproj
+        - server/OkeyApi/*.sln
+      when: always
+    - if: '$CI_COMMIT_TAG =~ $RELEASE_TAG'
+      when: always
+  tags:
+    - kubernetes
+docker-website:
+  # Docker, Docker in Docker (dind) and Buildah don't work
+  # with Unistra GitLab's kubernetes shared runners due to
+  # various permission and runner configuration issues (user space/kernel space)
+  image:
+    name: gcr.io/kaniko-project/executor:v1.21.1-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    IMAGE_NAME: okeywebsite
+  before_script:
+    # Store registry auth credentials for Kaniko to read during push
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - IMAGE_TAG=$(if [ "${CI_COMMIT_BRANCH}" ]; then echo "dev-${CI_COMMIT_SHORT_SHA}"; else echo ${CI_COMMIT_TAG}; fi)
+    - IMAGE_SLIDING_TAG=$(if [ "${CI_COMMIT_BRANCH}" ]; then echo "dev"; else echo "latest"; fi)
+  script:
+    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/docker/OkeyWebsite.Dockerfile" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:${IMAGE_TAG}" --destination "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:${IMAGE_SLIDING_TAG}"
+  after_script: ""
+  rules:
+    - if: $CI_COMMIT_BRANCH == "back-end"
+      changes:
+        - docker/OkeyWebsite.Dockerfile
+        - server/okeywebsite/new_app/**/*
+      when: always
+    - if: '$CI_COMMIT_TAG =~ $RELEASE_TAG'
+      when: always
+  tags:
+    - kubernetes
+unity-linux-test:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-base-3.0.1
+  stage: build
+  needs:
+    - job: unity-linux-local-test
+      artifacts: false
+    - job: unity-mac-local-test
+      artifacts: false
+    - job: unity-windows-local-test
+      artifacts: false
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Linux
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.LinuxTestBuild
+    - tar cJf "OkeyTest_Linux_x86-64_${OKEY_BUILD_VERSION}.tar.xz" ${BUILD_PATH}/OkeyTest ${BUILD_PATH}/OkeyTest_s.debug ${BUILD_PATH}/OkeyTest_Data ${BUILD_PATH}/UnityPlayer.so ${BUILD_PATH}/UnityPlayer_s.debug
+    - mkdir -p public/
+    - mv "OkeyTest_Linux_x86-64_${OKEY_BUILD_VERSION}.tar.xz" public/
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-linux-test-build"
+    paths:
+      - public
+    expire_in: 30 days
+  tags:
+    - kubernetes
+unity-mac-test:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-mac-mono-3.0.1
+  stage: build
+  needs:
+    - job: unity-linux-local-test
+      artifacts: false
+    - job: unity-mac-local-test
+      artifacts: false
+    - job: unity-windows-local-test
+      artifacts: false
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Mac
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.MacTestBuild
+    - chmod a+x ${BUILD_PATH}/OkeyTest.app/Contents/MacOS/Okey
+    - tar cJf "OkeyTest_Mac_Universal_${OKEY_BUILD_VERSION}.tar.xz" ${BUILD_PATH}/OkeyTest.app
+    - mkdir -p public/
+    - mv "OkeyTest_Mac_Universal_${OKEY_BUILD_VERSION}.tar.xz" public/
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-mac-test-build"
+    paths:
+      - public
+    expire_in: 30 days
+  tags:
+    - kubernetes
+unity-windows-test:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-windows-mono-3.0.1
+  stage: build
+  needs:
+    - job: unity-linux-local-test
+      artifacts: false
+    - job: unity-mac-local-test
+      artifacts: false
+    - job: unity-windows-local-test
+      artifacts: false
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Windows
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.WindowsTestBuild
+    - tar cJf "OkeyTest_Windows_x86-64_${OKEY_BUILD_VERSION}.tar.xz" ${BUILD_PATH}/OkeyTest.exe ${BUILD_PATH}/OkeyTest_Data ${BUILD_PATH}/UnityPlayer.dll ${BUILD_PATH}/UnityCrashHandler64.exe ${BUILD_PATH}/WinPixEventRuntime.dll ${BUILD_PATH}/MonoBleedingEdge
+    - mkdir -p public/
+    - mv "OkeyTest_Windows_x86-64_${OKEY_BUILD_VERSION}.tar.xz" public/
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-windows-test-build"
+    paths:
+      - public
+    expire_in: 30 days
+  tags:
+    - kubernetes
+unity-linux-local-test:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-base-3.0.1
+  stage: build
+  dependencies: []
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Linux
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.LinuxLocalTestBuild
+    - tar cJf "OkeyTest_Linux_x86-64_${OKEY_BUILD_VERSION}_Local.tar.xz" ${BUILD_PATH}/OkeyTest ${BUILD_PATH}/OkeyTest_s.debug ${BUILD_PATH}/OkeyTest_Data ${BUILD_PATH}/UnityPlayer.so ${BUILD_PATH}/UnityPlayer_s.debug
+    - mkdir -p public/
+    - mv "OkeyTest_Linux_x86-64_${OKEY_BUILD_VERSION}_Local.tar.xz" public/
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-linux-local-test-build"
+    paths:
+      - public
+    expire_in: 30 days
+  tags:
+    - kubernetes
+unity-mac-local-test:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-mac-mono-3.0.1
+  stage: build
+  dependencies: []
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Mac
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.MacLocalTestBuild
+    - chmod a+x ${BUILD_PATH}/OkeyTest.app/Contents/MacOS/Okey
+    - tar cJf "OkeyTest_Mac_Universal_${OKEY_BUILD_VERSION}_Local.tar.xz" ${BUILD_PATH}/OkeyTest.app
+    - mkdir -p public/
+    - mv "OkeyTest_Mac_Universal_${OKEY_BUILD_VERSION}_Local.tar.xz" public/
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-mac-local-test-build"
+    paths:
+      - public
+    expire_in: 30 days
+  tags:
+    - kubernetes
+unity-windows-local-test:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-windows-mono-3.0.1
+  stage: build
+  dependencies: []
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Windows
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.WindowsLocalTestBuild
+    - tar cJf "OkeyTest_Windows_x86-64_${OKEY_BUILD_VERSION}_Local.tar.xz" ${BUILD_PATH}/OkeyTest.exe ${BUILD_PATH}/OkeyTest_Data ${BUILD_PATH}/UnityPlayer.dll ${BUILD_PATH}/UnityCrashHandler64.exe ${BUILD_PATH}/WinPixEventRuntime.dll ${BUILD_PATH}/MonoBleedingEdge
+    - mkdir -p public/
+    - mv "OkeyTest_Windows_x86-64_${OKEY_BUILD_VERSION}_Local.tar.xz" public/
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-windows-local-test-build"
+    paths:
+      - public
+    expire_in: 30 days
+  tags:
+    - kubernetes
+unity-linux-release:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-base-3.0.1
+  stage: build
+  needs:
+    - job: unity-linux-test
+      artifacts: false
+    - job: unity-mac-test
+      artifacts: false
+    - job: unity-windows-test
+      artifacts: false
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Linux
+    ENV_FILE: unity-linux-release.env
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - export ARCHIVE_PATH="Okey_Linux_x86-64_${OKEY_BUILD_VERSION}.tar.xz"
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.LinuxReleaseBuild
+    - tar cJf "$ARCHIVE_PATH" ${BUILD_PATH}/Okey ${BUILD_PATH}/Okey_Data ${BUILD_PATH}/UnityPlayer.so
+    - mkdir -p public/
+    - cp "$ARCHIVE_PATH" public/
+    - if [ "$CI_COMMIT_TAG" ]; then scripts/unity-upload-package.sh; fi
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-linux-release-build"
+    paths:
+      - public
+    expire_in: 30 days
+    reports:
+      dotenv: $ENV_FILE
+  tags:
+    - kubernetes
+unity-mac-release:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-mac-mono-3.0.1
+  stage: build
+  needs:
+    - job: unity-linux-test
+      artifacts: false
+    - job: unity-mac-test
+      artifacts: false
+    - job: unity-windows-test
+      artifacts: false
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Mac
+    ENV_FILE: unity-mac-release.env
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - export ARCHIVE_PATH="Okey_Mac_Universal_${OKEY_BUILD_VERSION}.tar.xz"
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.MacReleaseBuild
+    - chmod a+x ${BUILD_PATH}/Okey.app/Contents/MacOS/Okey
+    - tar cJf "$ARCHIVE_PATH" ${BUILD_PATH}/Okey.app
+    - mkdir -p public/
+    - cp "$ARCHIVE_PATH" public/
+    - if [ "$CI_COMMIT_TAG" ]; then scripts/unity-upload-package.sh; fi
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-mac-release-build"
+    paths:
+      - public
+    expire_in: 30 days
+    reports:
+      dotenv: $ENV_FILE
+  tags:
+    - kubernetes
+unity-windows-release:
+  image:
+    name: unityci/editor:ubuntu-2022.3.19f1-windows-mono-3.0.1
+  stage: build
+  needs:
+    - job: unity-linux-test
+      artifacts: false
+    - job: unity-mac-test
+      artifacts: false
+    - job: unity-windows-test
+      artifacts: false
+  variables:
+    BUILD_PATH: client/OkeyClient/Builds/Windows
+    ENV_FILE: unity-windows-release.env
+  before_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - export OKEY_BUILD_VERSION=$(scripts/generate_unity_build_version.sh)
+    - export ARCHIVE_PATH="Okey_Windows_x86-64_${OKEY_BUILD_VERSION}.tar.xz"
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -logFile - -projectPath client/OkeyClient -timestamps -executeMethod Builder.WindowsReleaseBuild
+    - tar cJf "$ARCHIVE_PATH" ${BUILD_PATH}/Okey.exe ${BUILD_PATH}/Okey_Data ${BUILD_PATH}/UnityPlayer.dll ${BUILD_PATH}/UnityCrashHandler64.exe ${BUILD_PATH}/MonoBleedingEdge
+    - mkdir -p public/
+    - cp "$ARCHIVE_PATH" public/
+    - if [ "$CI_COMMIT_TAG" ]; then scripts/unity-upload-package.sh; fi
+  after_script:
+    - /opt/unity/Editor/Unity -quit -batchmode -nographics -returnlicense -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "front-end"
+      changes:
+        - client/OkeyClient/**/*
+      when: always
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+      when: always
+  artifacts:
+    name: "unity-windows-release-build"
+    paths:
+      - public
+    expire_in: 30 days
+    reports:
+      dotenv: $ENV_FILE
+  tags:
+    - kubernetes
+deploy-backend-staging:
+  stage: deploy
+  dependencies: []
+  # process_mode=oldest_first
+  resource_group: staging
+  environment:
+    name: Deploy/Staging
+  variables:
+    TARGET: dev
+    PERSIST_PATH: '/home/ubuntu/'
+    SECURE_FILES_DOWNLOAD_PATH: "/ssh/"
+  script:
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - cp -r /builds/okaybytes/okey/ssh /
+    - chmod -R 600 /ssh
+    - cp /ssh/config /etc/ssh/ssh_config.d/config.conf # https://linuxize.com/post/using-the-ssh-config-file/
+    - ansible-playbook -i scripts/ansible/inventory.yml scripts/ansible/playbook.yml --limit dev
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin # https://medium.com/@vitalypanukhin/docker-compose-and-gitlab-b209d09210f6
+    - cd docker/
+    - docker-compose -H "ssh://pi0" --profile extra down --remove-orphans
+    - ssh pi0 "rm -rf docker_data/config/ ; mkdir -p docker_data/"
+    - scp -r docker_data/config pi0:${PERSIST_PATH}/docker_data/
+    - docker-compose -H "ssh://pi0" --profile extra pull
+    - docker-compose -H "ssh://pi0" --profile extra up -d
+    - docker -H "ssh://pi0" system prune --all --force --volumes
+  rules:
+    - if: $CI_COMMIT_BRANCH == "back-end"
+  tags:
+    - kubernetes
+deploy-backend-production:
+  # https://forum.gitlab.com/t/how-can-i-set-the-stage-environment-from-a-condition/67401/2
+  extends: deploy-backend-staging
+  # process_mode=oldest_first
+  resource_group: production
+  environment:
+    name: Deploy/Production
+  variables:
+    TARGET: "$CI_COMMIT_TAG"
+  script:
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - cp -r /builds/okaybytes/okey/ssh /
+    - chmod -R 600 /ssh
+    - cp /ssh/config /etc/ssh/ssh_config.d/config.conf # https://linuxize.com/post/using-the-ssh-config-file/
+    - ansible-playbook -i scripts/ansible/inventory.yml scripts/ansible/playbook.yml --limit prod
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin # https://medium.com/@vitalypanukhin/docker-compose-and-gitlab-b209d09210f6
+    - cd docker/
+    - docker-compose -H "ssh://pi1" --profile extra down --remove-orphans
+    - ssh pi1 "rm -rf docker_data/config/ ; mkdir -p docker_data/"
+    - scp -r docker_data/config pi1:${PERSIST_PATH}/docker_data/
+    - docker-compose -H "ssh://pi1" --profile extra pull
+    - docker-compose -H "ssh://pi1" --profile extra up -d
+    - docker -H "ssh://pi1" system prune --all --force --volumes
+  rules:
+    - if: $CI_COMMIT_TAG =~ $RELEASE_TAG
+pages:
+  stage: deploy
+  dependencies: []
+  script:
+    - dotnet docfx docs/docfx.json
+    - cp -r docs/_site public
+  rules:
+    - if: '$CI_COMMIT_TAG =~ $RELEASE_TAG' # Run this job when a release tag is created
+  artifacts:
+    paths:
+      - public
+  tags:
+    - kubernetes
+release_job:
+  stage: release
+  dependencies: ["unity-linux-release", "unity-mac-release", "unity-windows-release"]
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: '$CI_COMMIT_TAG =~ $RELEASE_TAG' # Run this job when a release tag is created
+  before_script:
+    - apk add --update --no-cache git python3 && ln -sf python3 /usr/bin/python
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - echo "Running release_job for $CI_COMMIT_TAG"
+    - scripts/create_latest_release_description.sh > RELEASE_NOTES.md
+  after_script: ""
+  release: # See https://docs.gitlab.com/ee/ci/yaml/#release for available properties
+    tag_name: $CI_COMMIT_TAG
+    name: 'Release $CI_COMMIT_TAG'
+    description: './RELEASE_NOTES.md'
+    assets:
+      links:
+        - name: "$Linux_LINK_NAME"
+          url: "$Linux_LINK_URL"
+          link_type: 'package'
+          filepath: "/binaries/$Linux_LINK_NAME"
+        - name: "$Mac_LINK_NAME"
+          url: "$Mac_LINK_URL"
+          link_type: 'package'
+          filepath: "/binaries/$Mac_LINK_NAME"
+        - name: "$Windows_LINK_NAME"
+          url: "$Windows_LINK_URL"
+          link_type: 'package'
+          filepath: "/binaries/$Windows_LINK_NAME"
+  tags:
+    - kubernetes

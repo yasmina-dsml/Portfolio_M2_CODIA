@@ -1,0 +1,964 @@
+@prefix : <http://www.semanticweb.org/yasmina/ontologies/chansons#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/yasmina/ontologies/chansons#> .
+
+<http://www.semanticweb.org/yasmina/ontologies/chansons> rdf:type owl:Ontology ;
+                                                          owl:imports <http://purl.org/spar/foaf> .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#gYear
+xsd:gYear rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#aAdhesion
+<http://www.co-ode.org/ontologies/ont.owl#aAdhesion> rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Groupe> ;
+                                                     rdfs:range <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                     rdfs:comment "un groupe a des adhesions" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque
+<http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque> rdf:type owl:ObjectProperty ;
+                                                          rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Disque> ;
+                                                          rdfs:range <http://xmlns.com/foaf/0.1/Agent> ;
+                                                          rdfs:comment "rnage foaf:Agent pour musicien ou groupe" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#aCompositeur
+<http://www.co-ode.org/ontologies/ont.owl#aCompositeur> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+                                                        rdfs:range <http://www.co-ode.org/ontologies/ont.owl#Musicien> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#aGenre
+<http://www.co-ode.org/ontologies/ont.owl#aGenre> rdf:type owl:ObjectProperty ;
+                                                  rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+                                                  rdfs:range <http://www.co-ode.org/ontologies/ont.owl#Genre> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#aInterprete
+<http://www.co-ode.org/ontologies/ont.owl#aInterprete> rdf:type owl:ObjectProperty ;
+                                                       rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+                                                       rdfs:range [ rdf:type owl:Class ;
+                                                                    owl:unionOf ( <http://www.co-ode.org/ontologies/ont.owl#Groupe>
+                                                                                  <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                                                )
+                                                                  ] ;
+                                                       rdfs:comment "L’interprétation est faite par un musicien seul ou un groupe -> range = union des deux" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#aParolier
+<http://www.co-ode.org/ontologies/ont.owl#aParolier> rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+                                                     rdfs:range <http://www.co-ode.org/ontologies/ont.owl#Musicien> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#aRecompense
+<http://www.co-ode.org/ontologies/ont.owl#aRecompense> rdf:type owl:ObjectProperty ;
+                                                       rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Disque> ;
+                                                       rdfs:range <http://www.co-ode.org/ontologies/ont.owl#Recompense> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#aRole
+<http://www.co-ode.org/ontologies/ont.owl#aRole> rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                                 rdfs:range <http://www.co-ode.org/ontologies/ont.owl#RoleMusical> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#dansDisque
+<http://www.co-ode.org/ontologies/ont.owl#dansDisque> rdf:type owl:ObjectProperty ;
+                                                      rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+                                                      rdfs:range <http://www.co-ode.org/ontologies/ont.owl#Disque> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#groupe
+<http://www.co-ode.org/ontologies/ont.owl#groupe> rdf:type owl:ObjectProperty ;
+                                                  rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                  rdfs:range <http://www.co-ode.org/ontologies/ont.owl#Groupe> ;
+                                                  rdfs:comment "Une adhésion est liée à un groupe" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#laureat
+<http://www.co-ode.org/ontologies/ont.owl#laureat> rdf:type owl:ObjectProperty ;
+                                                   rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                   rdfs:range <http://xmlns.com/foaf/0.1/Agent> ;
+                                                   rdfs:comment "leaureat peut etre un musicien ou un groupe ,range -> foaf:Agent" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#membre
+<http://www.co-ode.org/ontologies/ont.owl#membre> rdf:type owl:ObjectProperty ;
+                                                  rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                  rdfs:range <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                                  rdfs:comment "on doit créer membre au lieu d'utiliser foaf:membre car on a pas une relation directe Musicien -> Groupe d'après le sujet" ,
+                                                               "une adhesion concerne un musicien" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#niveauCertification
+<http://www.co-ode.org/ontologies/ont.owl#niveauCertification> rdf:type owl:ObjectProperty ;
+                                                               rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Certification> ;
+                                                               rdfs:range <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#roleDansGroupe
+<http://www.co-ode.org/ontologies/ont.owl#roleDansGroupe> rdf:type owl:ObjectProperty ;
+                                                          rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                          rdfs:range <http://www.co-ode.org/ontologies/ont.owl#RoleMusical> ;
+                                                          rdfs:comment "Dans cette adhésion, le musicien a ce rôle" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#aNationalite
+<http://www.co-ode.org/ontologies/ont.owl#aNationalite> rdf:type owl:DatatypeProperty ;
+                                                        rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                                        rdfs:range xsd:string ;
+                                                        rdfs:comment "foaf n'a pas de data property Nationalité donc on en crée une" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#anneCertification
+<http://www.co-ode.org/ontologies/ont.owl#anneCertification> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Certification> ;
+                                                             rdfs:range xsd:gYear .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#anneePrix
+<http://www.co-ode.org/ontologies/ont.owl#anneePrix> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                     rdfs:range xsd:gYear .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#categoriePrix
+<http://www.co-ode.org/ontologies/ont.owl#categoriePrix> rdf:type owl:DatatypeProperty ;
+                                                         rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                         rdfs:range xsd:string .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#debut
+<http://www.co-ode.org/ontologies/ont.owl#debut> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                 rdfs:range xsd:gYear ;
+                                                 rdfs:comment "debut d'adhesion dans un groupe" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#fin
+<http://www.co-ode.org/ontologies/ont.owl#fin> rdf:type owl:DatatypeProperty ;
+                                               rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                               rdfs:range xsd:gYear ;
+                                               rdfs:comment "fin d'adhesion dans un groupe" ,
+                                                            "si la personne est encore dans le groupe -> fin vide" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#nomPrix
+<http://www.co-ode.org/ontologies/ont.owl#nomPrix> rdf:type owl:DatatypeProperty ;
+                                                   rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                   rdfs:range xsd:string .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#paysCertification
+<http://www.co-ode.org/ontologies/ont.owl#paysCertification> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Certification> ;
+                                                             rdfs:range xsd:string .
+
+
+###  http://xmlns.com/foaf/0.1/family_name
+<http://xmlns.com/foaf/0.1/family_name> rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                        rdfs:range xsd:string ;
+                                        rdfs:comment "on utilise foaf:family_name pas besoin de creer une nouvelle data property" .
+
+
+###  http://xmlns.com/foaf/0.1/firstName
+<http://xmlns.com/foaf/0.1/firstName> rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                      rdfs:range xsd:string ;
+                                      rdfs:comment "on utilise foaf:firstName pour le prenom des interpretes pas besoin de creer une nouvelle data property" .
+
+
+###  http://xmlns.com/foaf/0.1/gender
+<http://xmlns.com/foaf/0.1/gender> rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                   rdfs:range xsd:string .
+
+
+###  http://xmlns.com/foaf/0.1/name
+<http://xmlns.com/foaf/0.1/name> rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#Groupe> .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe
+<http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> rdf:type owl:Class ;
+                                                          rdfs:subClassOf owl:Thing ;
+                                                          rdfs:comment "classe intermediaire pour pouvoir modeliser musicien->membrede->groupe" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Album
+<http://www.co-ode.org/ontologies/ont.owl#Album> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Disque> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Certification
+<http://www.co-ode.org/ontologies/ont.owl#Certification> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Recompense> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Chanson
+<http://www.co-ode.org/ontologies/ont.owl#Chanson> rdf:type owl:Class ;
+                                                   rdfs:subClassOf owl:Thing .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Disque
+<http://www.co-ode.org/ontologies/ont.owl#Disque> rdf:type owl:Class .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Genre
+<http://www.co-ode.org/ontologies/ont.owl#Genre> rdf:type owl:Class ;
+                                                 rdfs:subClassOf owl:Thing .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Groupe
+<http://www.co-ode.org/ontologies/ont.owl#Groupe> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Group> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Musicien
+<http://www.co-ode.org/ontologies/ont.owl#Musicien> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <http://xmlns.com/foaf/0.1/Person> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#NiveauCertification
+<http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> rdf:type owl:Class ;
+                                                               rdfs:subClassOf owl:Thing .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie
+<http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Recompense> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Recompense
+<http://www.co-ode.org/ontologies/ont.owl#Recompense> rdf:type owl:Class ;
+                                                      rdfs:subClassOf owl:Thing .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#RoleMusical
+<http://www.co-ode.org/ontologies/ont.owl#RoleMusical> rdf:type owl:Class ;
+                                                       rdfs:subClassOf owl:Thing .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Single
+<http://www.co-ode.org/ontologies/ont.owl#Single> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Disque> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#AuteurInterprete
+:AuteurInterprete rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aInterprete>
+                                                                              ] ;
+                                                               owl:someValuesFrom <http://www.co-ode.org/ontologies/ont.owl#Chanson>
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aParolier>
+                                                                              ] ;
+                                                               owl:someValuesFrom <http://www.co-ode.org/ontologies/ont.owl#Chanson>
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                  rdfs:comment "un AuteurInterprete est un musicien qui est parolier d’au moins une chanson et interprète d’au moins une chanson (pas nécessairement la même). La classification est inférée automatiquement via les propriétés inverses de aParolier et aInterprete" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#ChansonAvecPlusieursInterpretes
+:ChansonAvecPlusieursInterpretes rdf:type owl:Class ;
+                                 owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Chanson>
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aInterprete> ;
+                                                                              owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                                                              owl:onClass [ rdf:type owl:Class ;
+                                                                                            owl:unionOf ( <http://www.co-ode.org/ontologies/ont.owl#Groupe>
+                                                                                                          <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                                                                        )
+                                                                                          ]
+                                                                            ]
+                                                                          ) ;
+                                                       rdf:type owl:Class
+                                                     ] ;
+                                 rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+                                 rdfs:comment "Chansons interprétées par au moins deux interprètes (musiciens et/ou groupes),c'est une classe intermediaire pour servir la classe JamaisSolo" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#ChansonRock
+:ChansonRock rdf:type owl:Class ;
+             owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Chanson>
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aGenre> ;
+                                                          owl:hasValue :Rock
+                                                        ]
+                                                      ) ;
+                                   rdf:type owl:Class
+                                 ] ;
+             rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+             rdfs:comment "une instance est une ChansonRock si et seulement si c’est une chanson dont le genre contient Rock (aGenre = Rock). La classification est inférée automatiquement par le raisonneur" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#ChansonRockOuPop
+:ChansonRockOuPop rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Chanson>
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aGenre> ;
+                                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                    owl:oneOf ( :Pop
+                                                                                                :Rock
+                                                                                              )
+                                                                                  ]
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+                  rdfs:comment "Les chansons Rock sont typées dans ChansonRock et comme ChansonRock est inclus dans ChansonRockOuPop, ces chansons appartiennent aussi à ChansonRockOuPop mais indirectement, sans apparaitre comme instances inferré de ChansonRockOuPop" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#CompositeurRockSeulement
+:CompositeurRockSeulement rdf:type owl:Class ;
+                          owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aCompositeur>
+                                                                                      ] ;
+                                                                       owl:someValuesFrom :ChansonRock
+                                                                     ]
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aCompositeur>
+                                                                                      ] ;
+                                                                       owl:allValuesFrom :ChansonRock
+                                                                     ]
+                                                                   ) ;
+                                                rdf:type owl:Class
+                                              ] ;
+                          rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                          rdfs:comment "un CompositeurRockSeulement est un musicien qui a composé au moins une chanson Rock et dont toutes les chansons composées sont des chansons Rock." .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#DansPlusieursGroupes
+:DansPlusieursGroupes rdf:type owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#membre>
+                                                                                  ] ;
+                                                                   owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                                                   owl:onClass <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe>
+                                                                 ]
+                                                               ) ;
+                                            rdf:type owl:Class
+                                          ] ;
+                      rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                      rdfs:comment "un musicien est DansPlusieursGroupes s’il apparaît comme membre dans au moins deux adhésions de groupe" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#DisqueAvecPlusieursMusiciens
+:DisqueAvecPlusieursMusiciens rdf:type owl:Class ;
+                              owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Disque>
+                                                                         [ rdf:type owl:Restriction ;
+                                                                           owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque> ;
+                                                                           owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                                                           owl:onClass <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                                         ]
+                                                                       ) ;
+                                                    rdf:type owl:Class
+                                                  ] ;
+                              rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Disque> ;
+                              rdfs:comment "Disques dont l’interprétation implique au moins deux musiciens (collaboration entre musiciens)" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#DisqueDiamantFrance
+:DisqueDiamantFrance rdf:type owl:Class ;
+                     owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Disque>
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aRecompense> ;
+                                                                  owl:someValuesFrom [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Certification>
+                                                                                                            [ rdf:type owl:Class ;
+                                                                                                              owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#niveauCertification> ;
+                                                                                                                              owl:hasValue <http://www.co-ode.org/ontologies/ont.owl#4xDiamant>
+                                                                                                                            ]
+                                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#niveauCertification> ;
+                                                                                                                              owl:hasValue :Diamant
+                                                                                                                            ]
+                                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#niveauCertification> ;
+                                                                                                                              owl:hasValue <http://www.semanticweb.org/yasmina/ontologies/chansons#2xDiamant>
+                                                                                                                            ]
+                                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#niveauCertification> ;
+                                                                                                                              owl:hasValue <http://www.semanticweb.org/yasmina/ontologies/chansons#3xDiamant>
+                                                                                                                            ]
+                                                                                                                          )
+                                                                                                            ]
+                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                              owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#paysCertification> ;
+                                                                                                              owl:hasValue "France"
+                                                                                                            ]
+                                                                                                          ) ;
+                                                                                       rdf:type owl:Class
+                                                                                     ]
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] ;
+                     rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Disque> ;
+                     rdfs:comment "Disques ayant reçu une certification Diamant (ou multiple) en France" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#GroupeMixte
+:GroupeMixte rdf:type owl:Class ;
+             owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Groupe>
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aAdhesion> ;
+                                                          owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                               owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#membre> ;
+                                                                               owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                    owl:onProperty <http://xmlns.com/foaf/0.1/gender> ;
+                                                                                                    owl:hasValue "Female"
+                                                                                                  ]
+                                                                             ]
+                                                        ]
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aAdhesion> ;
+                                                          owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                               owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#membre> ;
+                                                                               owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                    owl:onProperty <http://xmlns.com/foaf/0.1/gender> ;
+                                                                                                    owl:hasValue "Male"
+                                                                                                  ]
+                                                                             ]
+                                                        ]
+                                                      ) ;
+                                   rdf:type owl:Class
+                                 ] ;
+             rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Groupe> ;
+             rdfs:comment "Au moins un membre homme et au moins un membre femme" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#JamaisSolo
+:JamaisSolo rdf:type owl:Class ;
+            owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aInterprete>
+                                                                        ] ;
+                                                         owl:someValuesFrom <http://www.co-ode.org/ontologies/ont.owl#Chanson>
+                                                       ]
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aInterprete>
+                                                                        ] ;
+                                                         owl:allValuesFrom :ChansonAvecPlusieursInterpretes
+                                                       ]
+                                                     ) ;
+                                  rdf:type owl:Class
+                                ] ;
+            rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+            rdfs:comment "Musiciens qui ne sont jamais interprètes seuls : toutes les chansons qu’ils interprètent ont au moins deux interprètes" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#MusicienDiamantFrançais
+:MusicienDiamantFrançais rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque>
+                                                                                     ] ;
+                                                                      owl:someValuesFrom :DisqueDiamantFrance
+                                                                    ]
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aNationalite> ;
+                                                                      owl:hasValue "France"
+                                                                    ]
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                         rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                         rdfs:comment "Musiciens français ayant participé à un disque certifié Diamant en France, en tant qu’artistes du disque" ,
+                                      "Remarque : dans les exemples demandés par le sujet, l’album Racine carrée est bien certifié 4xDiamant en France mais son artiste (Stromae) n’est pas français. Il est donc normal que cette classe puisse ne contenir aucun individu inféré avec ces seuls exemples" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#PrixVictoires
+:PrixVictoires rdf:type owl:Class ;
+               owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie>
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#nomPrix> ;
+                                                            owl:hasValue "Victoires de la musique"
+                                                          ]
+                                                        ) ;
+                                     rdf:type owl:Class
+                                   ] ;
+               rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+               rdfs:comment "Prix remis lors des Victoires de la musique (identifié par nomPrix = \"Victoires de la musique\"" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#SoloSeulement
+:SoloSeulement rdf:type owl:Class ;
+               owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                          [ rdf:type owl:Class ;
+                                                            owl:complementOf [ rdf:type owl:Restriction ;
+                                                                               owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque>
+                                                                                              ] ;
+                                                                               owl:someValuesFrom :DisqueAvecPlusieursMusiciens
+                                                                             ]
+                                                          ]
+                                                          [ rdf:type owl:Class ;
+                                                            owl:complementOf [ rdf:type owl:Restriction ;
+                                                                               owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#membre>
+                                                                                              ] ;
+                                                                               owl:someValuesFrom <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe>
+                                                                             ]
+                                                          ]
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque>
+                                                                           ] ;
+                                                            owl:someValuesFrom <http://www.co-ode.org/ontologies/ont.owl#Disque>
+                                                          ]
+                                                        ) ;
+                                     rdf:type owl:Class
+                                   ] ;
+               rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+               rdfs:comment "musiciens n’appartenant à aucun groupe et n’ayant participé à aucun disque impliquant plusieurs musiciens" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#TrèsRécompensé
+:TrèsRécompensé rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( <http://www.co-ode.org/ontologies/ont.owl#Musicien>
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#laureat>
+                                                                            ] ;
+                                                             owl:minQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass :PrixVictoires
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                rdfs:comment "Musiciens ayant reçu au moins trois prix aux Victoires de la musique (seul ou avec d’autres lauréats)" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#Adh_Dave_FooFighters
+<http://www.co-ode.org/ontologies/ont.owl#Adh_Dave_FooFighters> rdf:type owl:NamedIndividual ,
+                                                                         <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                                owl:differentFrom <http://www.co-ode.org/ontologies/ont.owl#Adh_Dave_Nirvana> ;
+                                                                <http://www.co-ode.org/ontologies/ont.owl#groupe> <http://www.co-ode.org/ontologies/ont.owl#FooFighters> ;
+                                                                <http://www.co-ode.org/ontologies/ont.owl#membre> <http://www.co-ode.org/ontologies/ont.owl#DaveGrohl> ;
+                                                                <http://www.co-ode.org/ontologies/ont.owl#roleDansGroupe> <http://www.co-ode.org/ontologies/ont.owl#Chanteur> ,
+                                                                                                                          <http://www.co-ode.org/ontologies/ont.owl#Guitariste> ;
+                                                                <http://www.co-ode.org/ontologies/ont.owl#debut> "1994"^^xsd:gYear .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Adh_Dave_Nirvana
+<http://www.co-ode.org/ontologies/ont.owl#Adh_Dave_Nirvana> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#groupe> <http://www.co-ode.org/ontologies/ont.owl#Nirvana> ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#membre> <http://www.co-ode.org/ontologies/ont.owl#DaveGrohl> ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#roleDansGroupe> <http://www.co-ode.org/ontologies/ont.owl#Batteur> ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#debut> "1990"^^xsd:gYear ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#fin> "1994"^^xsd:gYear ;
+                                                            rdfs:comment "different individuals car on ne peut garantir que deux individus sont effectivement différents" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Adh_Krist_Nirvana
+<http://www.co-ode.org/ontologies/ont.owl#Adh_Krist_Nirvana> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                             <http://www.co-ode.org/ontologies/ont.owl#groupe> <http://www.co-ode.org/ontologies/ont.owl#Nirvana> ;
+                                                             <http://www.co-ode.org/ontologies/ont.owl#membre> <http://www.co-ode.org/ontologies/ont.owl#KristNovoselic> ;
+                                                             <http://www.co-ode.org/ontologies/ont.owl#roleDansGroupe> <http://www.co-ode.org/ontologies/ont.owl#Bassiste> ;
+                                                             <http://www.co-ode.org/ontologies/ont.owl#debut> "1987"^^xsd:gYear ,
+                                                                                                              "1994"^^xsd:gYear .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Adh_Kurt_Nirvana
+<http://www.co-ode.org/ontologies/ont.owl#Adh_Kurt_Nirvana> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#groupe> <http://www.co-ode.org/ontologies/ont.owl#Nirvana> ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#membre> <http://www.co-ode.org/ontologies/ont.owl#KurtCobain> ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#roleDansGroupe> <http://www.co-ode.org/ontologies/ont.owl#Chanteur> ,
+                                                                                                                      <http://www.co-ode.org/ontologies/ont.owl#Guitariste> ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#debut> "1987"^^xsd:gYear ;
+                                                            <http://www.co-ode.org/ontologies/ont.owl#fin> "1994"^^xsd:gYear .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#AlainSouchon
+<http://www.co-ode.org/ontologies/ont.owl#AlainSouchon> rdf:type owl:NamedIndividual ,
+                                                                 <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "France" ;
+                                                        <http://xmlns.com/foaf/0.1/family_name> "Souchon" ;
+                                                        <http://xmlns.com/foaf/0.1/firstName> "Alain Edouard" ;
+                                                        <http://xmlns.com/foaf/0.1/gender> "Male" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Bassiste
+<http://www.co-ode.org/ontologies/ont.owl#Bassiste> rdf:type owl:NamedIndividual ,
+                                                             <http://www.co-ode.org/ontologies/ont.owl#RoleMusical> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Batteur
+<http://www.co-ode.org/ontologies/ont.owl#Batteur> rdf:type owl:NamedIndividual ,
+                                                            <http://www.co-ode.org/ontologies/ont.owl#RoleMusical> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Bleach
+<http://www.co-ode.org/ontologies/ont.owl#Bleach> rdf:type owl:NamedIndividual ,
+                                                           <http://www.co-ode.org/ontologies/ont.owl#Album> ;
+                                                  <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque> <http://www.co-ode.org/ontologies/ont.owl#Nirvana> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Certif_RacineCarree_4xDiamant_2014
+<http://www.co-ode.org/ontologies/ont.owl#Certif_RacineCarree_4xDiamant_2014> rdf:type owl:NamedIndividual ,
+                                                                                       <http://www.co-ode.org/ontologies/ont.owl#Certification> ;
+                                                                              <http://www.co-ode.org/ontologies/ont.owl#niveauCertification> <http://www.co-ode.org/ontologies/ont.owl#4xDiamant> ;
+                                                                              <http://www.co-ode.org/ontologies/ont.owl#anneCertification> "2014"^^xsd:gYear ;
+                                                                              <http://www.co-ode.org/ontologies/ont.owl#paysCertification> "France" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Chanteur
+<http://www.co-ode.org/ontologies/ont.owl#Chanteur> rdf:type owl:NamedIndividual ,
+                                                             <http://www.co-ode.org/ontologies/ont.owl#RoleMusical> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#DaveGrohl
+<http://www.co-ode.org/ontologies/ont.owl#DaveGrohl> rdf:type owl:NamedIndividual ,
+                                                              <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                                     <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "USA" ;
+                                                     <http://xmlns.com/foaf/0.1/family_name> "Grohl" ;
+                                                     <http://xmlns.com/foaf/0.1/firstName> "Dave" ;
+                                                     <http://xmlns.com/foaf/0.1/gender> "Male" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#FooFighters
+<http://www.co-ode.org/ontologies/ont.owl#FooFighters> rdf:type owl:NamedIndividual ,
+                                                                <http://www.co-ode.org/ontologies/ont.owl#Groupe> ;
+                                                       <http://www.co-ode.org/ontologies/ont.owl#aAdhesion> <http://www.co-ode.org/ontologies/ont.owl#Adh_Dave_FooFighters> ;
+                                                       <http://xmlns.com/foaf/0.1/name> "Foo Fighters" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Geopoetique
+<http://www.co-ode.org/ontologies/ont.owl#Geopoetique> rdf:type owl:NamedIndividual ,
+                                                                <http://www.co-ode.org/ontologies/ont.owl#Album> ;
+                                                       <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque> <http://www.co-ode.org/ontologies/ont.owl#McSolaar> ;
+                                                       <http://www.co-ode.org/ontologies/ont.owl#aRecompense> <http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2018> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#GlobeCristal_InterpreteMasculin_2014
+<http://www.co-ode.org/ontologies/ont.owl#GlobeCristal_InterpreteMasculin_2014> rdf:type owl:NamedIndividual ,
+                                                                                         <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                                                <http://www.co-ode.org/ontologies/ont.owl#laureat> <http://www.co-ode.org/ontologies/ont.owl#Stromae> ;
+                                                                                <http://www.co-ode.org/ontologies/ont.owl#anneePrix> "2014"^^xsd:gYear ;
+                                                                                <http://www.co-ode.org/ontologies/ont.owl#categoriePrix> "Meilleur interprète masculin de l'année" ;
+                                                                                <http://www.co-ode.org/ontologies/ont.owl#nomPrix> "Globe de Cristal" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#GlobeCristal_InterpreteMasculin_2015
+<http://www.co-ode.org/ontologies/ont.owl#GlobeCristal_InterpreteMasculin_2015> rdf:type owl:NamedIndividual ,
+                                                                                         <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                                                <http://www.co-ode.org/ontologies/ont.owl#laureat> <http://www.co-ode.org/ontologies/ont.owl#AlainSouchon> ,
+                                                                                                                                   <http://www.co-ode.org/ontologies/ont.owl#LaurentVoulzy> ;
+                                                                                <http://www.co-ode.org/ontologies/ont.owl#anneePrix> "2015"^^xsd:gYear ;
+                                                                                <http://www.co-ode.org/ontologies/ont.owl#categoriePrix> "Meilleur interprète masculin de l'année" ;
+                                                                                <http://www.co-ode.org/ontologies/ont.owl#nomPrix> "Globe de Cristal" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Guitariste
+<http://www.co-ode.org/ontologies/ont.owl#Guitariste> rdf:type owl:NamedIndividual ,
+                                                               <http://www.co-ode.org/ontologies/ont.owl#RoleMusical> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#InUtero
+<http://www.co-ode.org/ontologies/ont.owl#InUtero> rdf:type owl:NamedIndividual ,
+                                                            <http://www.co-ode.org/ontologies/ont.owl#Album> ;
+                                                   <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque> <http://www.co-ode.org/ontologies/ont.owl#Nirvana> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#KristNovoselic
+<http://www.co-ode.org/ontologies/ont.owl#KristNovoselic> rdf:type owl:NamedIndividual ,
+                                                                   <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                                          <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "USA" ;
+                                                          <http://xmlns.com/foaf/0.1/family_name> "Novoselic" ;
+                                                          <http://xmlns.com/foaf/0.1/firstName> "Krist" ;
+                                                          <http://xmlns.com/foaf/0.1/gender> "Male" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#KurtCobain
+<http://www.co-ode.org/ontologies/ont.owl#KurtCobain> rdf:type owl:NamedIndividual ,
+                                                               <http://www.co-ode.org/ontologies/ont.owl#Musicien> ,
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aCompositeur>
+                                                                                ] ;
+                                                                 owl:allValuesFrom [ rdf:type owl:Class ;
+                                                                                     owl:oneOf ( :Lithium
+                                                                                                 :SmellsLikeTeenSpirit
+                                                                                               )
+                                                                                   ]
+                                                               ] ;
+                                                      <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "USA" ;
+                                                      <http://xmlns.com/foaf/0.1/family_name> "Cobain" ;
+                                                      <http://xmlns.com/foaf/0.1/firstName> "Kurt" ;
+                                                      <http://xmlns.com/foaf/0.1/gender> "Male" ;
+                                                      rdfs:comment "toutes les chansons dont Kurt est compositeur ∈ {Lithium, SmellsLikeTeenSpirit} pour pouvoir inférer CompositeurRockSeulement sinon le reasoner ne peut pas conclure \"only rock\"" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#LaurentVoulzy
+<http://www.co-ode.org/ontologies/ont.owl#LaurentVoulzy> rdf:type owl:NamedIndividual ,
+                                                                  <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                                         <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "France" ;
+                                                         <http://xmlns.com/foaf/0.1/family_name> "Voulzy" ;
+                                                         <http://xmlns.com/foaf/0.1/firstName> "Laurent" ;
+                                                         <http://xmlns.com/foaf/0.1/gender> "Male" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#McSolaar
+<http://www.co-ode.org/ontologies/ont.owl#McSolaar> rdf:type owl:NamedIndividual ,
+                                                             <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+                                                    <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "France" ;
+                                                    <http://xmlns.com/foaf/0.1/family_name> "Honoré M’Barali" ;
+                                                    <http://xmlns.com/foaf/0.1/firstName> "Claude" ;
+                                                    <http://xmlns.com/foaf/0.1/gender> "Male" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Nirvana
+<http://www.co-ode.org/ontologies/ont.owl#Nirvana> rdf:type owl:NamedIndividual ,
+                                                            <http://www.co-ode.org/ontologies/ont.owl#Groupe> ;
+                                                   <http://www.co-ode.org/ontologies/ont.owl#aAdhesion> <http://www.co-ode.org/ontologies/ont.owl#Adh_Dave_Nirvana> ,
+                                                                                                        <http://www.co-ode.org/ontologies/ont.owl#Adh_Krist_Nirvana> ,
+                                                                                                        <http://www.co-ode.org/ontologies/ont.owl#Adh_Kurt_Nirvana> ;
+                                                   <http://xmlns.com/foaf/0.1/name> "Nirvana" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#RacineCarree
+<http://www.co-ode.org/ontologies/ont.owl#RacineCarree> rdf:type owl:NamedIndividual ,
+                                                                 <http://www.co-ode.org/ontologies/ont.owl#Album> ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque> ;
+                                                                   owl:allValuesFrom [ rdf:type owl:Class ;
+                                                                                       owl:oneOf ( <http://www.co-ode.org/ontologies/ont.owl#Stromae>
+                                                                                                 )
+                                                                                     ]
+                                                                 ] ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque> <http://www.co-ode.org/ontologies/ont.owl#Stromae> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#aRecompense> <http://www.co-ode.org/ontologies/ont.owl#Certif_RacineCarree_4xDiamant_2014> ,
+                                                                                                               <http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2014> ;
+                                                        rdfs:comment "nécessite une fermeture des artistes du disque pour garantir l'absence de collaboration et ainsi pouvoir inférer" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Stromae
+<http://www.co-ode.org/ontologies/ont.owl#Stromae> rdf:type owl:NamedIndividual ,
+                                                            <http://www.co-ode.org/ontologies/ont.owl#Musicien> ,
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque>
+                                                                             ] ;
+                                                              owl:allValuesFrom [ rdf:type owl:Class ;
+                                                                                  owl:oneOf ( <http://www.co-ode.org/ontologies/ont.owl#RacineCarree>
+                                                                                            )
+                                                                                ]
+                                                            ] ,
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty [ owl:inverseOf <http://www.co-ode.org/ontologies/ont.owl#membre>
+                                                                             ] ;
+                                                              owl:allValuesFrom owl:Nothing
+                                                            ] ;
+                                                   <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "Belge" ;
+                                                   <http://xmlns.com/foaf/0.1/family_name> "Van Haver" ;
+                                                   <http://xmlns.com/foaf/0.1/firstName> "Paul" ;
+                                                   <http://xmlns.com/foaf/0.1/gender> "Male" ;
+                                                   rdfs:comment "Ajout de contraintes de fermeture (closure axioms) sur Stromae pour permettre l’inférence de SoloSeulement en OWL (hypothèse de monde ouvert) : on précise que les seuls disques auxquels Stromae participe dans ce jeu de données sont {RacineCarree} et qu’il n’est membre d’aucun groupe, afin que le reasoner puisse conclure l’absence de collaborations et d’appartenance à un groupe" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2014
+<http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2014> rdf:type owl:NamedIndividual ,
+                                                                                      <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#laureat> <http://www.co-ode.org/ontologies/ont.owl#Stromae> ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#anneePrix> "2014"^^xsd:gYear ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#categoriePrix> "Album de chansons de l’année" ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#nomPrix> "Victoires de la Musique" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2015
+<http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2015> rdf:type owl:NamedIndividual ,
+                                                                                      <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#laureat> <http://www.co-ode.org/ontologies/ont.owl#AlainSouchon> ,
+                                                                                                                                <http://www.co-ode.org/ontologies/ont.owl#LaurentVoulzy> ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#anneePrix> "2015"^^xsd:gYear ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#categoriePrix> "Album de chansons de l’année" ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#nomPrix> "Victoires de la Musique" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2018
+<http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2018> rdf:type owl:NamedIndividual ,
+                                                                                      <http://www.co-ode.org/ontologies/ont.owl#PrixCeremonie> ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#laureat> <http://www.co-ode.org/ontologies/ont.owl#McSolaar> ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#anneePrix> "2018"^^xsd:gYear ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#categoriePrix> "Album de chansons de l’année" ;
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#nomPrix> "Victoires de la Musique" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#4xDiamant
+<http://www.co-ode.org/ontologies/ont.owl#4xDiamant> rdf:type owl:NamedIndividual ,
+                                                              <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#AlainSouchon&LaurentVoulzy
+<http://www.co-ode.org/ontologies/ont.owl#AlainSouchon&LaurentVoulzy> rdf:type owl:NamedIndividual ,
+                                                                               <http://www.co-ode.org/ontologies/ont.owl#Album> ;
+                                                                      <http://www.co-ode.org/ontologies/ont.owl#aArtisteDisque> <http://www.co-ode.org/ontologies/ont.owl#AlainSouchon> ,
+                                                                                                                                <http://www.co-ode.org/ontologies/ont.owl#LaurentVoulzy> ;
+                                                                      <http://www.co-ode.org/ontologies/ont.owl#aRecompense> <http://www.co-ode.org/ontologies/ont.owl#Victoires_AlbumChansonsAnnee_2015> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Adh_Duke_Garbage
+:Adh_Duke_Garbage rdf:type owl:NamedIndividual ,
+                           <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                  <http://www.co-ode.org/ontologies/ont.owl#groupe> :Garbage ;
+                  <http://www.co-ode.org/ontologies/ont.owl#membre> :DukeErikson ;
+                  <http://www.co-ode.org/ontologies/ont.owl#roleDansGroupe> <http://www.co-ode.org/ontologies/ont.owl#Guitariste> ;
+                  <http://www.co-ode.org/ontologies/ont.owl#debut> "1994"^^xsd:gYear .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Adh_Shirley_Garbage
+:Adh_Shirley_Garbage rdf:type owl:NamedIndividual ,
+                              <http://www.co-ode.org/ontologies/ont.owl#AdhesionGroupe> ;
+                     <http://www.co-ode.org/ontologies/ont.owl#groupe> :Garbage ;
+                     <http://www.co-ode.org/ontologies/ont.owl#membre> :ShirleyManson ;
+                     <http://www.co-ode.org/ontologies/ont.owl#roleDansGroupe> <http://www.co-ode.org/ontologies/ont.owl#Chanteur> ;
+                     <http://www.co-ode.org/ontologies/ont.owl#debut> "1994"^^xsd:gYear .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#AlternativeRock
+:AlternativeRock rdf:type owl:NamedIndividual ,
+                          <http://www.co-ode.org/ontologies/ont.owl#Genre> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Argent
+:Argent rdf:type owl:NamedIndividual ,
+                 <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Diamant
+:Diamant rdf:type owl:NamedIndividual ,
+                  <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#DukeErikson
+:DukeErikson rdf:type owl:NamedIndividual ,
+                      <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+             <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "USA" ;
+             <http://xmlns.com/foaf/0.1/family_name> "Erikson" ;
+             <http://xmlns.com/foaf/0.1/firstName> "Duke" ;
+             <http://xmlns.com/foaf/0.1/gender> "Male" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Formidable
+:Formidable rdf:type owl:NamedIndividual ,
+                     <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+            <http://www.co-ode.org/ontologies/ont.owl#aCompositeur> <http://www.co-ode.org/ontologies/ont.owl#Stromae> ;
+            <http://www.co-ode.org/ontologies/ont.owl#aGenre> :Pop ;
+            <http://www.co-ode.org/ontologies/ont.owl#aInterprete> <http://www.co-ode.org/ontologies/ont.owl#Stromae> ;
+            <http://www.co-ode.org/ontologies/ont.owl#aParolier> <http://www.co-ode.org/ontologies/ont.owl#Stromae> ;
+            rdfs:label "Formidable" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Garbage
+:Garbage rdf:type owl:NamedIndividual ,
+                  <http://www.co-ode.org/ontologies/ont.owl#Groupe> ;
+         <http://www.co-ode.org/ontologies/ont.owl#aAdhesion> :Adh_Duke_Garbage ,
+                                                              :Adh_Shirley_Garbage ;
+         <http://xmlns.com/foaf/0.1/name> "Garbage" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Lithium
+:Lithium rdf:type owl:NamedIndividual ,
+                  <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+         <http://www.co-ode.org/ontologies/ont.owl#aCompositeur> <http://www.co-ode.org/ontologies/ont.owl#KurtCobain> ;
+         <http://www.co-ode.org/ontologies/ont.owl#aGenre> :Rock ;
+         <http://www.co-ode.org/ontologies/ont.owl#aInterprete> <http://www.co-ode.org/ontologies/ont.owl#Nirvana> ;
+         rdfs:label "Lithium" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Or
+:Or rdf:type owl:NamedIndividual ,
+             <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Platine
+:Platine rdf:type owl:NamedIndividual ,
+                  <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Pop
+:Pop rdf:type owl:NamedIndividual ,
+              <http://www.co-ode.org/ontologies/ont.owl#Genre> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#Rock
+:Rock rdf:type owl:NamedIndividual ,
+               <http://www.co-ode.org/ontologies/ont.owl#Genre> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#ShirleyManson
+:ShirleyManson rdf:type owl:NamedIndividual ,
+                        <http://www.co-ode.org/ontologies/ont.owl#Musicien> ;
+               <http://www.co-ode.org/ontologies/ont.owl#aNationalite> "United Kingdom" ;
+               <http://xmlns.com/foaf/0.1/family_name> "Manson" ;
+               <http://xmlns.com/foaf/0.1/firstName> "Shirley" ;
+               <http://xmlns.com/foaf/0.1/gender> "Female" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#SmellsLikeTeenSpirit
+:SmellsLikeTeenSpirit rdf:type owl:NamedIndividual ,
+                               <http://www.co-ode.org/ontologies/ont.owl#Chanson> ;
+                      <http://www.co-ode.org/ontologies/ont.owl#aCompositeur> <http://www.co-ode.org/ontologies/ont.owl#KurtCobain> ;
+                      <http://www.co-ode.org/ontologies/ont.owl#aGenre> :Rock ;
+                      <http://www.co-ode.org/ontologies/ont.owl#aInterprete> <http://www.co-ode.org/ontologies/ont.owl#KurtCobain> ,
+                                                                             <http://www.co-ode.org/ontologies/ont.owl#Nirvana> ;
+                      <http://www.co-ode.org/ontologies/ont.owl#aParolier> <http://www.co-ode.org/ontologies/ont.owl#KurtCobain> ;
+                      rdfs:label "Smells Like Teen Spirit" .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#2xDiamant
+<http://www.semanticweb.org/yasmina/ontologies/chansons#2xDiamant> rdf:type owl:NamedIndividual ,
+                                                                            <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#2xPlatine
+<http://www.semanticweb.org/yasmina/ontologies/chansons#2xPlatine> rdf:type owl:NamedIndividual ,
+                                                                            <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#3xDiamant
+<http://www.semanticweb.org/yasmina/ontologies/chansons#3xDiamant> rdf:type owl:NamedIndividual ,
+                                                                            <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#3xPlatine
+<http://www.semanticweb.org/yasmina/ontologies/chansons#3xPlatine> rdf:type owl:NamedIndividual ,
+                                                                            <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  http://www.semanticweb.org/yasmina/ontologies/chansons#4xDiamant
+<http://www.semanticweb.org/yasmina/ontologies/chansons#4xDiamant> rdf:type owl:NamedIndividual ,
+                                                                            <http://www.co-ode.org/ontologies/ont.owl#NiveauCertification> .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

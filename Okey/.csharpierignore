@@ -1,0 +1,13 @@
+# Inspired by https://github.com/KageKirin/UnityCSharpier/blob/main/.csharpierignore
+
+## Never format Unity internal files
+client/OkeyClient/Packages/
+client/OkeyClient/Library/
+client/OkeyClient/UserSettings/
+client/OkeyClient/ProjectSettings/
+client/OkeyClient/Logs/
+client/OkeyClient/Temp/
+
+## More ignores
+client/OkeyClient/Assets/ThirdParty/
+server/OkeyApi/Migrations/

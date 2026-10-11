@@ -1,0 +1,53 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "type": "Battery",
+      "model": "FFH3DS",
+      "voltage": 3.2,
+      "capacity": 86.0,
+      "chemistry": "Lithium iron phosphate",
+      "id": "battery_FFH3DS"
+    },
+    {
+      "type": "Battery",
+      "model": "9059156",
+      "voltage": 3.7,
+      "capacity": 11500.0,
+      "chemistry": "Polymer lithium-ion battery",
+      "id": "battery_9059156"
+    },
+    {
+      "type": "Battery",
+      "model": "16340",
+      "voltage": 3.2,
+      "capacity": 500.0,
+      "chemistry": "unknown",
+      "id": "battery_16340"
+    },
+    {
+      "type": "Battery",
+      "model": "LIR2450",
+      "voltage": 3.6,
+      "capacity": 120.0,
+      "chemistry": "Li-ion Battery",
+      "id": "battery_LIR2450"
+    }
+  ],
+  "links": [
+    {
+      "relation": "similar_voltage",
+      "weight": 0.8,
+      "source": "battery_16340",
+      "target": "battery_FFH3DS"
+    },
+    {
+      "relation": "similar_voltage",
+      "weight": 0.8,
+      "source": "battery_LIR2450",
+      "target": "battery_9059156"
+    }
+  ]
+}

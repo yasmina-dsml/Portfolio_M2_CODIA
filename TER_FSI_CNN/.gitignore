@@ -1,0 +1,42 @@
+# Environnement virtuel Python (~5 Go) : dossier technique généré par
+# `python -m venv` dans Code_Experiments/, propre à cette machine (contient
+# notamment les paquets CUDA/NVIDIA liés au GPU local). Jamais versionné,
+# recréé via Code_Experiments/requirements.txt.
+Code_Experiments/venv/
+Code_Experiments/.venv/
+
+# Caches Python et Jupyter générés automatiquement à l'exécution.
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Données brutes CIFAR-10 (~341 Mo, dont cifar-10-python.tar.gz ~163 Mo et le
+# dossier extrait cifar-10-batches-py/ ~178 Mo) : jeu de données public,
+# retéléchargé automatiquement par torchvision (voir README, section
+# "Exécuter le projet") au premier lancement du notebook. Pas besoin de le
+# versionner.
+Code_Experiments/data/
+
+# Articles de recherche externes (~37 Mo, 7 PDF jusqu'à 19 Mo chacun) : ce
+# sont des publications de tiers, certaines sous droit d'auteur éditeur
+# (ex. Liu et al. 2024, Image and Vision Computing / Elsevier), qu'on ne
+# redistribue pas. Le README cite les références complètes (titres, DOI).
+# Les notes de lecture personnelles (synthese_art_1.md, synthese_art_3.md)
+# restent versionnées.
+Bibliographie/*.pdf
+
+# Synthèse d'une expérience de code antérieure et dépassée (10 classes
+# CIFAR-10, 2 architectures sans baseline), aux chiffres différents de la
+# version finale documentée dans le mémoire et reproduite par le notebook
+# actuel (4 classes, 3 architectures). Conservée uniquement en local pour
+# ne pas introduire de chiffres contradictoires dans le dépôt.
+Code_Experiments/synthese_code_experiment.pdf
+
+# Doublon de Memoire_TER_Yasmina_Farid.pdf (racine) : un ancien build PDF de
+# memoire.tex resté dans ce dossier, avec une reformulation mineure d'une
+# phrase (la question de recherche) non répercutée dans memoire.tex actuel.
+# Le PDF de la racine fait foi ; ce doublon serait sinon source de confusion.
+Memoire/Memoire_ter.pdf
+
+# Fichiers système
+.DS_Store

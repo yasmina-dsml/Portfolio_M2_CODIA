@@ -1,0 +1,14 @@
+// Semantic error: refers to a column that is not declared anywhere.
+source visits "exemples/data/visits_info.csv";
+
+schema visit_data {
+    visit_id integer;
+    weight float;
+}
+associate visit_data with visits;
+
+compute bmi = height / weight; // 'height' is undefined
+
+analyze visit_data {
+    summary bmi;
+}

@@ -1,0 +1,15 @@
+# Dependances Python du notebook, sans version figee : le projet a ete execute
+# sur Google Colab (environnement geree par Google, pas de pip freeze local
+# disponible), contrairement au projet emoji prediction execute en local.
+# Installer avec : pip install -r requirements.txt
+jupyterlab
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+geopandas
+pyogrio
+shapely
+pyarrow
+zstandard

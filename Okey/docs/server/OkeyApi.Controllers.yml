@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: OkeyApi.Controllers
+  commentId: N:OkeyApi.Controllers
+  id: OkeyApi.Controllers
+  children:
+  - OkeyApi.Controllers.AccountController
+  - OkeyApi.Controllers.AchievementsController
+  langs:
+  - csharp
+  - vb
+  name: OkeyApi.Controllers
+  nameWithType: OkeyApi.Controllers
+  fullName: OkeyApi.Controllers
+  type: Namespace
+  assemblies:
+  - OkeyApi
+references:
+- uid: OkeyApi.Controllers.AccountController
+  commentId: T:OkeyApi.Controllers.AccountController
+  href: OkeyApi.Controllers.AccountController.html
+  name: AccountController
+  nameWithType: AccountController
+  fullName: OkeyApi.Controllers.AccountController
+- uid: OkeyApi.Controllers.AchievementsController
+  commentId: T:OkeyApi.Controllers.AchievementsController
+  href: OkeyApi.Controllers.AchievementsController.html
+  name: AchievementsController
+  nameWithType: AchievementsController
+  fullName: OkeyApi.Controllers.AchievementsController

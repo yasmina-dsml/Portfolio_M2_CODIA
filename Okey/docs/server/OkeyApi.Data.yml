@@ -1,0 +1,46 @@
+### YamlMime:ManagedReference
+items:
+- uid: OkeyApi.Data
+  commentId: N:OkeyApi.Data
+  id: OkeyApi.Data
+  children:
+  - OkeyApi.Data.ApplicationDBContext
+  langs:
+  - csharp
+  - vb
+  name: OkeyApi.Data
+  nameWithType: OkeyApi.Data
+  fullName: OkeyApi.Data
+  type: Namespace
+  assemblies:
+  - OkeyApi
+references:
+- uid: OkeyApi.Data.ApplicationDBContext
+  commentId: T:OkeyApi.Data.ApplicationDBContext
+  parent: OkeyApi.Data
+  href: OkeyApi.Data.ApplicationDBContext.html
+  name: ApplicationDBContext
+  nameWithType: ApplicationDBContext
+  fullName: OkeyApi.Data.ApplicationDBContext
+- uid: OkeyApi.Data
+  commentId: N:OkeyApi.Data
+  href: OkeyApi.html
+  name: OkeyApi.Data
+  nameWithType: OkeyApi.Data
+  fullName: OkeyApi.Data
+  spec.csharp:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Data
+    name: Data
+    href: OkeyApi.Data.html
+  spec.vb:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Data
+    name: Data
+    href: OkeyApi.Data.html

@@ -1,0 +1,25 @@
+// Filtrage sur une chaîne de caractères
+source employees "data/employees.csv";
+
+schema employee_schema {
+    id integer;
+    name string;
+    department string;
+    salary float;
+}
+associate employee_schema with employees;
+
+// Filtrage pour ne conserver que les employés du département "R&D"
+filter r_and_d_employees = employees where employees.department == "R&D";
+
+// Analyse sur les salaires de ce groupe
+analyze r_and_d_employees {
+    summary salary;
+}
+// Résultats attendus avec les fichiers donnés
+// summary salary:
+// min: 65000
+// max: 75000
+// mean: 70000
+// std_dev: 3000
+

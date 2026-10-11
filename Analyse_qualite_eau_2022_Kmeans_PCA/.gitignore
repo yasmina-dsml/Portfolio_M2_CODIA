@@ -1,0 +1,16 @@
+# Environnement Python
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Sorties intermediaires generees par le notebook (tables Parquet/pickle mises en cache)
+cache/
+
+# Archives volumineuses non versionnees (voir la section "Archive complete"
+# et "Donnees geographiques complementaires" du README)
+analyse_qualite_eau_2022.zip
+data/CLC12_FR_RGF_SHP.zip
+data/CLC12_FR_RGF_SHP/
+data/CoursEau_FXX-shp.zip
+data/CoursEau_FXX-shp/

@@ -1,0 +1,9 @@
+# Ignorer les fichiers générés par le Makefile
+/projet-integrateur-cicd
+/okeyapi
+/server
+/db-init
+/okeywebsite
+
+# Ignorer les fichiers persistants des conteneurs Docker
+/docker_data/data/

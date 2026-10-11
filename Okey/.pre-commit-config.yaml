@@ -1,0 +1,81 @@
+default_stages: [pre-commit, pre-push]
+default_install_hook_types: [pre-commit, pre-push, prepare-commit-msg, commit-msg]
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-xml
+      - id: check-json
+      - id: pretty-format-json
+        args:
+          - "--autofix"
+          - "--indent=2"
+          - "--no-sort-keys"
+          - "--no-ensure-ascii"
+        exclude: 'client/OkeyClient/ProjectSettings/Packages/com\.unity\.testtools\.codecoverage/Settings\.json'
+      - id: end-of-file-fixer
+        exclude: |
+          (?x)^(
+              (.*\.(asset|meta|unity|prefab)$)|
+              client/OkeyClient/ProjectSettings/Packages/com\.unity\.testtools\.codecoverage/Settings\.json
+          )$
+      - id: trailing-whitespace
+        exclude: '.*\.(asset|meta|unity|prefab)$'
+      - id: fix-byte-order-marker
+      - id: check-executables-have-shebangs
+        exclude: '(client/OkeyClient/.*)|(server/OkeyServer/.*)'
+      - id: check-shebang-scripts-are-executable
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-case-conflict
+      - id: detect-private-key
+      - id: mixed-line-ending
+  - repo: https://github.com/milin/giticket
+    rev: v1.3
+    hooks:
+      - id: giticket
+        args: ['--regex=\d+', '--format=GL-{ticket}: {commit_msg}', '--mode=regex_match'] # Optional
+        stages: [prepare-commit-msg]
+  - repo: local
+    hooks:
+      - id: dotnet-tool-restore
+        name: Install .NET tools
+        entry: dotnet tool restore
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages:
+          - commit
+          - push
+          - post-checkout
+          - post-rewrite
+        description: Install the .NET tools listed at .config/dotnet-tools.json.
+      - id: csharpier
+        name: Run CSharpier on C# files
+        entry: dotnet tool run dotnet-csharpier
+        language: system
+        types:
+          - c#
+        description: CSharpier is an opinionated C# formatter inspired by Prettier.
+      - id: roslynator-OkeyServer
+        name: Run Roslynator on OkeyServer C# project
+        entry: dotnet tool run roslynator analyze server/OkeyServer/OkeyServer.csproj
+        language: system
+        files: '^server/OkeyServer/'
+        types:
+          - c#
+        verbose: true
+        pass_filenames: false
+        description: Roslynator is a static analysis tool
+      - id: roslynator-OkeyApi
+        name: Run Roslynator on OkeyApi C# project
+        entry: dotnet tool run roslynator analyze server/OkeyApi/OkeyApi.csproj
+        language: system
+        files: '^server/OkeyApi/'
+        types:
+          - c#
+        verbose: true
+        pass_filenames: false
+        description: Roslynator is a static analysis tool

@@ -1,0 +1,95 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../server",
+          "files": [
+            "**/*.csproj"
+          ],
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**",
+            "**/[Tt]ests/**"
+          ]
+        }
+      ],
+      "dest": "server"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "src": "server",
+        "files": [
+          "*.yml"
+        ],
+        "dest": "server"
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          ".attachments/**",
+          "**/.attachments/**",
+          "images/**",
+          "**/images/**",
+          "resources/**/*"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "src": "..",
+        "files": "images/**"
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "Okey",
+      "_appTitle": "Okey",
+      "_appFooter": "Okey documentation",
+      "_appLogoPath": "../images/favicons/favicon.ico",
+      "_appFaviconPath": "../images/favicons/favicon.ico",
+      "_enableSearch": true,
+      "_enableNewTab": true,
+      "pdf": false,
+      "_disableContribution": false,
+      "_gitContribute": {
+        "repo": "https://git.unistra.fr/okaybytes/okey",
+        "branch": "main"
+      },
+      "_gitUrlPattern": "github",
+      "_lang": "fr"
+    },
+    "markdownEngineName": "markdig",
+    "markdownEngineProperties": {
+      "markdigExtensions": [
+        "tasklists",
+        "diagrams"
+      ]
+    },
+    "sitemap": {
+      "baseUrl": "https://okaybytes.pages.unistra.fr/okey",
+      "changefreq": "weekly",
+      "fileOptions": {
+        "api/*": {
+          "changefreq": "daily"
+        }
+      }
+    }
+  }
+}

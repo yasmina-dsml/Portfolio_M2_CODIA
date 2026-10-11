@@ -1,0 +1,9 @@
+# Fichiers locaux jamais versionnés (chaque projet a aussi son propre .gitignore)
+.claude/
+.env
+.venv/
+venv/
+__pycache__/
+.ipynb_checkpoints/
+.Rhistory
+.DS_Store

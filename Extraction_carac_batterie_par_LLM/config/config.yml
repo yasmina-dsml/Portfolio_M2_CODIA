@@ -1,0 +1,78 @@
+# Configuration pour l'extraction de datasheets de batteries
+
+# Configuration LLM
+llm:
+  provider: "openwebui"       # openwebui = serveur Mistral Unistra (gratuit)
+  base_url: "https://mai.ia.unistra.fr"
+  model: "chat-mistral"
+  api_key: "${LLM_API_KEY}"
+  max_tokens: 2000
+  temperature: 0.1
+  
+# Configuration de l'extraction  
+extraction:
+  fields:
+    - model
+    - manufacturer
+    - chemistry
+    - voltage
+    - voltage_unit
+    - capacity
+    - capacity_unit
+    - temperature_range
+    - charge_current
+    - charge_current_unit
+    - discharge_current
+    - discharge_current_unit
+    - internal_resistance
+    - internal_resistance_unit
+    - dimensions
+    - weight
+    - weight_unit
+    - cycle_life
+    - charge_cutoff_voltage
+    - discharge_cutoff_voltage
+    
+  # Unités attendues
+  units:
+    voltage: ["V", "mV"]
+    capacity: ["mAh", "Ah", "Wh"] 
+    temperature: ["°C", "K", "°F"]
+    current: ["A", "mA"]
+    resistance: ["mΩ", "Ω"]
+    dimensions: ["mm", "cm", "inch"]
+    weight: ["g", "kg", "lb"]
+    
+# Règles de validation
+validation:
+  voltage:
+    min: 1.0
+    max: 5.0
+    typical_lithium: [3.2, 3.7, 4.2]
+    
+  capacity:
+    min: 10  # mAh
+    max: 100000  # mAh
+    
+  temperature:
+    operating_min: -40
+    operating_max: 85
+    storage_min: -50
+    storage_max: 100
+    
+# Chemins des fichiers
+paths:
+  data_dir: "data"
+  output_dir: "data/extracted"
+  validation_dir: "data/validated"
+  logs_dir: "logs"
+  
+# Configuration du Knowledge Graph
+knowledge_graph:
+  enable: true
+  format: "turtle"  # turtle, xml, json-ld
+  
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/extraction.log"

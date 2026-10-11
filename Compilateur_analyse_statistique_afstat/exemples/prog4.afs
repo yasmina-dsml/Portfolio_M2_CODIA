@@ -1,0 +1,33 @@
+// Définition des sources de données
+source patients "data/patients_medinfo.csv";
+source records "data/records.csv";
+
+// Définition et association des schémas
+schema patients_schema {
+    id integer;
+    age integer;
+    gender string;
+}
+associate patients_schema with patients;
+
+schema records_schema {
+    record_id integer;
+    patient_id integer;
+    cholesterol float;
+    blood_pressure float;
+}
+associate records_schema with records;
+
+// Jointure des données sur l'identifiant du patient
+join patient_cholesterol = patients.id inner join records.patient_id;
+
+// Analyse sur les données combinées
+analyze patient_cholesterol {
+    summary cholesterol;
+}
+// Résultats attendus avec les fichiers donnés
+// summary cholesterol:
+// min: 75.6
+// max: 270.6
+// mean: 224.2
+// std_dev: 25.1

@@ -1,0 +1,321 @@
+@prefix battery: <http://example.com/battery#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix spec: <http://example.com/specs#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/battery> a owl:Ontology .
+
+battery:LiFePO4Battery a owl:Class ;
+    rdfs:label "Batterie LiFePO4"@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty spec:hasVoltage ;
+            owl:someValuesFrom xsd:float ],
+        battery:Battery .
+
+battery:LiPolymerBattery a owl:Class ;
+    rdfs:label "Batterie Li-Po"@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty spec:hasVoltage ;
+            owl:someValuesFrom xsd:float ],
+        battery:Battery .
+
+battery:LithiumIonBattery a owl:Class ;
+    rdfs:label "Batterie Li-ion"@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty spec:hasVoltage ;
+            owl:someValuesFrom xsd:float ],
+        battery:Battery .
+
+battery:NiMHBattery a owl:Class ;
+    rdfs:label "Batterie NiMH"@fr ;
+    rdfs:subClassOf battery:Battery .
+
+battery:battery_16340 a battery:Battery ;
+    rdfs:label "16340" ;
+    battery:similarVoltage battery:battery_FFH3DS ;
+    spec:capacityUnit "mAh"^^xsd:string ;
+    spec:chargeCurrentUnit "mA"^^xsd:string ;
+    spec:chargeCutoffVoltage "3.65"^^xsd:float ;
+    spec:chargeFlowRate "100.0"^^xsd:float ;
+    spec:dischargeCurrent "1000.0"^^xsd:float ;
+    spec:dischargeCurrentUnit "mA"^^xsd:string ;
+    spec:dischargeCutoffVoltage "2.0"^^xsd:float ;
+    spec:hasCapacity "500.0"^^xsd:float ;
+    spec:hasVoltage "3.2"^^xsd:float ;
+    spec:internalResistance "100.0"^^xsd:float ;
+    spec:internalResistanceUnit "mΩ"^^xsd:string ;
+    spec:manufacturer "DNK Power o., Ltd."^^xsd:string ;
+    spec:physicalDimensions "Diameter 16.3 mm (+0.2/-0.1 mm); height 34.0 mm (-0.2/+0.2 mm)"^^xsd:string ;
+    spec:voltageUnit "V"^^xsd:string ;
+    spec:weight "17.0"^^xsd:float ;
+    spec:weightUnit "g"^^xsd:string .
+
+battery:battery_LIR2450 a battery:Battery ;
+    rdfs:label "LIR2450" ;
+    battery:similarVoltage battery:battery_9059156 ;
+    spec:capacityUnit "mAh"^^xsd:string ;
+    spec:chargeCurrentUnit "mA"^^xsd:string ;
+    spec:chargeCutoffVoltage "4.2"^^xsd:float ;
+    spec:chargeFlowRate "24.0"^^xsd:float ;
+    spec:chemistry "Li-ion Battery"^^xsd:string ;
+    spec:cycleLife 300 ;
+    spec:dischargeCurrent "24.0"^^xsd:float ;
+    spec:dischargeCurrentUnit "mA"^^xsd:string ;
+    spec:dischargeCutoffVoltage "2.75"^^xsd:float ;
+    spec:hasCapacity "120.0"^^xsd:float ;
+    spec:hasVoltage "3.6"^^xsd:float ;
+    spec:internalResistance "400.0"^^xsd:float ;
+    spec:internalResistanceUnit "mΩ"^^xsd:string ;
+    spec:manufacturer "EEMB Co., Ltd."^^xsd:string ;
+    spec:physicalDimensions "diameter 24.5mm -0.2; height 5.0mm+0.35"^^xsd:string ;
+    spec:temperatureRange "-20°C—60°C"^^xsd:string ;
+    spec:voltageUnit "V"^^xsd:string ;
+    spec:weight "5.0"^^xsd:float ;
+    spec:weightUnit "g"^^xsd:string .
+
+battery:sameChemistry a owl:ObjectProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "même chimie"@fr ;
+    rdfs:domain battery:Battery ;
+    rdfs:range battery:Battery .
+
+battery:similarCapacityRange a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "capacité similaire"@fr ;
+    rdfs:domain battery:Battery ;
+    rdfs:range battery:Battery .
+
+battery:similarVoltage a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "voltage similaire"@fr ;
+    rdfs:domain battery:Battery ;
+    rdfs:range battery:Battery .
+
+spec:Ampere a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "A" ;
+    rdfs:comment "Ampère — unité de courant électrique"@fr .
+
+spec:Ampere_hour a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "Ah" ;
+    rdfs:comment "Ampère-heure — unité de capacité"@fr .
+
+spec:Celsius a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "°C" ;
+    rdfs:comment "Degré Celsius — unité de température"@fr .
+
+spec:Gram a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "g" ;
+    rdfs:comment "Gramme — unité de masse"@fr .
+
+spec:Kilogram a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "kg" ;
+    rdfs:comment "Kilogramme — unité de masse"@fr .
+
+spec:Milliampere a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "mA" ;
+    rdfs:comment "Milliampère — unité de courant électrique"@fr .
+
+spec:Milliampere_hour a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "mAh" ;
+    rdfs:comment "Milliampère-heure — unité de capacité"@fr .
+
+spec:Ohm a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "Ω" ;
+    rdfs:comment "Ohm — unité de résistance électrique"@fr .
+
+spec:Specification a owl:Class ;
+    rdfs:comment "Spécification technique d'une batterie (valeur + unité)"@fr .
+
+spec:capacityUnit a owl:DatatypeProperty ;
+    rdfs:label "unité de capacité"@fr ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:chargeCurrentUnit a owl:DatatypeProperty ;
+    rdfs:label "unité courant de charge"@fr ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:chargeCutoffVoltage a owl:DatatypeProperty ;
+    rdfs:label "tension de fin de charge"@fr ;
+    spec:unit spec:Volt ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:chargeFlowRate a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:chemistry a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:cycleLife a owl:DatatypeProperty ;
+    rdfs:label "durée de vie (cycles)"@fr ;
+    spec:maxValue 10000 ;
+    spec:minValue 1 ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:integer .
+
+spec:dischargeCurrent a owl:DatatypeProperty ;
+    rdfs:label "courant de décharge"@fr ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:dischargeCurrentUnit a owl:DatatypeProperty ;
+    rdfs:label "unité courant de décharge"@fr ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:dischargeCutoffVoltage a owl:DatatypeProperty ;
+    rdfs:label "tension de fin de décharge"@fr ;
+    spec:unit spec:Volt ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:extractionConfidence a owl:DatatypeProperty ;
+    spec:maxValue "1.0"^^xsd:float ;
+    spec:minValue "0.0"^^xsd:float ;
+    rdfs:comment "Score de confiance LLM entre 0 et 1."@fr ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:hasCapacity a owl:DatatypeProperty ;
+    rdfs:label "capacité"@fr ;
+    spec:maxValue "1000000.0"^^xsd:float ;
+    spec:minValue "1.0"^^xsd:float ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:internalResistance a owl:DatatypeProperty ;
+    rdfs:label "résistance interne"@fr ;
+    spec:maxValue "1000.0"^^xsd:float ;
+    spec:minValue "0.1"^^xsd:float ;
+    spec:unit spec:Milliohm ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:internalResistanceUnit a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:manufacturer a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:maxOperatingTemperature a owl:DatatypeProperty ;
+    rdfs:label "température maximale"@fr ;
+    spec:maxValue "100.0"^^xsd:float ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:maxValue a owl:AnnotationProperty .
+
+spec:minOperatingTemperature a owl:DatatypeProperty ;
+    rdfs:label "température minimale"@fr ;
+    spec:minValue "-60.0"^^xsd:float ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:minValue a owl:AnnotationProperty .
+
+spec:physicalDimensions a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:temperatureRange a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:unit a owl:AnnotationProperty .
+
+spec:voltageUnit a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+spec:weight a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:weightUnit a owl:DatatypeProperty ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:string .
+
+battery:battery_9059156 a battery:Battery ;
+    rdfs:label "9059156" ;
+    spec:capacityUnit "mAh"^^xsd:string ;
+    spec:chargeCurrentUnit "mA"^^xsd:string ;
+    spec:chargeCutoffVoltage "4.2"^^xsd:float ;
+    spec:chargeFlowRate "1000.0"^^xsd:float ;
+    spec:chemistry "Polymer lithium-ion battery"^^xsd:string ;
+    spec:cycleLife 300 ;
+    spec:dischargeCurrent "1000.0"^^xsd:float ;
+    spec:dischargeCurrentUnit "mA"^^xsd:string ;
+    spec:dischargeCutoffVoltage "2.75"^^xsd:float ;
+    spec:hasCapacity "11500.0"^^xsd:float ;
+    spec:hasVoltage "3.7"^^xsd:float ;
+    spec:internalResistance "15.0"^^xsd:float ;
+    spec:internalResistanceUnit "mΩ"^^xsd:string ;
+    spec:physicalDimensions "9.2×59.0×157.0 mm³ (±0.5 mm)"^^xsd:string ;
+    spec:temperatureRange "-20°C to 60°C"^^xsd:string ;
+    spec:voltageUnit "V"^^xsd:string ;
+    spec:weight "196.0"^^xsd:float ;
+    spec:weightUnit "g"^^xsd:string .
+
+battery:battery_FFH3DS a battery:Battery ;
+    rdfs:label "FFH3DS" ;
+    spec:capacityUnit "Ah"^^xsd:string ;
+    spec:chargeCurrentUnit "A"^^xsd:string ;
+    spec:chargeCutoffVoltage "3.65"^^xsd:float ;
+    spec:chargeFlowRate "43.0"^^xsd:float ;
+    spec:chemistry "Lithium iron phosphate"^^xsd:string ;
+    spec:cycleLife 3500 ;
+    spec:dischargeCurrent "43.0"^^xsd:float ;
+    spec:dischargeCurrentUnit "A"^^xsd:string ;
+    spec:dischargeCutoffVoltage "2.5"^^xsd:float ;
+    spec:hasCapacity "86000.0"^^xsd:float ;
+    spec:hasVoltage "3.2"^^xsd:float ;
+    spec:internalResistance "0.32"^^xsd:float ;
+    spec:internalResistanceUnit "mΩ"^^xsd:string ;
+    spec:manufacturer "CATL"^^xsd:string ;
+    spec:physicalDimensions "Width: 173±0.5mm; Height: 131±0.5mm; Thickness: 47.5±0.5mm"^^xsd:string ;
+    spec:temperatureRange "-20°C to 60°C"^^xsd:string ;
+    spec:voltageUnit "V"^^xsd:string ;
+    spec:weight "2.25"^^xsd:float ;
+    spec:weightUnit "kg"^^xsd:string .
+
+spec:Milliohm a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "mΩ" ;
+    rdfs:comment "Milliohm — unité de résistance interne"@fr .
+
+spec:Volt a spec:Unit,
+        owl:NamedIndividual ;
+    rdfs:label "V" ;
+    rdfs:comment "Volt — unité de tension électrique"@fr .
+
+spec:hasVoltage a owl:DatatypeProperty ;
+    rdfs:label "tension nominale"@fr ;
+    spec:maxValue "12.0"^^xsd:float ;
+    spec:minValue "0.5"^^xsd:float ;
+    spec:unit spec:Volt ;
+    rdfs:domain battery:Battery ;
+    rdfs:range xsd:float .
+
+spec:Unit a owl:Class ;
+    rdfs:label "Unité de mesure"@fr .
+
+battery:Battery a owl:Class ;
+    rdfs:label "Batterie"@fr ;
+    rdfs:comment "Batterie électrochimique rechargeable avec ses spécifications techniques."@fr .
+

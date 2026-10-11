@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: OkeyApi.Service
+  commentId: N:OkeyApi.Service
+  id: OkeyApi.Service
+  children:
+  - OkeyApi.Service.TokenService
+  langs:
+  - csharp
+  - vb
+  name: OkeyApi.Service
+  nameWithType: OkeyApi.Service
+  fullName: OkeyApi.Service
+  type: Namespace
+  assemblies:
+  - OkeyApi
+references:
+- uid: OkeyApi.Service.TokenService
+  commentId: T:OkeyApi.Service.TokenService
+  href: OkeyApi.Service.TokenService.html
+  name: TokenService
+  nameWithType: TokenService
+  fullName: OkeyApi.Service.TokenService

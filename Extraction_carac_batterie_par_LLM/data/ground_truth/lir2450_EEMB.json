@@ -1,0 +1,32 @@
+{
+  "model": "LIR2450",
+  "manufacturer": "EEMB Co., Ltd.",
+  "chemistry": "Li-ion rechargeable battery",
+
+  "voltage": 3.6,
+  "voltage_unit": "V",
+
+  "capacity": 120,
+  "capacity_unit": "mAh",
+
+  "charge_current": 24,
+  "charge_current_unit": "mA",
+
+  "discharge_current": 24,
+  "discharge_current_unit": "mA",
+
+  "internal_resistance": 400,
+  "internal_resistance_unit": "mΩ",
+
+  "temperature_range": "-20°C to 60°C",
+
+  "dimensions": "Diameter 24.5 mm (-0.2 mm); height 5.0 mm (+0.35 mm)",
+
+  "weight": 5.0,
+  "weight_unit": "g",
+
+  "cycle_life": 300,
+
+  "charge_cutoff_voltage": 4.2,
+  "discharge_cutoff_voltage": 2.75
+}

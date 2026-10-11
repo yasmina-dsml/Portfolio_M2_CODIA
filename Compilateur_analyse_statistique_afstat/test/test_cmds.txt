@@ -1,0 +1,92 @@
+Demo command pipeline
+
+===========================
+Outil (compiler + options)
+===========================
+
+
+make clean && make
+
+# [OPTION] -version afficher les membres du groupe
+./afstat_parser -version
+
+# [OPTION] -tos afficher la table des symboles après analyse
+./afstat_parser -tos exemples/prog1.afs
+
+===========================
+Fonctionnels (positifs)
+===========================
+
+# [OK] Programme minimal : test de fonctionnement source + schema + associate + analyze
+make test_positive_simple
+
+# [OK] Compute : création d'une colonne calculée à partir d'une expression arithmétique(bmi)
+# -> Vérifie expressions + ajout colonne au schéma + analyse possible derrière
+make test_positive_compute
+
+# [OK] Join : inner join entre deux datasets sur colonnes compatibles
+# -> Vérifie résolution dataset.colonne + création dataset join + analyse possible
+make test_positive_join
+
+# [OK] Join + Compute : jointure puis calcul sur colonnes du dataset joint
+# -> Vérifie enchaînement d'opérations + propagation du schéma après join
+make test_positive_join_compute
+
+# [OK] Filter numérique : filtrage avec condition sur valeurs numériques (ex: age > 50)
+# -> Vérifie parsing condition + évaluation booleenne + sortie filtrée analysable
+make test_positive_filter
+
+# [OK] Filter string : filtrage avec condition sur chaîne (ex: dept == "R&D")
+# -> Vérifie comparaison de chaînes + bonne gestion des littéraux string
+make test_positive_filter_string
+
+# [OK] Histogram : analyse de type histogramme sur une colonne
+# -> Vérifie opération ANALYZE histogram + génération/exécution correcte
+make test_positive_histogram
+
+
+===========================
+Détection d’erreurs (négatifs, messages attendus)
+===========================
+
+# [KO LEXICAL] Caractère ou lexème non reconnu par le lexer
+# -> Doit produire une erreur lexicale (avant parsing)
+make test_lexical_invalid
+
+# [KO SYNTAX] Programme ne respectant pas la grammaire (ex: ; manquant, bloc mal fermé)
+# -> Doit produire une erreur de syntaxe via Bison (yyerror)
+make test_syntax_error
+
+# [KO SEMANTIC] Colonne inconnue dans un schéma/dataset (référence invalide)
+# -> identifiant/colonne non déclarée
+make test_semantic_unknown_column
+
+# [KO SEMANTIC] Join sur colonnes incompatibles (types différents non compatibles)
+# ->  erreur de compatibilité de jointure
+make test_semantic_join_mismatch
+
+# [KO SEMANTIC] Analyse incompatible ( mean sur colonne string)
+# ->  vérification type d'opération analyze vs type de colonne
+make test_analyze_type_mismatch
+
+# [KO SEMANTIC] Expression invalide ("abc" + 3, opérandes incompatibles)
+# -> vérification de types dans compute/expressions
+make test_expr_type_mismatch
+
+# [KO SEMANTIC] Identifiant non défini (dataset ou variable non déclarée)
+# ->  résolution des identifiants
+make test_undefined_identifier
+
+# [KO SCHEMA/SOURCE] Schéma incohérent avec le CSV associé (type ou structure incorrecte)
+# ->  mismatch entre schéma et données
+make test_schema_type_mismatch
+
+# [KO SCHEMA/SOURCE] Schéma invalide / CSV non conforme (colonnes manquantes, format inattendu)
+# -> validation stricte schema/source
+make test_bad_schema
+
+====================================================================
+# [PIPELINE complet PROG1-5] Génère/compile/exécute prog1..prog5 via Makefile
+RUN=1 make test_codegen
+
+

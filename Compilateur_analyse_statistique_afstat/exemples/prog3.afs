@@ -1,0 +1,22 @@
+// Analyse avec des colonnes non utilisées
+// Même si le fichier CSV a de nombreuses colonnes, le DSL permet de ne déclarer 
+// et d'analyser que celles qui vous intéressent, simplifiant ainsi le processus.
+// Fichier CSV : "id,nom,age,ville,poids,taille,imc"
+// L'utilisateur ne s'intéresse qu'à l'âge et à la taille.
+
+source med "data/mediacal_records_full.csv";
+
+schema data_subset {
+    age integer;
+    height float;
+}
+
+associate data_subset with med;
+
+analyze data_subset {
+    mean age;
+    std_dev height;
+}
+// Résultats attendus avec les fichiers donnés
+// mean age: 51.5
+// std_dev height: 0.061

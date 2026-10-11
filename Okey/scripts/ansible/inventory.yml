@@ -1,0 +1,12 @@
+all:
+  children:
+    dev:
+    prod:
+dev:
+  hosts:
+    vm0-0:
+      ansible_host: vmProjetIntegrateurgrp0-0
+prod:
+  hosts:
+    vm0-1:
+      ansible_host: vmProjetIntegrateurgrp0-1

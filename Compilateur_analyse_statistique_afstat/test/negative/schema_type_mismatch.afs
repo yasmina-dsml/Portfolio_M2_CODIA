@@ -1,0 +1,15 @@
+// Runtime schema/type mismatch: declared column type differs from CSV content.
+// 'department' in the CSV is a string, but here it is declared as integer.
+source employees "exemples/data/employees.csv";
+
+schema bad_types {
+    id integer;
+    name string;
+    department integer; // mismatched type
+    salary float;
+}
+associate bad_types with employees;
+
+analyze bad_types {
+    summary salary;
+}

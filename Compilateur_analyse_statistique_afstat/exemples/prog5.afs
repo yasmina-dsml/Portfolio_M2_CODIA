@@ -1,0 +1,37 @@
+// Définition des sources
+source patients "data/patients_medinfo.csv";
+source visits "data/visits_info.csv";
+
+// Définition et association des schémas
+schema patient_data {
+    id integer;
+    age integer;
+    gender string;
+}
+associate patient_data with patients;
+
+schema visit_data {
+    visit_id integer;
+    patient_id integer;
+    visit_date string;
+    weight float;
+    height float;
+}
+associate visit_data with visits;
+
+// Jointure des données pour analyser le poids et la taille
+join patient_visits = patients.id inner join visits.patient_id;
+
+// Calculer le BMI pour chaque visite
+compute bmi = weight / (height * height);
+
+// Analyse sur les données jointes
+analyze patient_visits {
+    mean bmi;
+    histogram gender;
+}
+// Résultats attendus avec les fichiers donnés
+// mean bmi: 26.5
+// histogram gender:
+// M: 15
+// F: 15

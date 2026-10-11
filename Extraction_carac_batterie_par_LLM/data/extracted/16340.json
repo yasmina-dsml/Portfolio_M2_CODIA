@@ -1,0 +1,22 @@
+{
+  "model": "16340",
+  "manufacturer": "DNK Power o., Ltd.",
+  "chemistry": "unknown",
+  "voltage": 3.2,
+  "voltage_unit": "V",
+  "capacity": 500.0,
+  "capacity_unit": "mAh",
+  "charge_current": 100.0,
+  "charge_current_unit": "mA",
+  "discharge_current": 1000.0,
+  "discharge_current_unit": "mA",
+  "internal_resistance": 100.0,
+  "internal_resistance_unit": "mΩ",
+  "temperature_range": "unknown",
+  "dimensions": "Diameter 16.3 mm (+0.2/-0.1 mm); height 34.0 mm (-0.2/+0.2 mm)",
+  "weight": 17.0,
+  "weight_unit": "g",
+  "charge_cutoff_voltage": 3.65,
+  "discharge_cutoff_voltage": 2.0,
+  "confidence_score": 1.0
+}

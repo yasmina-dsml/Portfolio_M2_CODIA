@@ -1,0 +1,32 @@
+{
+  "model": "PL-9059156",
+  "manufacturer": "AA portable power corp",
+  "chemistry": "Polymer lithium-ion battery",
+
+  "voltage": 3.7,
+  "voltage_unit": "V",
+
+  "capacity": "11500",
+  "capacity_unit": "mAh",
+
+  "charge_current": 1.8,
+  "charge_current_unit": "A",
+
+  "discharge_current": 9.0,
+  "discharge_current_unit": "A",
+
+  "internal_resistance": null,
+  "internal_resistance_unit": null,
+
+  "temperature_range": "-20°C to +60°C",
+
+  "dimensions": "Thickness 9.2 mm; width 59.0 mm; length 157.0 mm (±0.5 mm)",
+
+  "weight": 196,
+  "weight_unit": "g",
+
+  "cycle_life": 300,
+
+  "charge_cutoff_voltage": 4.2,
+  "discharge_cutoff_voltage": 2.75
+}

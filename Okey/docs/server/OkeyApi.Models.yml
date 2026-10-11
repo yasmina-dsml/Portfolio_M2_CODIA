@@ -1,0 +1,53 @@
+### YamlMime:ManagedReference
+items:
+- uid: OkeyApi.Models
+  commentId: N:OkeyApi.Models
+  id: OkeyApi.Models
+  children:
+  - OkeyApi.Models.Achievements
+  - OkeyApi.Models.Utilisateur
+  langs:
+  - csharp
+  - vb
+  name: OkeyApi.Models
+  nameWithType: OkeyApi.Models
+  fullName: OkeyApi.Models
+  type: Namespace
+  assemblies:
+  - OkeyApi
+references:
+- uid: OkeyApi.Models.Achievements
+  commentId: T:OkeyApi.Models.Achievements
+  href: OkeyApi.Models.Achievements.html
+  name: Achievements
+  nameWithType: Achievements
+  fullName: OkeyApi.Models.Achievements
+- uid: OkeyApi.Models.Utilisateur
+  commentId: T:OkeyApi.Models.Utilisateur
+  parent: OkeyApi.Models
+  href: OkeyApi.Models.Utilisateur.html
+  name: Utilisateur
+  nameWithType: Utilisateur
+  fullName: OkeyApi.Models.Utilisateur
+- uid: OkeyApi.Models
+  commentId: N:OkeyApi.Models
+  href: OkeyApi.html
+  name: OkeyApi.Models
+  nameWithType: OkeyApi.Models
+  fullName: OkeyApi.Models
+  spec.csharp:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Models
+    name: Models
+    href: OkeyApi.Models.html
+  spec.vb:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Models
+    name: Models
+    href: OkeyApi.Models.html

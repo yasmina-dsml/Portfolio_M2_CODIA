@@ -1,0 +1,11 @@
+server/OkeyApi/Migrations/
+server/OkeyApi/_site/
+server/OkeyApi/api/
+server/OkeyApi/bin/
+server/OkeyApi/docs/
+server/OkeyApi/obj/
+server/OkeyApi/docfx.json
+server/OkeyApi/index.md
+server/OkeyApi/toc.yml
+server/OkeyApi/.gitignore
+server/OkeyApi/**/.DS_Store

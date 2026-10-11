@@ -1,0 +1,27 @@
+// Filter patients older than 50 and compute statistics on cholesterol.
+source patients_data "exemples/data/patients_medinfo.csv";
+source records_data "exemples/data/records.csv";
+
+schema patient_schema {
+    id integer;
+    age integer;
+    gender string;
+}
+associate patient_schema with patients_data;
+
+schema record_schema {
+    record_id integer;
+    patient_id integer;
+    cholesterol float;
+    blood_pressure float;
+}
+associate record_schema with records_data;
+
+join all_data = patients_data.id inner join records_data.patient_id;
+
+filter old_patients = all_data where all_data.age > 50;
+
+analyze old_patients {
+    mean cholesterol;
+    histogram gender;
+}

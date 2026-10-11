@@ -1,0 +1,1356 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799809cba631448718307acd1df5bb43, type: 3}
+  m_Name: 'Button clicked '
+  m_EditorClassIdentifier: 
+  assetsData:
+  - rid: 2723897597052846095
+  - rid: 2723897597052846103
+  - rid: 2723897597052846111
+  - rid: 2723897597052846119
+  - rid: 2723897597052846127
+  - rid: 2723897597052846135
+  - rid: 2723897597052846143
+  - rid: 2723897597052846151
+  - rid: 2723897597052846159
+  - rid: 2723897597052846167
+  - rid: 2723897597052846175
+  - rid: 2723897597052846183
+  currentMode: TextToSprite
+  m_Data:
+  - rid: 2723897597052846082
+  - rid: 2723897597052846083
+  - rid: 2723897597052846084
+  - rid: 2723897597052846085
+  - rid: 2723897597052846086
+  - rid: 2723897597052846094
+  preRefinedArtifact:
+    rid: -2
+  refinedArtifact:
+    rid: -2
+  selectedArtifact:
+    rid: -2
+  m_Operators:
+  - rid: 2723897597052846087
+  - rid: 2723897597052846088
+  - rid: 2723897597052846089
+  - rid: 2723897597052846090
+  - rid: 2723897597052846091
+  - rid: 2723897597052846092
+  - rid: 2723897597052846093
+  m_PreRefineOperators: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2723897597052846082
+      type: {class: FeedbackManager, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_Disliked:
+          m_Values: []
+    - rid: 2723897597052846083
+      type: {class: DefaultStyleData, ns: Unity.Muse.Sprite.Data, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846084
+      type: {class: MainUI/UISize, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_NodeListWidth: 300
+        m_NodeListRefineWidth: 300
+        m_AssetListRefineWidth: 200
+    - rid: 2723897597052846085
+      type: {class: SessionData, ns: Unity.Muse.Sprite.Data, asm: Unity.Muse.Sprite}
+      data:
+        m_SessionId: c593c2bc-b44b-4a62-a409-5d9552b7700b
+        sessionLoaded: 
+    - rid: 2723897597052846086
+      type: {class: BookmarkManager, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_BookmarkedArtifacts:
+          m_Values: []
+        m_IsFilterEnabled: 0
+    - rid: 2723897597052846087
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846088
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846089
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846090
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 23340
+          - 0
+          - 0
+          - cb1bb903-4e91-4682-bff2-4671555e8f5d
+          - 0
+          - 0
+          - 
+          - 
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846091
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846092
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846093
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846094
+      type: {class: GenerateCountData, ns: Unity.Muse.Sprite.Data, asm: Unity.Muse.Sprite}
+      data:
+        m_Counter: 0
+    - rid: 2723897597052846095
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: Error-2bdda7d5-361c-4668-b8ee-a92af3faf32a
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846096
+        - rid: 2723897597052846097
+        - rid: 2723897597052846098
+        - rid: 2723897597052846099
+        - rid: 2723897597052846100
+        - rid: 2723897597052846101
+        - rid: 2723897597052846102
+        history:
+        - rid: 2723897597052846095
+    - rid: 2723897597052846096
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846097
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button clicked '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846098
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846099
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 48748
+          - 0
+          - 0
+          - c4a37424-aff2-4190-89ab-6b8f307bdaf4
+          - 0
+          - ab0d69da-7f0e-41b9-ab4f-0dbe2bf9614a
+          - Default Style (Animals)
+          - Style specialized on generating animals based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846100
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846101
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846102
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846103
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: Error-a2cf1878-dfc5-4bf1-9dab-db54404d4b49
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846104
+        - rid: 2723897597052846105
+        - rid: 2723897597052846106
+        - rid: 2723897597052846107
+        - rid: 2723897597052846108
+        - rid: 2723897597052846109
+        - rid: 2723897597052846110
+        history:
+        - rid: 2723897597052846103
+    - rid: 2723897597052846104
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846105
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button clicked '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846106
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846107
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 25092
+          - 0
+          - 0
+          - c4a37424-aff2-4190-89ab-6b8f307bdaf4
+          - 0
+          - ab0d69da-7f0e-41b9-ab4f-0dbe2bf9614a
+          - Default Style (Animals)
+          - Style specialized on generating animals based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846108
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846109
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846110
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846111
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: Error-19307278-c91d-4c1b-8ea1-b53319a431a4
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846112
+        - rid: 2723897597052846113
+        - rid: 2723897597052846114
+        - rid: 2723897597052846115
+        - rid: 2723897597052846116
+        - rid: 2723897597052846117
+        - rid: 2723897597052846118
+        history:
+        - rid: 2723897597052846111
+    - rid: 2723897597052846112
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846113
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button clicked '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846114
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846115
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 19162
+          - 0
+          - 0
+          - c4a37424-aff2-4190-89ab-6b8f307bdaf4
+          - 0
+          - ab0d69da-7f0e-41b9-ab4f-0dbe2bf9614a
+          - Default Style (Animals)
+          - Style specialized on generating animals based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846116
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846117
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846118
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846119
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: Error-9d5ea9f4-3adc-49bd-861b-df3c5eb4887a
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846120
+        - rid: 2723897597052846121
+        - rid: 2723897597052846122
+        - rid: 2723897597052846123
+        - rid: 2723897597052846124
+        - rid: 2723897597052846125
+        - rid: 2723897597052846126
+        history:
+        - rid: 2723897597052846119
+    - rid: 2723897597052846120
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846121
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button clicked '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846122
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846123
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 47263
+          - 0
+          - 0
+          - c4a37424-aff2-4190-89ab-6b8f307bdaf4
+          - 0
+          - ab0d69da-7f0e-41b9-ab4f-0dbe2bf9614a
+          - Default Style (Animals)
+          - Style specialized on generating animals based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846124
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846125
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846126
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846127
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: Error-3d9536c1-10cf-4276-98aa-da98d0d846f2
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846128
+        - rid: 2723897597052846129
+        - rid: 2723897597052846130
+        - rid: 2723897597052846131
+        - rid: 2723897597052846132
+        - rid: 2723897597052846133
+        - rid: 2723897597052846134
+        history:
+        - rid: 2723897597052846127
+    - rid: 2723897597052846128
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846129
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846130
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846131
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 54216
+          - 0
+          - 0
+          - c4a37424-aff2-4190-89ab-6b8f307bdaf4
+          - 0
+          - ab0d69da-7f0e-41b9-ab4f-0dbe2bf9614a
+          - Default Style (Animals)
+          - Style specialized on generating animals based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846132
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846133
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846134
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846135
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: Error-4a6ceee8-c2ee-4798-8601-87fa749e0fae
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846136
+        - rid: 2723897597052846137
+        - rid: 2723897597052846138
+        - rid: 2723897597052846139
+        - rid: 2723897597052846140
+        - rid: 2723897597052846141
+        - rid: 2723897597052846142
+        history:
+        - rid: 2723897597052846135
+    - rid: 2723897597052846136
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846137
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846138
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846139
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 55746
+          - 0
+          - 0
+          - c4a37424-aff2-4190-89ab-6b8f307bdaf4
+          - 0
+          - ab0d69da-7f0e-41b9-ab4f-0dbe2bf9614a
+          - Default Style (Animals)
+          - Style specialized on generating animals based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846140
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846141
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846142
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846143
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: Error-cb14cc86-052e-4495-adbd-ceefa83d8223
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846144
+        - rid: 2723897597052846145
+        - rid: 2723897597052846146
+        - rid: 2723897597052846147
+        - rid: 2723897597052846148
+        - rid: 2723897597052846149
+        - rid: 2723897597052846150
+        history:
+        - rid: 2723897597052846143
+    - rid: 2723897597052846144
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846145
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846146
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846147
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 47573
+          - 0
+          - 0
+          - c4a37424-aff2-4190-89ab-6b8f307bdaf4
+          - 0
+          - ab0d69da-7f0e-41b9-ab4f-0dbe2bf9614a
+          - Default Style (Animals)
+          - Style specialized on generating animals based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846148
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846149
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846150
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846151
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: Error-7d26ad19-7ff3-41bf-8aa6-0a1b108c87c0
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846152
+        - rid: 2723897597052846153
+        - rid: 2723897597052846154
+        - rid: 2723897597052846155
+        - rid: 2723897597052846156
+        - rid: 2723897597052846157
+        - rid: 2723897597052846158
+        history:
+        - rid: 2723897597052846151
+    - rid: 2723897597052846152
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846153
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846154
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846155
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 4097
+          - 0
+          - 0
+          - c4a37424-aff2-4190-89ab-6b8f307bdaf4
+          - 0
+          - ab0d69da-7f0e-41b9-ab4f-0dbe2bf9614a
+          - Default Style (Animals)
+          - Style specialized on generating animals based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846156
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846157
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846158
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846159
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: 
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846160
+        - rid: 2723897597052846161
+        - rid: 2723897597052846162
+        - rid: 2723897597052846163
+        - rid: 2723897597052846164
+        - rid: 2723897597052846165
+        - rid: 2723897597052846166
+        history:
+        - rid: 2723897597052846159
+    - rid: 2723897597052846160
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846161
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846162
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846163
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 8988
+          - 0
+          - 0
+          - cb1bb903-4e91-4682-bff2-4671555e8f5d
+          - 0
+          - 9070f7e6-5f75-4809-b11e-6b27c0aa1139
+          - Default Style (Vegetation)
+          - Style specialized on generating vegetation based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846164
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846165
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846166
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846167
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: 
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846168
+        - rid: 2723897597052846169
+        - rid: 2723897597052846170
+        - rid: 2723897597052846171
+        - rid: 2723897597052846172
+        - rid: 2723897597052846173
+        - rid: 2723897597052846174
+        history:
+        - rid: 2723897597052846167
+    - rid: 2723897597052846168
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846169
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846170
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846171
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 17934
+          - 0
+          - 0
+          - cb1bb903-4e91-4682-bff2-4671555e8f5d
+          - 0
+          - 9070f7e6-5f75-4809-b11e-6b27c0aa1139
+          - Default Style (Vegetation)
+          - Style specialized on generating vegetation based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846172
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846173
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846174
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846175
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: 
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846176
+        - rid: 2723897597052846177
+        - rid: 2723897597052846178
+        - rid: 2723897597052846179
+        - rid: 2723897597052846180
+        - rid: 2723897597052846181
+        - rid: 2723897597052846182
+        history:
+        - rid: 2723897597052846175
+    - rid: 2723897597052846176
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846177
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846178
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846179
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 10793
+          - 0
+          - 0
+          - cb1bb903-4e91-4682-bff2-4671555e8f5d
+          - 0
+          - 9070f7e6-5f75-4809-b11e-6b27c0aa1139
+          - Default Style (Vegetation)
+          - Style specialized on generating vegetation based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846180
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846181
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846182
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846183
+      type: {class: SpriteMuseArtifact, ns: Unity.Muse.Sprite.Artifacts, asm: Unity.Muse.Sprite}
+      data:
+        Guid: 
+        Seed: 0
+        m_Operators:
+        - rid: 2723897597052846184
+        - rid: 2723897597052846185
+        - rid: 2723897597052846186
+        - rid: 2723897597052846187
+        - rid: 2723897597052846188
+        - rid: 2723897597052846189
+        - rid: 2723897597052846190
+        history:
+        - rid: 2723897597052846183
+    - rid: 2723897597052846184
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          version: 0.0.1
+          settings:
+          - TextToSprite
+          - 4
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846185
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          version: 0.0.1
+          settings:
+          - 'Button '
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846186
+      type: {class: NegativePromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: NegativePromptOperator
+          version: 1.0
+          settings:
+          - 
+          enabled: 1
+          assembly: 
+    - rid: 2723897597052846187
+      type: {class: SpriteGeneratorSettingsOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SpriteGeneratorSettingsOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - 0.85
+          - 512
+          - 512
+          - 1
+          - 1
+          - 59124
+          - 0
+          - 0
+          - cb1bb903-4e91-4682-bff2-4671555e8f5d
+          - 0
+          - 9070f7e6-5f75-4809-b11e-6b27c0aa1139
+          - Default Style (Vegetation)
+          - Style specialized on generating vegetation based on Happy Harvest style.
+          - 
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846188
+      type: {class: KeyImageOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.KeyImageOperator
+          version: 0.0.1
+          settings:
+          - 
+          - 
+          - True
+          - 512
+          - 512
+          - 0.5
+          enabled: 1
+          assembly: Unity.Muse.Sprite
+    - rid: 2723897597052846189
+      type: {class: SpriteRefiningMaskOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data: 
+    - rid: 2723897597052846190
+      type: {class: SessionOperator, ns: Unity.Muse.Sprite.Operators, asm: Unity.Muse.Sprite}
+      data:
+        m_OperatorData:
+          type: Unity.Muse.Sprite.Operators.SessionOperator
+          version: 0.0.1
+          settings:
+          - c593c2bc-b44b-4a62-a409-5d9552b7700b
+          enabled: 0
+          assembly: Unity.Muse.Sprite

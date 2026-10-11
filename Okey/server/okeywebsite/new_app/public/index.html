@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="./favicon-32x32.png">
+  <title>OkeyGame: Le meilleur jeu de Okey en ligne</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+  <nav id="navbar"
+    class="fixed w-full z-10 h-28 flex items-center bg-transparent backdrop-filter backdrop-blur-lg bg-green-800">
+    <div class="flex items-center justify-center w-full">
+      <img src="./resources/imgs/logo.png" alt="Logo" class="h-20 mr-4">
+      <div class="hidden md:flex items-center space-x-4">
+        <a href="#tutoriel" id="tutoNav" class="text-white px-3 py-2 rounded-md text-sm font-medium">Tutoriel</a>
+        <a href="#download" id="downNav" class="text-white px-3 py-2 rounded-md text-sm font-medium">Télécharger le
+          jeu</a>
+        <div class="relative">
+          <button id="toggleButton"
+            class="text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none">Langue</button>
+          <div id="dropdownMenu"
+            class="hidden absolute right-0 mt-2 w-48 bg-green-800 rounded-md shadow-lg origin-top-right ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none z-20">
+            <a href="#" onclick="changeLanguage('fr')"
+              class="block px-4 py-2 text-sm text-white hover:bg-green-700">Français</a>
+            <a href="#" onclick="changeLanguage('en')"
+              class="block px-4 py-2 text-sm text-white hover:bg-green-700">English</a>
+            <a href="#" onclick="changeLanguage('tr')"
+              class="block px-4 py-2 text-sm text-white hover:bg-green-700">Türkçe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center pr-4">
+      <button id="toggleMobileMenu"
+        class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white">
+        <svg id="openIcon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+        <svg id="closeIcon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+
+  <div id="mobileMenu"
+    class="hidden fixed top-0 left-0 w-full h-full bg-green-800 pt-5 pb-3 px-3 flex flex-col items-center z-50 shadow-lg overflow-scroll">
+    <button id="closeMobileMenu" class="self-end pr-3 pt-3 text-gray-700">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <img src="./resources/imgs/logo.png" alt="Logo" class="w-40 h-40 my-5">
+    <div class="flex flex-col justify-center items-center space-y-10">
+      <a href="#tutoriel" class="text-white px-6 py-5 rounded-md text-3xl font-light">Tutoriel</a>
+      <a href="#download" class="text-white px-6 py-5 rounded-md text-3xl font-light">Télécharger</a>
+      <a href="#" class="text-white px-6 py-5 rounded-md text-3xl font-light">Langue</a>
+    </div>
+  </div>
+
+  <div class='text-white bg-cover bg-center h-screen'>
+    <div class='bg-cover h-screen bg-center flex flex-col justify-center items-center'
+      style="background-image: url('./resources/imgs/bg-green.png')">
+      <div class='max-w-[1000px] mx-4 flex-1 pt-52 ml-10'>
+        <div class="md:flex md:justify-between items-center">
+          <div class="ml-1 md:w-full md:mb-4">
+            <h1 id="first" class='md:text-4xl text-4xl font-bold mb-2'>OkeyGame: Partout avec qui vous voulez</h1>
+            <p id="second" class='font-normal md:text-l text-white mb-4'>Faites preuve de stratégie dans ce jeu excitant
+              et compétitif, jouez en ligne avec vos amis, votre famille ou avec notre communauté de joueurs.</p>
+          </div>
+          <div class="md:flex md:flex-col md:items-center md:w-full">
+            <video class='max-w-full h-auto md:max-w-[500px] md:h-auto md:w-full' autoplay muted loop>
+              <source src="resources/vids/video-site.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <div class="md:mt-4 space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+          <button id="osButton" class="button btn hover:text-black py-2 px-4 rounded">
+            Essayer sur
+          </button>
+          <button id="android" class="button btn hover:text-black py-2 px-4 rounded">
+            Essayer sur Android
+          </button>
+          <style>
+            .button {
+              background-color: #E3E3BB;
+              color: black;
+            }
+
+            .button:hover {
+              background-color: #d1d1ae;
+              color: black;
+            }
+          </style>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="flex h-1/4">
+    <div class="w-1/2 h-full flex items-center justify-center">
+      <img src="./resources/imgs/history_pic.jpeg" alt="Image" class="h-full w-auto max-h-full max-w-full ml-8" />
+    </div>
+    <div class="w-1/2 p-8 flex flex-col justify-center">
+      <h3 id="title1" class="font-bold text-xl">Jouer en partie rapide avec notre communauté</h3>
+      <p id="subtxt1" class="font-normal text-m">Nous avons des salles de jeux publiques pour pouvoir jouer contre des
+        adversaires faisant preuve de stratégie et de vivacité d&lsquo;esprit.</p><br />
+      <h3 id="title2" class="font-bold text-xl">Créez ou rejoignez des salles de jeux privées</h3>
+      <p id="subtxt2" class="font-normal text-m">Jouer entre amis ou avec votre famille en toute convivialité et avec
+        l&lsquo;esprit de rivalité. </p><br />
+      <h3 id="title3" class="font-bold text-xl">Votre jeu sur Desktop et dans votre poche !</h3>
+      <p id="subtxt3" class="font-normal text-m">Notre jeu est disponnible sur Windows, MacOS, Linux ainsi que Android.
+      </p>
+    </div>
+  </div>
+
+
+  <div id="tutoriel" class="text-center pt-32">
+    <h3 id="tutovid" class="text-3xl md:text-4xl font-bold">Apprendre à jouer</h3>
+  </div>
+  <div class="px-20">
+    <h4 id="tuto-head" class="text-3xl md:text-3xl font-bold pt-10">Objectif du jeu</h4>
+    <p id="tuto-obj" class="text-justify">Le but du jeu est d'être le premier joueur à former une main complète,
+      composée d'ensembles
+      (trois tuiles ou plus de même nombre mais de couleurs différentes, par exemple : rouge 7, noir 7, bleu 7)
+      et/ou de suites (trois tuiles ou plus de la même couleur qui se suivent, par exemple : rouge 3, 4, 5). Le joker
+      peut remplacer n'importe quelle tuile pour compléter une série ou une manche.
+      Un joueur peut déclarer sa main s'il a formé une combinaison valide (un mélange d'ensembles et de séries).
+      La partie se termine immédiatement et le joueur est déclaré vainqueur.</p>
+
+    <h4 id="obj-head" class="text-3xl md:text-3xl font-bold pt-10">Objets du jeu</h4>
+    <p id="obj-desc" class="text-justify">Le but du jeu est d'être le premier joueur à former une main complète,
+      composée d'ensembles</p>
+    <ul class="list-disc px-10">
+
+      <ul class="list-disc px-10">
+        <li class="flex items-center justify-between">
+          <p id="obj-u1">104 tuiles numérotées de 1 à 13 dans quatre couleurs différentes (rouge, noir, bleu et jaune), chaque
+            couleur comportant deux séries de chaque numéro.</p>
+          <img src="./resources/imgs/img1.png" alt="image description" class="ml-1" />
+        </li>
+        <li class="flex items-center justify-between">
+          <p id="obj-u2">2 jokers marqués d'une étoile.</p>
+          <img src="./resources/imgs/jokers.png" alt="image description" class="ml-1" />
+        </li>
+      </ul>
+      <li id="obj-u3">104 tuiles numérotées de 1 à 13 dans quatre couleurs différentes (rouge, noir, bleu et jaune), chaque couleur
+        comportant deux séries de chaque chiffre.</li>
+    </ul>
+    <p id="obj-end" class="text-justify">Les joueurs utilisent également des casiers pour cacher leurs tuiles aux
+      autres joueurs.</p>
+
+    <h4 id="start-head" class="text-3xl md:text-3xl font-bold pt-10">Joueur qui débute la partie</h4>
+    <p id="start-p" class="text-justify">Le joueur dont l'indicateur de tour est vert commence la partie en se défaussant
+      d'une tuile au centre de la table.</p>
+    <img src="./resources/imgs/start.png" class="">
+
+
+    <h4 id="turns-head" class="text-3xl md:text-3xl font-bold pt-10">Tours</h4>
+    <p id="turns-desc" class="text-justify">Les joueurs se succèdent dans le sens inverse des aiguilles d'une montre.
+    </p>
+    <p id="turns-p" class="text-justify">Pendant son tour, un joueur peut:</p>
+    <ul class="list-disc px-10">
+      <li id="turn-u1">Tirez une tuile du stock au centre de la table (la pile de tuiles face cachée).</li>
+      <li id="turn-u2">Tirez la dernière tuile défaussée de la pile à gauche du joueur.</li>
+    </ul>
+
+    <img class="h-36" src="./resources/imgs/turns.png" alt="">
+
+    <h4 id="arr-head" class="text-3xl md:text-3xl font-bold pt-10">Arrangement des tuiles</h4>
+
+    <p id="arr-p">Le but est d'organiser les tuiles sur le support en ensembles et en séries :</p>
+
+    <ul id="tuto-list" class="list-disc px-10">
+      <li class="flex items-center justify-between pb-10">
+        <p id="arr-u1">Ensembles : Groupes de trois tuiles ou plus du même nombre mais de couleurs différentes.</p>
+        <img class="h-36" src="./resources/imgs/suite-1.png" alt="">
+      </li>
+      <li class="flex items-center justify-between pb-10">
+        <p id="arr-u2">Série : Séquence de trois nombres consécutifs ou plus de la même couleur.</p>
+        <img class="h-36" src="./resources/imgs/suite-2.png" alt="">
+      </li>
+    </ul>
+
+    <h4 id="joker-head" class="text-3xl md:text-3xl font-bold pt-10">Jokers</h4>
+
+    <p id="joker-p">Les jokers peuvent être utilisés pour remplacer n'importe quelle tuile.</p>
+    <ul id="tuto-list" class="list-disc px-10">
+
+
+      <li class="flex items-center justify-between pb-10">
+        <p id="joker-u1">Dans une série</p>
+        <img class="h-36" src="./resources/imgs/jk-2.png" alt="">
+      </li>
+
+
+
+      <li class="flex items-center justify-between">
+        <p id="joker-u2">Dans une suite</p>
+        <img class="h-36" src="./resources/imgs/jk-1.png" alt="">
+      </li>
+
+    </ul>
+
+    <h4 id="end-head" class="text-3xl md:text-3xl font-bold pt-10">Finir un tour</h4>
+    <p id="end-desc" class="text-justify">À la fin de son tour, le joueur doit défausser une tuile sur la pile située à
+      sa droite.</p>
+    <img class="h-36" src="./resources/imgs/end-tour.png" alt="">
+
+    <h4 id="win-head" class="text-3xl md:text-3xl font-bold pt-10">Gagner</h4>
+    <p id="win-desc" class="text-justify pb-10">Un joueur gagne en organisant les 14 tuiles de son rack en ensembles
+      valides et en courses et en se débarrassant de sa dernière tuile.</p>
+
+
+
+  </div>
+
+  <div id="download" class="bg-green-800 text-white">
+    <div class="mx-10 py-20 flex h-1/4">
+      <div class="w-1/2 h-full flex flex-col justify-center">
+        <h1 id="downloadgametitle" class="font-bold text-4xl pb-5">Téléchargez OkeyGame</h1>
+        <p id="downloadgametxt" class="text-justify">Notre jeu est disponnible sur Desktop (Windows) et Mobile
+          (Android). Installer le jeu sans s&lsquo;inscrire suffis pour pouvoir y jouer et rejoindre notre communauté !
+        </p>
+      </div>
+      <div class="w-1/2 pt-3 flex flex-col justify-center mx-10">
+
+        <div class="pb-5 flex justify-between">
+          <button id="windows" class="button btn text-black py-2 px-4 rounded">
+            Essayer sur Windows
+          </button>
+          <button id="mac" class="button btn text-black py-2 px-4 rounded">
+            Essayer sur MacOS
+          </button>
+          <button id="linux" class="button btn text-black py-2 px-4 rounded">
+            Essayer sur Linux
+          </button>
+        </div>
+
+        <button id="android" class="button btn text-black py-2 px-4 rounded">
+          Essayer sur Android
+        </button>
+
+        <style>
+          .button {
+            background-color: #E3E3BB;
+            color: black;
+          }
+
+          .button:hover {
+            background-color: #d1d1ae;
+            color: black;
+          }
+        </style>
+
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="bg-gray-800 text-white pt-8 pb-2 flex flex-col items-center justify-center">
+    <div class="flex items-center mb-4">
+      <div class="flex flex-col items-center mr-5">
+        <img src="./resources/imgs/logo.png" alt="Logo du jeu" class="h-20 mb-2" />
+      </div>
+      <div class="flex flex-col items-center ml-20">
+        <h2 id="footertitle" class="text-xl font-semibold">Nous rejoindre</h2>
+
+        <a href="https://www.instagram.com/okey_bytes/" target="_blank" rel="noopener noreferrer" class="flex">
+          <p id="ig" class="mr-2">Sur Instagram</p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=""
+            viewBox="0 0 16 16">
+            <path
+              d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="flex items-center justify-center w-full">
+      <p id="legaltxt">OkeyBytes Studio tous droits réservés</p>
+    </div>
+  </footer>
+
+
+
+
+
+  <script>
+
+    var actualLang = 'fr';
+
+    var translations = {
+      fr: {
+        nav: {
+          tuto: "Tutoriel",
+          download: "Télécharger le jeu",
+          langue: "Langue",
+        },
+        heading: {
+          first: "OkeyGame: Partout avec qui vous voulez",
+          second: "Faites preuve de stratégie dans ce jeu excitant et compétitif, jouez en ligne avec vos amis, votre famille ou avec notre communauté de joueurs."
+
+        },
+        history: {
+          first: {
+            title: "Jouer en partie rapide avec notre communauté",
+            subtext: "Nous avons des salles de jeux publiques pour pouvoir jouer contre des adversaires faisant preuve de stratégie et de vivacité d‘esprit.",
+          },
+          second: {
+            title: "Créez ou rejoignez des salles de jeux privées",
+            subtext: "Jouer entre amis ou avec votre famille en toute convivialité et avec l‘esprit de rivalité.",
+          },
+          third: {
+            title: "Votre jeu sur Desktop et dans votre poche !",
+            subtext: "Notre jeu est disponnible sur Windows, MacOS, Linux ainsi que Android."
+          }
+        },
+        learn: "Apprendre à jouer",
+        download: {
+          title: "Téléchargez OkeyGame",
+          subtext: "Notre jeu est disponnible sur Desktop (Windows) et Mobile (Android). Installer le jeu sans s‘inscrire suffis pour pouvoir y jouer et rejoindre notre communauté !",
+          btns: {
+            windows: "Essayer sur Windows",
+            macos: "Essayer sur MacOS",
+            linux: "Essayer sur Linux",
+            android: "Essayer sur Android"
+          }
+        },
+        footer: {
+          follow: {
+            title: "Nous suivre",
+            subtext: "Sur Instagram"
+          },
+          legal: "OkeyBytes Studio tous droits réservés"
+        },
+        tryon: "Essayer sur",
+        tutoriel: {
+                    objectifs: {
+                        heading: "Objectif du jeu",
+                        desc: "Le but du jeu est d'être le premier joueur à former une main complète, composée d'ensembles (trois tuiles ou plus de même nombre mais de couleurs différentes, par exemple : rouge 7, noir 7, bleu 7) et/ou de suites (trois tuiles ou plus de la même couleur qui se suivent, par exemple : rouge 3, 4, 5). Le joker peut remplacer n'importe quelle tuile pour compléter une série ou une manche. Un joueur peut déclarer sa main s'il a formé une combinaison valide (un mélange d'ensembles et de séries). La partie se termine immédiatement et le joueur est déclaré vainqueur."
+                    },
+                    obj: {
+                        head: "Objets du jeu",
+                        list: {
+                            p: "Le but du jeu est d'être le premier joueur à former une main complète, composée d'ensembles",
+                            u1: "104 tuiles numérotées de 1 à 13 dans quatre couleurs différentes (rouge, noir, bleu et jaune), chaque couleur comportant deux séries de chaque numéro.",
+                            u2: "2 jokers marqués d'une étoile.",
+                            u3: "104 tuiles numérotées de 1 à 13 dans quatre couleurs différentes (rouge, noir, bleu et jaune), chaque couleur comportant deux séries de chaque chiffre."
+                        },
+                        p: "Les joueurs utilisent également des casiers pour cacher leurs tuiles aux autres joueurs."
+                    },
+                    gamestart: {
+                        head: "Joueur qui débute la partie",
+                        p: "Le joueur dont l'indicateur de tour est vert commence la partie en se défaussant d'une tuile au centre de la table."
+                    },
+                    tours: {
+                        head: "Tours",
+                        p: "Les joueurs se succèdent dans le sens inverse des aiguilles d'une montre.",
+                        list: {
+                            head: "Pendant son tour, un joueur peut:",
+                            u1: "Tirez une tuile du stock au centre de la table (la pile de tuiles face cachée).",
+                            u2: "Tirez la dernière tuile défaussée de la pile à gauche du joueur."
+                        }
+                    },
+                    arr: {
+                        head: "Arrangement des tuiles",
+                        p: "Le but est d'organiser les tuiles sur le support en ensembles et en séries :",
+                        list: {
+                            u1: "Ensembles : Groupes de trois tuiles ou plus du même nombre mais de couleurs différentes.",
+                            u2: "Série : Séquence de trois nombres consécutifs ou plus de la même couleur."
+                        }
+                    },
+                    jokers: {
+                        head: "Jokers",
+                        list: {
+                            u1: "Dans une série",
+                            u2: "Dans une suite"
+                        }
+                    },
+                    fintour: {
+                        head :"Finir un tour",
+                        p: "À la fin de son tour, le joueur doit défausser une tuile sur la pile située à sa droite."
+                    },
+                    win: {
+                        head: "Gagner",
+                        p: "Un joueur gagne en organisant les 14 tuiles de son rack en ensembles valides et en courses et en se débarrassant de sa dernière tuile."
+                    }
+                }
+      },
+      en: {
+        nav: {
+          tuto: "Tutorial",
+          download: "Download the Game",
+          langue: "Language",
+        },
+        heading: {
+          first: "OkeyGame: Play with Anyone, Anywhere",
+          second: "Use your strategy in this exciting and competitive game, play online with your friends, family, or our player community."
+        },
+        history: {
+          first: {
+            title: "Play a Quick Game with Our Community",
+            subtext: "We have public game rooms where you can play against opponents with strategy and quick thinking.",
+          },
+          second: {
+            title: "Create or Join Private Game Rooms",
+            subtext: "Play with friends or family in a friendly and competitive environment.",
+          },
+          third: {
+            title: "Your Game on Desktop and in Your Pocket!",
+            subtext: "Our game is available on Windows, MacOS, Linux, and Android."
+          }
+        },
+        learn: "Learn to Play",
+        download: {
+          title: "Download OkeyGame",
+          subtext: "Our game is available on Desktop (Windows) and Mobile (Android). Install the game without registration to play and join our community!",
+          btns: {
+            windows: "Try on Windows",
+            macos: "Try on MacOS",
+            linux: "Try on Linux",
+            android: "Try on Android"
+          }
+        },
+        footer: {
+          follow: {
+            title: "Follow Us",
+            subtext: "On Instagram"
+          },
+          legal: "OkeyBytes Studio all rights reserved"
+        },
+        tryon: "Try on",
+        tutorial: {
+    objectives: {
+        heading: "Objective of the Game",
+        desc: "The goal of the game is to be the first player to form a complete hand, consisting of sets (three or more tiles of the same number but different colors, for example: red 7, black 7, blue 7) and/or runs (three or more consecutive tiles of the same color, for example: red 3, 4, 5). The joker can replace any tile to complete a set or run. A player can declare their hand if they have formed a valid combination (a mix of sets and runs). The game ends immediately and the player is declared the winner."
+    },
+    obj: {
+        head: "Game Items",
+        list: {
+            p: "The goal of the game is to be the first player to form a complete hand, consisting of sets",
+            u1: "104 tiles numbered 1 to 13 in four different colors (red, black, blue, and yellow), each color having two sets of each number.",
+            u2: "2 jokers marked with a star.",
+            u3: "104 tiles numbered 1 to 13 in four different colors (red, black, blue, and yellow), each color having two sets of each number."
+        },
+        p: "Players also use racks to hide their tiles from other players."
+    },
+    gamestart: {
+        head: "Starting Player",
+        p: "The player with the green turn indicator starts the game by discarding a tile to the center of the table."
+    },
+    turns: {
+        head: "Turns",
+        p: "Players take turns in a counterclockwise direction.",
+        list: {
+            head: "During their turn, a player can:",
+            u1: "Draw a tile from the stock in the center of the table (the pile of face-down tiles).",
+            u2: "Draw the last discarded tile from the pile to the left of the player."
+        }
+    },
+    arr: {
+        head: "Tile Arrangement",
+        p: "The goal is to organize the tiles on the rack into sets and runs:",
+        list: {
+            u1: "Sets: Groups of three or more tiles of the same number but different colors.",
+            u2: "Runs: Sequences of three or more consecutive numbers of the same color."
+        }
+    },
+    jokers: {
+        head: "Jokers",
+        list: {
+            u1: "In a set",
+            u2: "In a run"
+        }
+    },
+    fintour: {
+        head: "Ending a Turn",
+        p: "At the end of their turn, the player must discard a tile onto the pile to their right."
+    },
+    win: {
+        head: "Winning",
+        p: "A player wins by arranging the 14 tiles on their rack into valid sets and runs and discarding their last tile."
+    }
+}
+      },
+      tr: {
+        nav: {
+          tuto: "Eğitim",
+          download: "Oyunu İndir",
+          langue: "Dil",
+        },
+        heading: {
+          first: "OkeyGame: İstediğin Kişiyle Her Yerde",
+          second: "Bu heyecan verici ve rekabetçi oyunda stratejinizi kullanın, arkadaşlarınızla, ailenizle veya oyuncu topluluğumuzla çevrimiçi oynayın."
+        },
+        history: {
+          first: {
+            title: "Topluluğumuzla Hızlı Bir Oyun Oynayın",
+            subtext: "Strateji ve zekâ dolu rakiplerle oynayabilmeniz için kamuya açık oyun odalarımız var.",
+          },
+          second: {
+            title: "Özel Oyun Odaları Oluşturun veya Katılın",
+            subtext: "Arkadaşlarınız veya ailenizle samimi ve rekabetçi bir ortamda oynayın.",
+          },
+          third: {
+            title: "Oyununuz Masaüstünde ve Cebinizde!",
+            subtext: "Oyunumuz Windows, MacOS, Linux ve Android üzerinde mevcut."
+          }
+        },
+        learn: "Oynamayı Öğren",
+        download: {
+          title: "OkeyGame'i İndirin",
+          subtext: "Oyunumuz Masaüstü (Windows) ve Mobil (Android) üzerinde mevcuttur. Oynamak ve topluluğumuza katılmak için oyunu kaydolmadan yüklemeniz yeterlidir!",
+          btns: {
+            windows: "Windows'ta Deneyin",
+            macos: "MacOS'ta Deneyin",
+            linux: "Linux'ta Deneyin",
+            android: "Android'de Deneyin"
+          }
+        },
+        footer: {
+          follow: {
+            title: "Bizi Takip Edin",
+            subtext: "Instagram'da"
+          },
+          legal: "OkeyBytes Studio tüm hakları saklıdır"
+        },
+        tryon: "üzerinde deneyin",
+        tutorial: {
+          objectives: {
+        heading: "Oyunun Amacı",
+        desc: "Oyunun amacı, ilk olarak tam bir el oluşturan oyuncu olmaktır. Bu el, setlerden (aynı numaradan fakat farklı renklerde üç veya daha fazla taş, örneğin: kırmızı 7, siyah 7, mavi 7) ve/veya dizilerden (aynı renkte ardışık üç veya daha fazla taş, örneğin: kırmızı 3, 4, 5) oluşur. Joker, bir seti veya diziyi tamamlamak için herhangi bir taşı yerine geçebilir. Bir oyuncu geçerli bir kombinasyon (setler ve dizilerin karışımı) oluşturduğunda elini açabilir. Oyun hemen biter ve oyuncu kazanan olarak ilan edilir."
+    },
+    obj: {
+        head: "Oyunun Nesneleri",
+        list: {
+            p: "Oyunun amacı, ilk olarak tam bir el oluşturan oyuncu olmaktır. Bu el, setlerden",
+            u1: "1'den 13'e kadar numaralandırılmış 104 taş, dört farklı renkte (kırmızı, siyah, mavi ve sarı), her renkte her numaradan iki set.",
+            u2: "Yıldız işareti ile işaretlenmiş 2 joker.",
+            u3: "1'den 13'e kadar numaralandırılmış 104 taş, dört farklı renkte (kırmızı, siyah, mavi ve sarı), her renkte her numaradan iki set."
+        },
+        p: "Oyuncular ayrıca taşlarını diğer oyunculardan gizlemek için raflar kullanırlar."
+    },
+    gamestart: {
+        head: "Oyunu Başlatan Oyuncu",
+        p: "Yeşil tur göstergesine sahip oyuncu, oyuna bir taşı masanın ortasına atarak başlar."
+    },
+    turns: {
+        head: "Turlar",
+        p: "Oyuncular saat yönünün tersine sırayla oynarlar.",
+        list: {
+            head: "Turunda bir oyuncu şunları yapabilir:",
+            u1: "Masadaki stoğundan bir taş çekmek (yüzü aşağı dönük taş yığını).",
+            u2: "Oyuncunun solundaki yığından son atılan taşı çekmek."
+        }
+    },
+    arr: {
+        head: "Taşların Düzenlenmesi",
+        p: "Amaç, raf üzerindeki taşları setler ve diziler halinde düzenlemektir:",
+        list: {
+            u1: "Setler: Aynı numaradan fakat farklı renklerde üç veya daha fazla taş grubu.",
+            u2: "Diziler: Aynı renkte ardışık üç veya daha fazla sayı."
+        }
+    },
+    jokers: {
+        head: "Jokerler",
+        p: "",
+        list: {
+            u1: "Bir sette",
+            u2: "Bir dizide"
+        }
+    },
+    fintour: {
+        head: "Turun Bitirilmesi",
+        p: "Turunun sonunda, oyuncu sağındaki yığına bir taş atmalıdır."
+    },
+    win: {
+        head: "Kazanma",
+        p: "Bir oyuncu, rafındaki 14 taşı geçerli setler ve diziler halinde düzenleyip son taşını atarak kazanır."
+    }
+}
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleButton = document.getElementById('toggleButton');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      const toggleMobileMenu = document.getElementById('toggleMobileMenu');
+      const openIcon = document.getElementById('openIcon');
+      const closeIcon = document.getElementById('closeIcon');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMobileMenu = document.getElementById('closeMobileMenu');
+
+      toggleButton.addEventListener('click', function () {
+        dropdownMenu.classList.toggle('hidden');
+      });
+
+      toggleMobileMenu.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+
+      });
+
+      closeMobileMenu.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 500) {
+          navbar.classList.add('bg-green-800');
+          navbar.classList.remove('bg-transparent');
+        } else {
+          navbar.classList.remove('bg-green-800');
+        }
+      });
+
+      function showOS() {
+        const platform = navigator.platform.toLowerCase();
+        let osName;
+
+        if (platform.includes('win')) {
+          osName = 'Windows';
+        } else if (platform.includes('mac')) {
+          osName = 'Mac OS';
+        } else if (platform.includes('linux')) {
+          osName = 'Linux';
+        } else {
+          osName = "Télécharger";
+        }
+
+
+        if (actualLang == "tr") {
+          document.getElementById('osButton').textContent = osName + " " + translations.tr.tryon;
+        } else {
+          if (actualLang == "fr") {
+            document.getElementById('osButton').textContent = translations.fr.tryon + " " + osName;
+          } else if (actualLang == "en") {
+            document.getElementById('osButton').textContent = translations.en.tryon + " " + osName;
+          }
+
+        }
+      }
+
+      // Call the function on page load to set the initial button label
+      showOS();
+    });
+
+
+    function changeLanguage(lang) {
+      actualLang = lang;
+      console.log(lang)
+
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      dropdownMenu.classList.toggle('hidden');
+
+      if (lang == "tr") {
+
+        document.getElementById("tutoNav").textContent = translations.tr.nav.tuto;
+        document.getElementById("downNav").textContent = translations.tr.nav.download;
+        document.getElementById("toggleButton").textContent = translations.tr.nav.langue;
+
+
+        document.getElementById("first").textContent = translations.tr.heading.first;
+        document.getElementById("second").textContent = translations.tr.heading.second;
+
+        document.getElementById("title1").textContent = translations.tr.history.first.title;
+        document.getElementById("subtxt1").textContent = translations.tr.history.first.subtext;
+
+        document.getElementById("title2").textContent = translations.tr.history.second.title;
+        document.getElementById("subtxt2").textContent = translations.tr.history.second.subtext;
+
+        document.getElementById("title3").textContent = translations.tr.history.third.title;
+        document.getElementById("subtxt3").textContent = translations.tr.history.third.subtext;
+
+        document.getElementById("tutovid").textContent = translations.tr.learn;
+
+        document.getElementById("downloadgametitle").textContent = translations.tr.download.title;
+        document.getElementById("downloadgametxt").textContent = translations.tr.download.subtext;
+
+        document.getElementById("footertitle").textContent = translations.tr.footer.follow.title;
+        document.getElementById("ig").textContent = translations.tr.footer.follow.subtext;
+        document.getElementById("legaltxt").textContent = translations.tr.footer.legal;
+
+        document.getElementById("windows").textContent = translations.tr.download.btns.windows;
+        document.getElementById("mac").textContent = translations.tr.download.btns.macos;
+        document.getElementById("linux").textContent = translations.tr.download.btns.linux;
+        document.getElementById("android").textContent = translations.tr.download.btns.android;
+
+        document.getElementById("tuto-head").textContent = translations.tr.tutorial.objectives.heading;
+        document.getElementById("tuto-obj").textContent = translations.tr.tutorial.objectives.desc;
+
+        document.getElementById("obj-head").textContent = translations.tr.tutorial.obj.head;
+        document.getElementById("obj-desc").textContent = translations.tr.tutorial.obj.p;
+
+
+        document.getElementById("obj-u1").textContent = translations.tr.tutorial.obj.list.u1;
+        document.getElementById("obj-u2").textContent = translations.tr.tutorial.obj.list.u2;
+        document.getElementById("obj-u3").textContent = translations.tr.tutorial.obj.list.u3;
+        document.getElementById("obj-end").textContent = translations.tr.tutorial.obj.list.p;
+
+
+        document.getElementById("start-head").textContent = translations.tr.tutorial.gamestart.head;
+        document.getElementById("start-p").textContent = translations.tr.tutorial.gamestart.p;
+
+        document.getElementById("turns-head").textContent = translations.tr.tutorial.turns.head;
+        document.getElementById("turns-desc").textContent = translations.tr.tutorial.turns.p;
+        document.getElementById("turns-p").textContent = translations.tr.tutorial.turns.list.head;
+        document.getElementById("turn-u1").textContent = translations.tr.tutorial.turns.list.u1;
+        document.getElementById("turn-u2").textContent = translations.tr.tutorial.turns.list.u2;
+
+        document.getElementById("arr-head").textContent = translations.tr.tutorial.arr.head;
+        document.getElementById("arr-p").textContent = translations.tr.tutorial.arr.p;
+        document.getElementById("arr-u1").textContent = translations.tr.tutorial.arr.list.u1;
+        document.getElementById("arr-u2").textContent = translations.tr.tutorial.arr.list.u2;
+
+        document.getElementById("joker-head").textContent = translations.tr.tutorial.jokers.head;
+        document.getElementById("joker-p").textContent = translations.tr.tutorial.jokers.p;
+        document.getElementById("joker-u1").textContent = translations.tr.tutorial.jokers.list.u1;
+        document.getElementById("joker-u2").textContent = translations.tr.tutorial.jokers.list.u2;
+
+        document.getElementById("end-head").textContent = translations.tr.tutorial.fintour.head;
+        document.getElementById("end-desc").textContent = translations.tr.tutorial.fintour.p;
+
+        document.getElementById("win-head").textContent = translations.tr.tutorial.win.head;
+        document.getElementById("win-desc").textContent = translations.tr.tutorial.win.p;
+
+        const platform = navigator.platform.toLowerCase();
+        let osName;
+
+        if (platform.includes('win')) {
+          osName = 'Windows';
+        } else if (platform.includes('mac')) {
+          osName = 'Mac OS';
+        } else if (platform.includes('linux')) {
+          osName = 'Linux';
+        } else {
+          osName = "Télécharger";
+        }
+
+        document.getElementById("osButton").textContent = osName + " " + translations.tr.tryon;
+
+
+
+      } else if (lang == "en") {
+        document.getElementById("tutoNav").textContent = translations.en.nav.tuto;
+        document.getElementById("downNav").textContent = translations.en.nav.download;
+        document.getElementById("toggleButton").textContent = translations.en.nav.langue;
+
+        document.getElementById("first").textContent = translations.en.heading.first;
+        document.getElementById("second").textContent = translations.en.heading.second;
+
+        document.getElementById("title1").textContent = translations.en.history.first.title;
+        document.getElementById("subtxt1").textContent = translations.en.history.first.subtext;
+
+        document.getElementById("title2").textContent = translations.en.history.second.title;
+        document.getElementById("subtxt2").textContent = translations.en.history.second.subtext;
+
+        document.getElementById("title3").textContent = translations.en.history.third.title;
+        document.getElementById("subtxt3").textContent = translations.en.history.third.subtext;
+
+        document.getElementById("tutovid").textContent = translations.en.learn;
+
+        document.getElementById("downloadgametitle").textContent = translations.en.download.title;
+        document.getElementById("downloadgametxt").textContent = translations.en.download.subtext;
+
+        document.getElementById("footertitle").textContent = translations.en.footer.follow.title;
+        document.getElementById("ig").textContent = translations.en.footer.follow.subtext;
+        document.getElementById("legaltxt").textContent = translations.en.footer.legal;
+
+        document.getElementById("windows").textContent = translations.en.download.btns.windows;
+        document.getElementById("mac").textContent = translations.en.download.btns.macos;
+        document.getElementById("linux").textContent = translations.en.download.btns.linux;
+        document.getElementById("android").textContent = translations.en.download.btns.android;
+
+         // Partie tutoriel (traduction necessaire)
+
+        document.getElementById("tuto-head").textContent = translations.en.tutorial.objectives.heading;
+        document.getElementById("tuto-obj").textContent = translations.en.tutorial.objectives.desc;
+
+        document.getElementById("obj-head").textContent = translations.en.tutorial.obj.head;
+        document.getElementById("obj-desc").textContent = translations.en.tutorial.obj.p;
+
+
+        document.getElementById("obj-u1").textContent = translations.en.tutorial.obj.list.u1;
+        document.getElementById("obj-u2").textContent = translations.en.tutorial.obj.list.u2;
+        document.getElementById("obj-u3").textContent = translations.en.tutorial.obj.list.u3;
+        document.getElementById("obj-end").textContent = translations.en.tutorial.obj.list.p;
+
+
+        document.getElementById("start-head").textContent = translations.en.tutorial.gamestart.head;
+        document.getElementById("start-p").textContent = translations.en.tutorial.gamestart.p;
+
+        document.getElementById("turns-head").textContent = translations.en.tutorial.turns.head;
+        document.getElementById("turns-desc").textContent = translations.en.tutorial.turns.p;
+        document.getElementById("turns-p").textContent = translations.en.tutorial.turns.list.head;
+        document.getElementById("turn-u1").textContent = translations.en.tutorial.turns.list.u1;
+        document.getElementById("turn-u2").textContent = translations.en.tutorial.turns.list.u2;
+
+        document.getElementById("arr-head").textContent = translations.en.tutorial.arr.head;
+        document.getElementById("arr-p").textContent = translations.en.tutorial.arr.p;
+        document.getElementById("arr-u1").textContent = translations.en.tutorial.arr.list.u1;
+        document.getElementById("arr-u2").textContent = translations.en.tutorial.arr.list.u2;
+
+        document.getElementById("joker-head").textContent = translations.en.tutorial.jokers.head;
+        document.getElementById("joker-p").textContent = translations.en.tutorial.jokers.p;
+        document.getElementById("joker-u1").textContent = translations.en.tutorial.jokers.list.u1;
+        document.getElementById("joker-u2").textContent = translations.en.tutorial.jokers.list.u2;
+
+        document.getElementById("end-head").textContent = translations.en.tutorial.fintour.head;
+        document.getElementById("end-desc").textContent = translations.en.tutorial.fintour.p;
+
+        document.getElementById("win-head").textContent = translations.en.tutorial.win.head;
+        document.getElementById("win-desc").textContent = translations.en.tutorial.win.p;
+
+        const platform = navigator.platform.toLowerCase();
+        let osName;
+
+        if (platform.includes('win')) {
+          osName = 'Windows';
+        } else if (platform.includes('mac')) {
+          osName = 'Mac OS';
+        } else if (platform.includes('linux')) {
+          osName = 'Linux';
+        } else {
+          osName = "Télécharger";
+        }
+
+        document.getElementById("osButton").textContent = translations.en.tryon + " " + osName;
+
+        showOS();
+
+      } else {
+        document.getElementById("tutoNav").textContent = translations.fr.nav.tuto;
+        document.getElementById("downNav").textContent = translations.fr.nav.download;
+        document.getElementById("toggleButton").textContent = translations.fr.nav.langue;
+
+        document.getElementById("first").textContent = translations.fr.heading.first;
+        document.getElementById("second").textContent = translations.fr.heading.second;
+
+        document.getElementById("title1").textContent = translations.fr.history.first.title;
+        document.getElementById("subtxt1").textContent = translations.fr.history.first.subtext;
+
+        document.getElementById("title2").textContent = translations.fr.history.second.title;
+        document.getElementById("subtxt2").textContent = translations.fr.history.second.subtext;
+
+        document.getElementById("title3").textContent = translations.fr.history.third.title;
+        document.getElementById("subtxt3").textContent = translations.fr.history.third.subtext;
+
+        document.getElementById("tutovid").textContent = translations.fr.learn;
+
+        document.getElementById("downloadgametitle").textContent = translations.fr.download.title;
+        document.getElementById("downloadgametxt").textContent = translations.fr.download.subtext;
+
+        document.getElementById("footertitle").textContent = translations.fr.footer.follow.title;
+        document.getElementById("ig").textContent = translations.fr.footer.follow.subtext;
+        document.getElementById("legaltxt").textContent = translations.fr.footer.legal;
+
+        document.getElementById("windows").textContent = translations.fr.download.btns.windows;
+        document.getElementById("mac").textContent = translations.fr.download.btns.macos;
+        document.getElementById("linux").textContent = translations.fr.download.btns.linux;
+        document.getElementById("android").textContent = translations.fr.download.btns.android;
+
+         // Partie tutoriel (traduction necessaire)
+
+         document.getElementById("tuto-head").textContent = translations.fr.tutorial.objectives.heading;
+        document.getElementById("tuto-obj").textContent = translations.fr.tutorial.objectives.desc;
+
+        document.getElementById("obj-head").textContent = translations.fr.tutorial.obj.head;
+        document.getElementById("obj-desc").textContent = translations.fr.tutorial.obj.p;
+
+
+        document.getElementById("obj-u1").textContent = translations.fr.tutorial.obj.list.u1;
+        document.getElementById("obj-u2").textContent = translations.fr.tutorial.obj.list.u2;
+        document.getElementById("obj-u3").textContent = translations.fr.tutorial.obj.list.u3;
+        document.getElementById("obj-end").textContent = translations.fr.tutorial.obj.list.p;
+
+
+        document.getElementById("start-head").textContent = translations.fr.tutorial.gamestart.head;
+        document.getElementById("start-p").textContent = translations.fr.tutorial.gamestart.p;
+
+        document.getElementById("turns-head").textContent = translations.fr.tutorial.turns.head;
+        document.getElementById("turns-desc").textContent = translations.fr.tutorial.turns.p;
+        document.getElementById("turns-p").textContent = translations.fr.tutorial.turns.list.head;
+        document.getElementById("turn-u1").textContent = translations.fr.tutorial.turns.list.u1;
+        document.getElementById("turn-u2").textContent = translations.fr.tutorial.turns.list.u2;
+
+        document.getElementById("arr-head").textContent = translations.fr.tutorial.arr.head;
+        document.getElementById("arr-p").textContent = translations.fr.tutorial.arr.p;
+        document.getElementById("arr-u1").textContent = translations.fr.tutorial.arr.list.u1;
+        document.getElementById("arr-u2").textContent = translations.fr.tutorial.arr.list.u2;
+
+        document.getElementById("joker-head").textContent = translations.fr.tutorial.jokers.head;
+        document.getElementById("joker-p").textContent = translations.fr.tutorial.jokers.p;
+        document.getElementById("joker-u1").textContent = translations.fr.tutorial.jokers.list.u1;
+        document.getElementById("joker-u2").textContent = translations.fr.tutorial.jokers.list.u2;
+
+        document.getElementById("end-head").textContent = translations.fr.tutorial.fintour.head;
+        document.getElementById("end-desc").textContent = translations.fr.tutorial.fintour.p;
+
+        document.getElementById("win-head").textContent = translations.fr.tutorial.win.head;
+        document.getElementById("win-desc").textContent = translations.fr.tutorial.win.p;
+
+        const platform = navigator.platform.toLowerCase();
+        let osName;
+
+        if (platform.includes('win')) {
+          osName = 'Windows';
+        } else if (platform.includes('mac')) {
+          osName = 'Mac OS';
+        } else if (platform.includes('linux')) {
+          osName = 'Linux';
+        } else {
+          osName = "Télécharger";
+        }
+
+        document.getElementById("osButton").textContent = translations.fr.tryon + " " + osName;
+
+      }
+    }
+
+  </script>
+
+
+
+</body>
+
+</html>

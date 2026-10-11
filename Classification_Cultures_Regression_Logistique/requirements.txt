@@ -1,0 +1,9 @@
+# Projet exécuté en local, sans venv figé conservé pour ce projet précis :
+# versions non imposées ci-dessous (pas de garantie de reproductibilité exacte
+# des versions, contrairement à un pip freeze d'un environnement contrôlé).
+numpy
+pandas
+matplotlib
+scikit-learn
+imbalanced-learn
+tqdm

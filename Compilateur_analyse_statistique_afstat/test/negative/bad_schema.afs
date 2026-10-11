@@ -1,0 +1,16 @@
+// Schéma volontairement erroné pour vérifier la validation header/type côté CSV.
+// Le CSV réel a les colonnes : id,name,department,salary
+source employees "exemples/data/employees.csv";
+
+schema bad_schema {
+    id integer;
+    name string;
+    dept string;    // colonne inexistante dans le CSV
+    salary float;
+}
+
+associate bad_schema with employees;
+
+analyze bad_schema {
+    summary salary;
+}

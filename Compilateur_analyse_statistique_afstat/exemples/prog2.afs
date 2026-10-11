@@ -1,0 +1,42 @@
+// Calcul et analyse de l'IMC
+// Ce programme calcule l'IMC avant d'en faire l'analyse
+
+// Spécification du fichier d'entrée
+source visits "data/visits_info.csv";
+
+// Définition de la structure des données
+schema health_data {
+    visit_id integer;
+    patient_id integer;
+    visit_date string;
+    weight float;
+    height float;
+}
+
+associate health_data with visits;
+
+// Définition d'une nouvelle colonne (bmi)
+compute bmi = weight / (height * height);
+
+// Analyses à effectuer
+analyze health_data {
+    summary weight; // Résumé du poids
+    summary height; // Résumé de la taille
+    summary bmi;    // Résumé de l'IMC
+}
+// Résultats attendus avec les fichiers donnés
+// summary weight: 
+// min: 65.4
+// max: 95.0
+// mean: 78.8
+// std_dev: 8.1
+// summary height:
+// min: 1.60
+// max: 1.81
+// mean: 1.70
+// std_dev: 0.06
+// summary bmi:
+// min: 21.7
+// max: 33.3
+// mean: 26.5
+// std_dev: 3.0

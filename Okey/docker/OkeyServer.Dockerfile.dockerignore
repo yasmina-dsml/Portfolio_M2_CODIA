@@ -1,0 +1,4 @@
+server/OkeyServer/bin/
+server/OkeyServer/obj/
+server/OkeyServer/.gitignore
+server/OkeyServer/**/.DS_Store

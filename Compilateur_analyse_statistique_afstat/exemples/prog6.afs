@@ -1,0 +1,36 @@
+// Ce programme sélectionne uniquement les patients dont l'âge 
+// est supérieur à 50 ans avant d'analyser leurs données
+source patients_data "data/patients_medinfo.csv";
+source records_data "data/records.csv";
+
+schema patient_schema {
+    id integer;
+    age integer;
+    gender string;
+}
+associate patient_schema with patients_data;
+
+schema record_schema {
+    record_id integer;
+    patient_id integer;
+    cholesterol float;
+    blood_pressure float;
+}
+associate record_schema with records_data;
+
+// Jointure des données
+join all_data = patients_data.id inner join records_data.patient_id;
+
+// Filtrage pour ne conserver que les patients de plus de 50 ans
+filter old_patients = all_data where all_data.age > 50;
+
+// Analyse sur le sous-ensemble de données filtré
+analyze old_patients {
+    mean cholesterol;
+    histogram gender;
+}
+// Résultats attendus avec les fichiers donnés
+// mean cholesterol: 236.4
+// histogram gender:
+// M: 9
+// F: 9

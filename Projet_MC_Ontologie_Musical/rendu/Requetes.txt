@@ -1,0 +1,166 @@
+======================
+REQUETES SPARQL (Protégé)
+Base prefix :
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+======================
+
+
+[SPARQL-01] Titres + interprète + genre (genre optionnel)
+--------------------------------------------------------
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT (STR(?titre) AS ?titreStr) (STR(?interprete) AS ?interpreteStr) (STR(?genre) AS ?genreStr)
+WHERE {
+  ?c a :Chanson ;
+     rdfs:label ?titre ;
+     :aInterprete ?i .
+  ?i rdfs:label ?interprete .
+  OPTIONAL {
+    ?c :aGenre ?g .
+    ?g rdfs:label ?genre .
+  }
+}
+ORDER BY ?titreStr ?interpreteStr ?genreStr
+
+
+[SPARQL-02] Disque de Nirvana contenant SmellsLikeTeenSpirit
+-----------------------------------------------------------
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT (STR(?label) AS ?disque)
+WHERE {
+  ?d a :Disque ;
+     :aArtisteDisque :Nirvana ;
+     :contientChanson :SmellsLikeTeenSpirit ;
+     rdfs:label ?label .
+}
+
+
+[SPARQL-03] ASK : Garbage a au moins une membre Female ?
+--------------------------------------------------------
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+ASK WHERE {
+  FILTER EXISTS {
+    :Garbage :aAdhesion ?adh .
+    ?adh :membre ?m .
+    ?m foaf:gender ?g .
+    FILTER(?g = "Female")
+  }
+}
+
+
+[SPARQL-04] Nombre de chansons par disque de Nirvana (Album + Single inclus)
+---------------------------------------------------------------------------
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT (STR(?nomDisque) AS ?disque) (COUNT(DISTINCT ?c) AS ?nbChansons)
+WHERE {
+  ?d a ?type ;
+     :aArtisteDisque :Nirvana ;
+     rdfs:label ?nomDisque ;
+     :contientChanson ?c .
+  ?type rdfs:subClassOf* :Disque .
+}
+GROUP BY ?nomDisque
+ORDER BY ?nomDisque
+
+
+[SPARQL-05] Chansons sans genre
+------------------------------
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?titre
+WHERE {
+  ?c a :Chanson ;
+     rdfs:label ?titre .
+  FILTER NOT EXISTS { ?c :aGenre ?g . }
+}
+ORDER BY ?titre
+
+
+[SPARQL-06] Récompenses (PrixCeremonie ou Certification) en 2014 ou 2015
+------------------------------------------------------------------------
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT (STR(?nomArtiste) AS ?artisteNom)
+       (STR(?nomRec) AS ?recompenseNom)
+       (STR(?annee) AS ?anneeStr)
+WHERE {
+  ?d :aArtisteDisque ?artiste ;
+     :aRecompense ?rec .
+  ?artiste rdfs:label ?nomArtiste .
+  ?rec rdfs:label ?nomRec .
+  {
+    ?rec a :PrixCeremonie ;
+         :anneePrix ?annee .
+  }
+  UNION
+  {
+    ?rec a :Certification ;
+         :anneeCertification ?annee .
+  }
+  FILTER(?annee = "2014"^^xsd:gYear || ?annee = "2015"^^xsd:gYear)
+}
+ORDER BY ?annee ?nomArtiste ?nomRec
+
+
+[SPARQL-07] Groupes ayant moins de 4 disques
+-------------------------------------------
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT (STR(?nomGroupe) AS ?groupe)
+       (COUNT(DISTINCT ?d) AS ?nbDisques)
+WHERE {
+  ?d :aArtisteDisque ?g .
+  ?g a :Groupe ;
+     rdfs:label ?nomGroupe .
+  ?d a ?typeDisque .
+  ?typeDisque rdfs:subClassOf* :Disque .
+}
+GROUP BY ?nomGroupe
+HAVING (COUNT(DISTINCT ?d) < 4)
+ORDER BY ?nbDisques ?nomGroupe
+
+
+[SPARQL-08] Musiciens dont le family_name commence par “c” (regex, insensible à la casse)
+---------------------------------------------------------------------------------------
+PREFIX : <http://www.semanticweb.org/yasmina/ontologies/chansons#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+SELECT (STR(?nomFamille) AS ?family_name)
+WHERE {
+  ?m a :Musicien ;
+     foaf:family_name ?nomFamille .
+  FILTER( REGEX(STR(?nomFamille), "^c", "i") )
+}
+ORDER BY LCASE(STR(?nomFamille))
+
+
+
+======================
+REQUETES SQWRL (Protégé)
+======================
+
+[SQWRL-09] Prénom + nom + groupe via les adhésions
+--------------------------------------------------
+Musicien(?m) ^ membre(?adh, ?m) ^ groupe(?adh, ?g) ^
+autogen0:firstName(?m, ?prenom) ^ autogen0:family_name(?m, ?nom) ^
+autogen0:name(?g, ?nomGroupe)
+-> sqwrl:select(?prenom, ?nom, ?nomGroupe)
+
+
+[SQWRL-10] Compter les adhésions “Female” par groupe (tel que tenté)
+--------------------------------------------------------------------
+AdhesionGroupe(?adh) ^ membre(?adh, ?m) ^ groupe(?adh, ?g) ^
+autogen0:gender(?m, "Female") ^ autogen0:name(?g, ?nomGroupe)
+-> sqwrl:select(?nomGroupe) ^ sqwrl:count(?adh) ^ sqwrl:groupBy(?nomGroupe) ^ sqwrl:orderBy(?nomGroupe)
+

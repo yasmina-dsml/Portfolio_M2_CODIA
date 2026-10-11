@@ -1,0 +1,261 @@
+# Inspired by:
+# https://rehansaeed.com/gitattributes-best-practices/#final-form
+# https://github.com/gitattributes/gitattributes
+# on 2024-04-20
+
+# Set default behaviour to automatically normalize line endings.
+* text=auto
+
+#
+# The above will handle all files NOT found below
+#
+
+# Define macros (only works in top-level gitattributes files)
+# [attr] (désactivé : macro interdite hors racine du dépôt) lfs               filter=lfs diff=lfs merge=lfs -text
+# [attr] (désactivé : macro interdite hors racine du dépôt) unity-json        eol=lf linguist-language=json
+# [attr]unity-yaml        merge=unityyamlmerge eol=lf linguist-language=yaml
+
+# Optionally collapse Unity-generated files on GitHub diffs
+# [attr] (désactivé : macro interdite hors racine du dépôt) unity-yaml        merge=unityyamlmerge diff eol=lf text linguist-language=yaml linguist-generated
+
+# Documents
+*.bibtex   text diff=bibtex
+*.doc      diff=astextplain
+*.DOC      diff=astextplain
+*.docx     diff=astextplain
+*.DOCX     diff=astextplain
+*.dot      diff=astextplain
+*.DOT      diff=astextplain
+*.pdf      lfs diff=astextplain
+*.PDF      lfs diff=astextplain
+*.rtf      diff=astextplain
+*.RTF      diff=astextplain
+*.md       text diff=markdown
+*.mdx      text diff=markdown
+*.tex      text diff=tex
+*.adoc     text
+*.textile  text
+*.mustache text
+*.csv      text eol=crlf
+*.tab      text
+*.tsv      text
+*.txt      text
+*.sql      text
+*.epub     diff=astextplain
+
+# Scripts
+*.bash     text eol=lf
+*.fish     text eol=lf
+*.ksh      text eol=lf
+*.sh       text eol=lf
+*.zsh      text eol=lf
+# These are explicitly windows files and should use crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.ps1      text eol=crlf
+
+# Serialisation
+*.json     text
+*.toml     text
+*.xml      text
+*.yaml     text
+*.yml      text
+
+# Archives
+*.7z       lfs
+*.bz       lfs
+*.bz2      lfs
+*.bzip2    lfs
+*.gz       lfs
+*.lz       lfs
+*.lzma     lfs
+*.rar      lfs
+*.tar      lfs
+*.taz      lfs
+*.tbz      lfs
+*.tbz2     lfs
+*.tgz      lfs
+*.tlz      lfs
+*.txz      lfs
+*.xz       lfs
+*.Z        lfs
+*.zip      lfs
+*.zst      lfs
+*.br      lfs
+
+# Text files where line endings should be preserved
+*.patch    -text
+
+# Csharp files
+*.cs       text diff=csharp
+*.cshtml   text diff=html
+*.csx      text diff=csharp
+*.sln      text eol=crlf
+*.csproj   text eol=crlf
+
+# Markdown files
+*.md linguist-detectable
+
+# Unity source files
+*.cginc                 text
+*.compute               text linguist-language=hlsl
+*.hlsl                  text linguist-language=hlsl
+*.raytrace              text linguist-language=hlsl
+*.shader                text
+
+# Unity JSON files
+*.asmdef                unity-json
+*.asmref                unity-json
+*.index                 unity-json
+*.inputactions          unity-json
+*.shadergraph           unity-json
+*.shadersubgraph        unity-json
+
+# Unity UI Toolkit files
+*.tss                   text diff=css linguist-language=css
+*.uss                   text diff=css linguist-language=css
+*.uxml                  text linguist-language=xml linguist-detectable
+
+# Unity YAML
+*.anim                  unity-yaml
+*.asset                 unity-yaml
+*.brush                 unity-yaml
+*.controller            unity-yaml
+*.flare                 unity-yaml
+*.fontsettings          unity-yaml
+*.giparams              unity-yaml
+*.guiskin               unity-yaml
+*.lighting              unity-yaml
+*.mask                  unity-yaml
+*.mat                   unity-yaml
+*.meta                  unity-yaml
+*.mixer                 unity-yaml
+*.overrideController    unity-yaml
+*.playable              unity-yaml
+*.prefab                unity-yaml
+*.preset                unity-yaml
+*.renderTexture         unity-yaml
+*.scenetemplate         unity-yaml
+*.shadervariants        unity-yaml
+*.signal                unity-yaml
+*.spriteatlas           unity-yaml
+*.spriteatlasv2         unity-yaml
+*.terrainlayer          unity-yaml
+*.unity                 unity-yaml
+
+# "physic" for 3D but "physics" for 2D
+*.physicMaterial        unity-yaml
+*.physicsMaterial2D     unity-yaml
+
+# Exclude third-party plugins from GitHub stats
+client/OkeyClient/Assets/Plugins/**       linguist-vendored
+
+# Unity LFS
+*.cubemap               lfs
+*.unitypackage          lfs
+
+# 3D models
+*.3dm                   lfs
+*.3ds                   lfs
+*.blend                 lfs
+*.c4d                   lfs
+*.collada               lfs
+*.dae                   lfs
+*.dxf                   lfs
+*.FBX                   lfs
+*.fbx                   lfs
+*.jas                   lfs
+*.lws                   lfs
+*.lxo                   lfs
+*.ma                    lfs
+*.max                   lfs
+*.mb                    lfs
+*.obj                   lfs
+*.ply                   lfs
+*.skp                   lfs
+*.stl                   lfs
+*.ztl                   lfs
+
+# Audio
+*.aif                   lfs
+*.aiff                  lfs
+*.it                    lfs
+*.mod                   lfs
+*.mp3                   lfs
+*.ogg                   lfs
+*.s3m                   lfs
+*.wav                   lfs
+*.xm                    lfs
+
+# Video
+*.asf                   lfs
+*.avi                   lfs
+*.flv                   lfs
+*.mov                   lfs
+*.MOV                   lfs
+*.mp4                   lfs
+*.m4v                   lfs
+*.mpeg                  lfs
+*.mpg                   lfs
+*.ogv                   lfs
+*.wmv                   lfs
+*.mkv                   lfs
+*.webm                  lfs
+*.avif                  lfs
+*.avifs                 lfs
+
+# Images
+*.bmp                   lfs
+*.exr                   lfs
+*.gif                   lfs
+*.hdr                   lfs
+*.iff                   lfs
+*.jpeg                  lfs
+*.jpg                   lfs
+*.pict                  lfs
+*.png                   lfs
+*.psd                   lfs
+*.tga                   lfs
+*.tif                   lfs
+*.tiff                  lfs
+*.webp                  lfs
+*.ico                   lfs
+*.eps                   lfs
+*.heic                  lfs
+*.HEIC                  lfs
+*.heif                  lfs
+*.HEIF                  lfs
+*.svg                   text
+
+# Compiled Dynamic Library
+*.dll                   lfs
+*.pdb                   lfs
+*.so                    lfs
+
+# Executable/Installer
+*.apk                   lfs
+*.exe                   lfs
+
+# ETC
+*.a                     lfs
+*.reason                lfs
+*.rns                   lfs
+
+# Spine export file for Unity
+*.skel.bytes            lfs
+
+# Fonts
+*.woff2 lfs
+*.otf lfs
+*.ttf lfs
+
+# Other
+*.exe lfs
+
+#
+# Exclude files from exporting
+#
+
+.gitattributes export-ignore
+.gitignore     export-ignore
+.gitkeep       export-ignore

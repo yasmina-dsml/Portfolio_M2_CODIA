@@ -1,0 +1,16 @@
+// Uses an undefined identifier in compute.
+source employees "exemples/data/employees.csv";
+
+schema employee_schema {
+    id integer;
+    name string;
+    department string;
+    salary float;
+}
+associate employee_schema with employees;
+
+compute bad = unknown_field + 1; // undefined identifier
+
+analyze employee_schema {
+    summary salary;
+}

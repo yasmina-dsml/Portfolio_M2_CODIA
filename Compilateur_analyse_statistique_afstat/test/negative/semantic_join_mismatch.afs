@@ -1,0 +1,19 @@
+// Semantic error: join on incompatible column types (integer vs string).
+source patients "exemples/data/patients_medinfo.csv";
+source employees "exemples/data/employees.csv";
+
+schema patients_schema {
+    id integer;
+}
+associate patients_schema with patients;
+
+schema employees_schema {
+    id string;
+}
+associate employees_schema with employees;
+
+join bad_join = patients.id inner join employees.id;
+
+analyze bad_join {
+    mean id;
+}

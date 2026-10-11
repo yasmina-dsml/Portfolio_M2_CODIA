@@ -1,0 +1,69 @@
+### YamlMime:ManagedReference
+items:
+- uid: OkeyApi.Dtos.Compte
+  commentId: N:OkeyApi.Dtos.Compte
+  id: OkeyApi.Dtos.Compte
+  children:
+  - OkeyApi.Dtos.Compte.LoginDto
+  - OkeyApi.Dtos.Compte.NewUtilisateurDto
+  - OkeyApi.Dtos.Compte.RegisterDto
+  langs:
+  - csharp
+  - vb
+  name: OkeyApi.Dtos.Compte
+  nameWithType: OkeyApi.Dtos.Compte
+  fullName: OkeyApi.Dtos.Compte
+  type: Namespace
+  assemblies:
+  - OkeyApi
+references:
+- uid: OkeyApi.Dtos.Compte.LoginDto
+  commentId: T:OkeyApi.Dtos.Compte.LoginDto
+  parent: OkeyApi.Dtos.Compte
+  href: OkeyApi.Dtos.Compte.LoginDto.html
+  name: LoginDto
+  nameWithType: LoginDto
+  fullName: OkeyApi.Dtos.Compte.LoginDto
+- uid: OkeyApi.Dtos.Compte.NewUtilisateurDto
+  commentId: T:OkeyApi.Dtos.Compte.NewUtilisateurDto
+  href: OkeyApi.Dtos.Compte.NewUtilisateurDto.html
+  name: NewUtilisateurDto
+  nameWithType: NewUtilisateurDto
+  fullName: OkeyApi.Dtos.Compte.NewUtilisateurDto
+- uid: OkeyApi.Dtos.Compte.RegisterDto
+  commentId: T:OkeyApi.Dtos.Compte.RegisterDto
+  parent: OkeyApi.Dtos.Compte
+  href: OkeyApi.Dtos.Compte.RegisterDto.html
+  name: RegisterDto
+  nameWithType: RegisterDto
+  fullName: OkeyApi.Dtos.Compte.RegisterDto
+- uid: OkeyApi.Dtos.Compte
+  commentId: N:OkeyApi.Dtos.Compte
+  href: OkeyApi.html
+  name: OkeyApi.Dtos.Compte
+  nameWithType: OkeyApi.Dtos.Compte
+  fullName: OkeyApi.Dtos.Compte
+  spec.csharp:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Dtos
+    name: Dtos
+    href: OkeyApi.Dtos.html
+  - name: .
+  - uid: OkeyApi.Dtos.Compte
+    name: Compte
+    href: OkeyApi.Dtos.Compte.html
+  spec.vb:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Dtos
+    name: Dtos
+    href: OkeyApi.Dtos.html
+  - name: .
+  - uid: OkeyApi.Dtos.Compte
+    name: Compte
+    href: OkeyApi.Dtos.Compte.html

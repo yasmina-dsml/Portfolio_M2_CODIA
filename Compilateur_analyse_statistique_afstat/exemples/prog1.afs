@@ -1,0 +1,27 @@
+//  Analyse simple de données démographiques
+// Ce programme lit un fichier de patients et calcule des statistiques de base 
+// sur leur âge et leur genre
+
+// Spécification du fichier d'entrée
+source patients "data/patients_medinfo.csv";
+
+// Définition de la structure des données
+schema patient_data {
+    id integer;
+    age integer;
+    gender string;
+}
+
+associate patient_data with patients;
+
+// Analyses à effectuer
+analyze patient_data {
+    mean age;
+    histogram gender;
+}
+// Résultats attendus avec les fichiers donnés
+// mean age: 51.5
+// histogram gender:
+// M: 15
+// F: 15
+

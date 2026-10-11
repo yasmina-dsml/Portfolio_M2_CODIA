@@ -1,0 +1,136 @@
+### YamlMime:ManagedReference
+items:
+- uid: OkeyApi.Interfaces.ITokenService
+  commentId: T:OkeyApi.Interfaces.ITokenService
+  id: ITokenService
+  parent: OkeyApi.Interfaces
+  children:
+  - OkeyApi.Interfaces.ITokenService.CreateToken(OkeyApi.Models.Utilisateur)
+  langs:
+  - csharp
+  - vb
+  name: ITokenService
+  nameWithType: ITokenService
+  fullName: OkeyApi.Interfaces.ITokenService
+  type: Interface
+  source:
+    remote:
+      path: server/OkeyApi/Interfaces/ITokenService.cs
+      branch: main
+      repo: git@git.unistra.fr:okaybytes/okey.git
+    id: ITokenService
+    path: ../server/OkeyApi/Interfaces/ITokenService.cs
+    startLine: 4
+  assemblies:
+  - OkeyApi
+  namespace: OkeyApi.Interfaces
+  syntax:
+    content: public interface ITokenService
+    content.vb: Public Interface ITokenService
+- uid: OkeyApi.Interfaces.ITokenService.CreateToken(OkeyApi.Models.Utilisateur)
+  commentId: M:OkeyApi.Interfaces.ITokenService.CreateToken(OkeyApi.Models.Utilisateur)
+  id: CreateToken(OkeyApi.Models.Utilisateur)
+  parent: OkeyApi.Interfaces.ITokenService
+  langs:
+  - csharp
+  - vb
+  name: CreateToken(Utilisateur)
+  nameWithType: ITokenService.CreateToken(Utilisateur)
+  fullName: OkeyApi.Interfaces.ITokenService.CreateToken(OkeyApi.Models.Utilisateur)
+  type: Method
+  source:
+    remote:
+      path: server/OkeyApi/Interfaces/ITokenService.cs
+      branch: main
+      repo: git@git.unistra.fr:okaybytes/okey.git
+    id: CreateToken
+    path: ../server/OkeyApi/Interfaces/ITokenService.cs
+    startLine: 6
+  assemblies:
+  - OkeyApi
+  namespace: OkeyApi.Interfaces
+  syntax:
+    content: string CreateToken(Utilisateur utilisateur)
+    parameters:
+    - id: utilisateur
+      type: OkeyApi.Models.Utilisateur
+    return:
+      type: System.String
+    content.vb: Function CreateToken(utilisateur As Utilisateur) As String
+  overload: OkeyApi.Interfaces.ITokenService.CreateToken*
+references:
+- uid: OkeyApi.Interfaces
+  commentId: N:OkeyApi.Interfaces
+  href: OkeyApi.html
+  name: OkeyApi.Interfaces
+  nameWithType: OkeyApi.Interfaces
+  fullName: OkeyApi.Interfaces
+  spec.csharp:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Interfaces
+    name: Interfaces
+    href: OkeyApi.Interfaces.html
+  spec.vb:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Interfaces
+    name: Interfaces
+    href: OkeyApi.Interfaces.html
+- uid: OkeyApi.Interfaces.ITokenService.CreateToken*
+  commentId: Overload:OkeyApi.Interfaces.ITokenService.CreateToken
+  href: OkeyApi.Interfaces.ITokenService.html#OkeyApi_Interfaces_ITokenService_CreateToken_OkeyApi_Models_Utilisateur_
+  name: CreateToken
+  nameWithType: ITokenService.CreateToken
+  fullName: OkeyApi.Interfaces.ITokenService.CreateToken
+- uid: OkeyApi.Models.Utilisateur
+  commentId: T:OkeyApi.Models.Utilisateur
+  parent: OkeyApi.Models
+  href: OkeyApi.Models.Utilisateur.html
+  name: Utilisateur
+  nameWithType: Utilisateur
+  fullName: OkeyApi.Models.Utilisateur
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: OkeyApi.Models
+  commentId: N:OkeyApi.Models
+  href: OkeyApi.html
+  name: OkeyApi.Models
+  nameWithType: OkeyApi.Models
+  fullName: OkeyApi.Models
+  spec.csharp:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Models
+    name: Models
+    href: OkeyApi.Models.html
+  spec.vb:
+  - uid: OkeyApi
+    name: OkeyApi
+    href: OkeyApi.html
+  - name: .
+  - uid: OkeyApi.Models
+    name: Models
+    href: OkeyApi.Models.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

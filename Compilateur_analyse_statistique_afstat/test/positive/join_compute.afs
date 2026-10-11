@@ -1,0 +1,27 @@
+// Join + compute + analyze: BMI after join.
+source patients "exemples/data/patients_medinfo.csv";
+source visits "exemples/data/visits_info.csv";
+
+schema patient_schema {
+    id integer;
+    age integer;
+    gender string;
+}
+associate patient_schema with patients;
+
+schema visit_schema {
+    visit_id integer;
+    patient_id integer;
+    visit_date string;
+    weight float;
+    height float;
+}
+associate visit_schema with visits;
+
+join patient_visits = patients.id inner join visits.patient_id;
+
+compute bmi = weight / (height * height);
+
+analyze patient_visits {
+    mean bmi;
+}
