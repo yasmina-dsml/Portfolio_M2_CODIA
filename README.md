@@ -1,60 +1,68 @@
 # Yasmina Farid
 
-**Étudiante en M2 Informatique : Connaissances, science de Données  et Intelligence Artificielle (CODIA) — Université de Strasbourg**
-Je cherche un **stage de fin d'études en IA / data science /ML** de 5 à 6 mois, à partir de février 2027,dans toute la France.
+**Stage de fin d'études en Data Science / Machine Learning — 6 mois, dès février 2027**
+Master Informatique, parcours CODIA (Connaissances, science des données et intelligence artificielle) — Université de Strasbourg
+Lieu : France entière
 
-[LinkedIn](https://www.linkedin.com/in/yasmina-farid-93231a196) · [CV (PDF)](CV_Yasmina_Farid.pdf) · [yasmina.dsml@gmail.com](mailto:yasmina.dsml@gmail.com)
+[yasmina.dsml@gmail.com](mailto:yasmina.dsml@gmail.com) · [LinkedIn](https://www.linkedin.com/in/yasmina-farid-93231a196) · [CV (PDF)](CV_Yasmina_Farid.pdf)
 
-**Ce que je sais faire :** deep learning (CNN, RNN/LSTM) · LLM et prompting (zero/few-shot, extraction structurée) · explicabilité (SHAP, LIME) · machine learning supervisé et non supervisé · préparation de données réelles multi-sources
+## Profil
 
-**Stack :** Python · PyTorch · TensorFlow/Keras · scikit-learn · pandas · Hugging Face Transformers · R · SPARQL · C · C# · Git
+Étudiante en M2 data science et IA. De la collecte et la préparation des données à l'évaluation critique des modèles : machine learning supervisé et non supervisé, deep learning, LLM (extraction, RAG).
+
+## Formation
+
+- **Master Informatique, parcours CODIA**, Université de Strasbourg (2025 – 2027)
+  - M2 (en cours) : données à large échelle, entreposage de données massives distribuées et Business Intelligence, mise en œuvre de l'Edge AI.
+  - M1 : science des données et apprentissage, statistiques pour la science des données, apprentissage profond, données complexes, programmation parallèle.
+- **Licence Informatique**, Université de Strasbourg (diplôme obtenu en 2024)
 
 ---
 
 ## Projets
 
-### Projet de recherche : superposition des caractéristiques dans un CNN
-
-**[TER_FSI_CNN](TER_FSI_CNN/)** · Solo · encadré par Anne Jeannin-Girardon (ICube) · [mémoire](TER_FSI_CNN/Memoire_TER_Yasmina_Farid.pdf) · [slides de soutenance](TER_FSI_CNN/Soutenance_Yasmina_Farid.pdf)
-
-- **Contexte.** Sur un appareil à ressources limitées, un CNN doit être précis et léger. Les choix d'architecture réduisent le coût de calcul, mais ils changent aussi la façon dont le réseau organise ses caractéristiques en interne.
-- **Question.** Le design d'un bloc convolutif influence-t-il l'organisation des caractéristiques, et qu'est-ce que cela suggère sur la superposition (plusieurs caractéristiques stockées dans les mêmes directions) ?
-- **Protocole.** 3 CNN comparables (bloc classique, bottleneck standard 8 → 4 → 8, bottleneck inversé 8 → 16 → 8), mêmes conditions d'entraînement sur CIFAR-10 à 4 classes. Les trois modèles atteignent 67 à 70 % d'accuracy, ce qui rend leurs représentations comparables. La sortie du bloc étudié est mesurée par similarité cosinus entre canaux et par rang effectif.
-- **Résultat.** La compression concentre la représentation (rang effectif **4,1/8**, paires de canaux très alignées) ; l'expansion la distribue (**7,7/8**, aucune paire au-delà de 0,5). Le bloc classique montre déjà du chevauchement : il n'est pas propre aux bottlenecks.
-- **Limite et suite.** Ces mesures sont indirectes : elles suggèrent un chevauchement mais ne prouvent pas la superposition. Piste proposée : des sparse autoencoders pour identifier les caractéristiques réellement partagées.
-
-PyTorch · torchvision · torcheval · LaTeX
-
-### IA : deep learning, LLM, NLP, explicabilité
+### Projets principaux
 
 | Projet | Problème → méthode | Résultat clé | Stack | Cadre · rôle |
 |---|---|---|---|---|
-| [Extraction de fiches techniques par LLM](Extraction_carac_batterie_par_LLM/) | Transformer des fiches PDF de batteries en JSON (20 champs) → Mistral Small 24B, zero-shot vs few-shot, contrôle des hallucinations | F1 moyen **0,85 → 0,87** avec un exemple dans le prompt (4 fiches) ; package testé (24 tests pytest) | Python · LLM API · pytest · pdfplumber | Groupe de 3 · rôle : extraction, prompts et évaluation |
-| [Explicabilité LIME vs SHAP](projet_tp_Feature_base_XAI/) | Expliquer un modèle de churn bancaire → forêt aléatoire + LIME + SHAP | Accuracy **0,92** ; instabilité de LIME mesurée, SHAP déterministe | scikit-learn · SHAP · LIME | Solo |
-| [Prédiction d'emoji (NLP)](Emoji_prediction_LR_RNN_LSTM/) | Associer une phrase à un emoji (5 classes) → back-traduction, GloVe, régression logistique vs RNN vs LSTM | Fuite d'information localisée et corrigée : validation croisée de la régression logistique ramenée de 0,73 à **0,64**, le LSTM devient le meilleur (**0,69**) | Keras · Hugging Face · scikit-learn | Groupe de 3 · rôle : augmentation des données et modèles |
+| **PrivRAG** — assistant RAG sur documents privés, 100 % local | Interroger et résumer des documents privés sans les envoyer à un service externe → recherche BM25, vectorielle ou hybride, LLM local | Projet en cours (rendu en janvier 2027) : protocole de benchmark inspiré de MLPerf Inference (latence p50/p95, RAM, CPU/GPU) et jeu d'évaluation de questions annotées réalisés | Python · Qdrant · BM25 · Ollama · GitLab | Projet de M2, équipe de 5 · rôle : résumés et protocole d'évaluation de bout en bout |
+| [Gravité des accidents de la route](Prediction-gravite-accidents-routiers/) | Prédire si un accident est grave → fusion de 6 sources ouvertes, 6 classifieurs comparés | F1 « grave » **0,665** sur 10 881 accidents de test (baseline : 0,53) ; stable en validation croisée (0,654 ± 0,005) | Python · pandas · scikit-learn | Projet de M1, équipe de 3 · rôle : construction et nettoyage du jeu de données |
+| ↳ *Prolongements personnels, en cours* | **GraviRoute** : mise en production du modèle (API FastAPI, Docker, suivi MLflow). **VigiRoute** : tableau de bord Power BI sur un modèle en étoile PostgreSQL | En développement, pas encore publiés | FastAPI · Docker · MLflow · PostgreSQL · Power BI | Solo |
+| [Extraction d'informations par LLM](Extraction_carac_batterie_par_LLM/) | Transformer des fiches techniques PDF en JSON de 20 champs → Mistral Small 24B, prompts zero-shot et few-shot, règles de validation contre les hallucinations | F1 moyen **0,87** en few-shot (0,85 en zero-shot) ; package Python de 6 modules, 24 tests pytest | Python · Mistral (API) · pytest | Projet de M1, équipe de 3 · rôle : extraction, prompts et évaluation |
+| [Classification de cultures (Sentinel-2)](Classification_Cultures_Regression_Logistique/) | 20 types de cultures depuis des séries d'images satellites → features par canal et par mois, NDVI, pipeline optimisé par GridSearchCV | F1 macro **0,48** sur 20 classes déséquilibrées (hasard : 0,05) | Python · scikit-learn · imbalanced-learn | Projet de M1, équipe de 3 · contribution individuelle |
+| [Qualité de l'eau en France (2022)](Analyse_qualite_eau_2022_Kmeans_PCA/) | Regrouper des stations de mesure → préparation de 331 122 mesures, K-means, ACP, croisement spatial et carte des résultats | 3 321 stations, 4 groupes (silhouette **0,26**) | Python · scikit-learn · GeoPandas | Projet de M1, binôme · rôle : préparation et clustering |
+| [TER : superposition des caractéristiques dans les CNN](TER_FSI_CNN/) | Le design d'un bloc convolutif change-t-il la redondance des représentations ? → 3 architectures comparables, similarité cosinus, rang effectif | Rang effectif **4,1/8** (bottleneck) contre **7,7/8** (bottleneck inversé) ; félicitations et bonus du jury | Python · PyTorch | Projet de recherche encadré, laboratoire ICube · solo |
 
-### Machine learning et data science
+Pour le TER, voir aussi le [mémoire](TER_FSI_CNN/Memoire_TER_Yasmina_Farid.pdf) et les [slides de soutenance](TER_FSI_CNN/Soutenance_Yasmina_Farid.pdf).
 
-| Projet | Problème → méthode | Résultat clé | Stack | Cadre · rôle |
-|---|---|---|---|---|
-| [Gravité des accidents de la route](Prediction-gravite-accidents-routiers/) | Prédire si un accident est grave → fusion de 6 sources publiques, 6 classifieurs comparés | F1 « grave » **0,665** sur 10 881 accidents de test (baseline : 0,53) ; stable en validation croisée (0,654 ± 0,005) | pandas · scikit-learn | Groupe de 3 · rôle : fusion et nettoyage des données |
-| [Classification de cultures (Sentinel-2)](Classification_Cultures_Regression_Logistique/) | 20 types de cultures depuis des séries d'images satellites → features par mois + NDVI, régression logistique | F1 macro **0,48** en test contre 0,05 au hasard (20 classes déséquilibrées) ; 0,61 en validation croisée | scikit-learn · imbalanced-learn | Groupe de 3 · rôle : features et régression logistique |
-| [Qualité de l'eau en France](Analyse_qualite_eau_2022_Kmeans_PCA/) | Regrouper des stations de mesure → K-means, ACP, jointure spatiale | 3 321 stations, 4 groupes (silhouette **0,26**) | scikit-learn · GeoPandas | Groupe de 2 · rôle : préparation et clustering |
-| [Génomique du cancer du sein (METABRIC)](Projet_tp_Genomique_METABRIC/) | Regrouper 1 092 patientes par expression génique → ACP, K-means, tests du χ² | Clusters fortement liés au sous-type moléculaire (p ≈ 10⁻²⁰²) | R · FactoMineR | Solo |
-
-### Autres compétences : génie logiciel, web sémantique, compilation, sécurité
+### Autres projets
 
 | Projet | Problème → méthode | Résultat clé | Stack | Cadre · rôle |
 |---|---|---|---|---|
-| [Jeu multijoueur Okey](Okey/) | Jeu de tuiles en ligne pour 2 à 4 joueurs → client Unity, API REST et serveur temps réel, Docker, CI/CD | Application complète développée à 10 en GitLab flow (revues de code, intégration continue) | C# · Unity · ASP.NET Core · MySQL · Docker | Groupe de 10 · rôle : client de jeu Unity |
-| [Ontologie du domaine musical](Projet_MC_Ontologie_Musical/) | Modéliser musiciens, groupes et récompenses dans le temps → OWL, FOAF, relations n-aires | 8/8 requêtes SPARQL validées | Protégé · OWL · SPARQL | Solo |
-| [Compilateur AFSTAT](Compilateur_analyse_statistique_afstat/) | Langage dédié à l'analyse de CSV → lexer, parser, génération de code C | Chaîne complète testée sur 8 programmes | C · flex · bison | Groupe de 4 · rôle : lexer, parser et table des symboles |
-| [Audit de sécurité CVE-2017-11774](Audit_Securite_CVE-2017-11774/) | Évaluer l'impact d'une faille Outlook sur un SI → kill chain, MITRE ATT&CK | Scénario d'attaque + recommandations, priorité P1 | Analyse de risque | Groupe de 3 · rôle : analyse de la faille et recommandations |
+| [Classification de texte : RNN et LSTM](Emoji_prediction_LR_RNN_LSTM/) | Associer une phrase à un emoji (5 classes : amour, sport, joie, tristesse, nourriture) → back-traduction, GloVe, régression logistique, RNN et LSTM | Fuite d'information localisée et corrigée : validation croisée de la régression logistique ramenée de 0,73 à **0,64**, le LSTM devient le meilleur (**0,69**) | Python · Keras · Hugging Face | Projet de M1, équipe de 3 · rôle : augmentation des données et modèles |
+| [Génomique du cancer du sein (METABRIC)](Projet_tp_Genomique_METABRIC/) | Regrouper 1 092 patientes par expression génique → ACP, K-means, tests du khi-deux | Clusters fortement liés au sous-type moléculaire (p ≈ 10⁻²⁰²) | R · FactoMineR | Projet de M1, solo |
+| [Explicabilité LIME et SHAP](projet_tp_Feature_base_XAI/) | Expliquer un modèle d'attrition bancaire → forêt aléatoire, LIME, SHAP | Accuracy **0,92** ; instabilité de LIME mesurée, SHAP déterministe | scikit-learn · SHAP · LIME | Projet de M1, solo |
+| Régression pénalisée (Lasso) | Sélectionner les bonnes variables → Ridge, Lasso et Elastic-Net sur données simulées, puis Lasso logistique et stability selection sur des données publicitaires | Les deux vraies variables retenues 100 fois sur 100 ; 2 variables stables sur les données réelles | R · glmnet · caret | TP noté de M1 · dossier pas encore publié |
+| Base de données d'une application de gestion des tâches | Concevoir entièrement la base d'une application → modélisation, schéma Oracle, requêtes SQL | Schéma et requêtes réalisés | Oracle · SQL · PL/SQL | Projet de L3 · dossier pas encore publié |
+| [Ontologie du domaine musical](Projet_MC_Ontologie_Musical/) | Modéliser musiciens, groupes et récompenses dans le temps → OWL, FOAF, relations n-aires | 9 requêtes SPARQL et SQWRL réussies sur 10 | Protégé · OWL · SPARQL | Projet de M1, solo |
+| [Jeu multijoueur Okey](Okey/) | Jeu de tuiles en ligne pour 2 à 4 joueurs → client Unity, API REST et serveur temps réel, Docker | Application complète développée à 10 (GitLab flow, revues de code) | C# · Unity · ASP.NET Core · MySQL | Projet de L3, équipe de 10 · rôle : client de jeu Unity |
+| [Compilateur AFSTAT](Compilateur_analyse_statistique_afstat/) | Langage dédié à l'analyse de fichiers CSV → lexer, parser, génération de code C | Chaîne complète testée sur 8 programmes | C · flex · bison | Projet de M1, équipe de 4 · rôle : lexer, parser et table des symboles |
+| [Audit de sécurité CVE-2017-11774](Audit_Securite_CVE-2017-11774/) | Évaluer l'impact d'une faille Outlook sur un système d'information → kill chain, MITRE ATT&CK | Scénario d'attaque et recommandations, priorité P1 | Analyse de risque | Projet de M1, équipe de 3 |
 
 Chaque dossier contient un README qui commence par une fiche technique (tâche, données, protocole, résultat comparé à une baseline), puis détaille la méthode, les limites et la façon d'exécuter le projet. Les chiffres annoncés ont été reproduits dans un environnement neuf, sauf mention contraire.
 
 ---
 
+## Compétences
+
+- **Langages** : C, C++, Java, Python, R, SQL (PostgreSQL, Oracle, PL/SQL).
+- **Données** : pandas, NumPy ; nettoyage, fusion de sources multiples, analyse exploratoire, feature engineering.
+- **Machine learning** : apprentissage supervisé (classification, régression) et non supervisé (clustering, ACP) ; évaluation et validation des modèles (validation croisée, métriques, déséquilibre de classes) ; optimisation des hyperparamètres ; explicabilité (SHAP, LIME) ; scikit-learn, XGBoost.
+- **Deep learning et LLM** : PyTorch, TensorFlow, Keras, Hugging Face ; CNN, RNN, LSTM ; prompting, extraction structurée, évaluation de RAG.
+- **Statistiques (R)** : tidyverse, FactoMineR, glmnet ; ACP, khi-deux, régression linéaire, Ridge, Lasso.
+- **Outils** : Git, Docker, FastAPI, MLflow, pytest, Jupyter, Matplotlib, Seaborn, LaTeX.
+- **Notions** : C#, Spark, MongoDB, Power BI, Tableau, Edge AI (TFLite, ONNX), OWL, SPARQL, pipeline RAG.
+
 ## Contact
 
-Disponible pour un stage à partir de février 2027. Le plus simple pour me joindre : [yasmina.dsml@gmail.com](mailto:yasmina.dsml@gmail.com) ou [LinkedIn](https://www.linkedin.com/in/yasmina-farid-93231a196).
+Disponible pour un stage de 6 mois à partir de février 2027, partout en France : [yasmina.dsml@gmail.com](mailto:yasmina.dsml@gmail.com) ou [LinkedIn](https://www.linkedin.com/in/yasmina-farid-93231a196).
