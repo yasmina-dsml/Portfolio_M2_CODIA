@@ -15,7 +15,7 @@ Lieu : France entière
 - **Master Informatique, parcours CODIA**, Université de Strasbourg (2025 – 2027)
   - M2 (en cours) : données à large échelle, entreposage de données massives distribuées et Business Intelligence, mise en œuvre de l'Edge AI.
   - M1 : science des données et apprentissage, statistiques pour la science des données, apprentissage profond, données complexes, programmation parallèle.
-- **Licence Informatique**, Université de Strasbourg (diplôme obtenu en 2024)
+- **Licence Informatique**, Université de Strasbourg 
 
 ---
 
