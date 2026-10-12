@@ -1,7 +1,7 @@
 # Yasmina Farid
 
-**Étudiante en M2 Informatique, parcours Data Science et Intelligence Artificielle (CODIA) — Université de Strasbourg**
-Je cherche un **stage de fin d'études en IA / data science** de 5 à 6 mois, à partir de février 2027, à Strasbourg, au Luxembourg ou à Paris.
+**Étudiante en M2 Informatique : Connaissances, science de Données  et Intelligence Artificielle (CODIA) — Université de Strasbourg**
+Je cherche un **stage de fin d'études en IA / data science /ML** de 5 à 6 mois, à partir de février 2027,dans toute la France.
 
 [LinkedIn](https://www.linkedin.com/in/yasmina-farid-93231a196) · [CV (PDF)](CV_Yasmina_Farid.pdf) · [yasmina.dsml@gmail.com](mailto:yasmina.dsml@gmail.com)
 
